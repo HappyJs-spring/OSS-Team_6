@@ -40,7 +40,7 @@ int main() {
         printf("결과: %.2lf\n", divide(x, y));
         break;
     case 5:
-        printf("결과(나머지): %.0lf\n", getRemainder(x, y));
+        printf("결과(나머지): %.0lf\n", Remainder(x, y));
         break;
     default:
         printf("잘못된 선택입니다.\n");

@@ -1,5 +1,9 @@
 #include <stdio.h>
 
+double add(double a, double b) {
+    return a + b;
+}
+
 double Remainder(double a, double b) {
     if ((int)b == 0) {
         printf("0으로 나눌 수 없습니다.\n");

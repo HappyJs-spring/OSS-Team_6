@@ -1,7 +1,7 @@
 #ifndef GAME_H
 #define GAME_H
 
-#define MAX_ATTEMPTS 10
+#define MAX_ATTEMPTS 7
 #define MIN_NUM 1
 #define MAX_NUM 100
 

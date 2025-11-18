@@ -66,7 +66,7 @@ void play_game(void) {
         else if (guess < answer)
             printf("Up!\n\n");
         else {
-            printf("\n🎉 정답입니다! %d번 만에 맞추셨네요!\n", attempts);
+            printf("\n 정답입니다! %d번 만에 맞추셨네요!\n", attempts);
             return;
         }
     }

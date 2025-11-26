@@ -1,8 +1,6 @@
 #ifndef GAME_H
 #define GAME_H
 
-#include <stdio.h>
-
 #define ROW 10
 #define COL 10
 
@@ -11,8 +9,7 @@ extern int px, py;
 
 void init_map();
 void print_map();
-void move_player(char key);
-void move_couples();
+int move_player(char key);
+int move_couples();
 
 #endif
-#pragma once

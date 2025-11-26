@@ -4,11 +4,15 @@
 #include <conio.h>
 #include <windows.h>
 #include <time.h>
-
 #include "avoid.h"
 
 char map[ROW][COL];
 int px, py;
+
+void clear_screen_smooth() {
+    COORD pos = { 0, 0 };
+    SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), pos);
+}
 
 void init_map() {
     for (int i = 0; i < ROW; i++)
@@ -21,27 +25,29 @@ void init_map() {
     map[8][2] = 'C';
 
     while (1) {
-        px = rand() % ROW;
-        py = rand() % COL;
-
-        if (map[px][py] == '.') {
-            map[px][py] = '#';
+        int x = rand() % ROW;
+        int y = rand() % COL;
+        if (map[x][y] == '.') {
+            px = x;
+            py = y;
+            map[x][y] = '#';
             break;
         }
     }
 }
 
 void print_map() {
-    system("cls");
+    clear_screen_smooth();
+
     for (int i = 0; i < ROW; i++) {
         for (int j = 0; j < COL; j++)
             printf("%c ", map[i][j]);
         printf("\n");
     }
-    printf("\nMove (W/A/S/D) ");
+    printf("\nHold to move (W/A/S/D)");
 }
 
-void move_player(char key) {
+int move_player(char key) {
     int nx = px, ny = py;
 
     if (key == 'w') nx--;
@@ -50,16 +56,10 @@ void move_player(char key) {
     else if (key == 'd') ny++;
 
     if (nx < 0 || nx >= ROW || ny < 0 || ny >= COL)
-        return;
+        return 0;
 
-    if (map[nx][ny] == 'E') {
-        px = nx;
-        py = ny;
-        map[px][py] = '#';
-        print_map();
-        printf("\n성공! 단서 +25\n");
-        exit(0);
-    }
+    if (map[nx][ny] == 'C') return -1;
+    if (map[nx][ny] == 'E') return 1;
 
     if (map[nx][ny] == '.') {
         map[px][py] = '.';
@@ -67,9 +67,11 @@ void move_player(char key) {
         py = ny;
         map[px][py] = '#';
     }
+
+    return 0;
 }
 
-void move_couples() {
+int move_couples() {
     int cx[50], cy[50], cnt = 0;
 
     for (int i = 0; i < ROW; i++)
@@ -93,20 +95,19 @@ void move_couples() {
         else if (dir == 3) dj = -1;
         else if (dir == 4) dj = 1;
 
-        int ni = i + di;
-        int nj = j + dj;
+        int ni = i + di, nj = j + dj;
 
-        if (ni < 0 || ni >= ROW || nj < 0 || nj >= COL) continue;
+        if (ni < 0 || ni >= ROW || nj < 0 || nj >= COL)
+            continue;
 
-        if (map[ni][nj] == '#') {
-            map[i][j] = '.';
-            map[ni][nj] = 'C';
-            return;
-        }
+        if (map[ni][nj] == '#')
+            return -1;
 
         if (map[ni][nj] == '.') {
             map[i][j] = '.';
             map[ni][nj] = 'C';
         }
     }
+
+    return 0;
 }

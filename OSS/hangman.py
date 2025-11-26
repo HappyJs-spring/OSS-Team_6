@@ -1,8 +1,5 @@
-# hangman_module.py (수정 버전)
-
 import ctypes
 import pygame
-import sys
 
 DLL_PATH = './hangman.dll' 
 
@@ -13,7 +10,7 @@ class HangmanGame:
         self.message = ""
         self.game_result = None # True: 승리, False: 패배
         
-        # 폰트 초기화 (생략 가능)
+        # 폰트
         self.font_big = pygame.font.SysFont("malgun gothic", 50)
         self.font = pygame.font.SysFont("malgun gothic", 30)
 
@@ -24,10 +21,10 @@ class HangmanGame:
             self.c_lib.init_game()
         except OSError:
             print(f"오류: {DLL_PATH} 파일을 로드할 수 없습니다.")
-            self.game_result = False # DLL 로드 실패는 패배로 처리
+            self.game_result = False # DLL 로드 실패
             
     def _setup_c_functions(self):
-        # C 함수들의 인자 타입 및 반환 타입 설정 (기존과 동일)
+        # C 함수들의 인자 타입 및 반환 타입 설정
         self.c_lib.init_game.restype = None
         self.c_lib.guess_char.argtypes = [ctypes.c_char]
         self.c_lib.guess_char.restype = ctypes.c_int
@@ -37,7 +34,6 @@ class HangmanGame:
         self.c_lib.is_finished.restype = ctypes.c_int
         
     def _draw_screen(self):
-        # 화면 그리기 로직 (기존과 동일)
         self.screen.fill((25, 25, 25))
         current = self.c_lib.get_current().decode()
         used = self.c_lib.get_used().decode()
@@ -67,13 +63,13 @@ class HangmanGame:
             if self.c_lib.is_finished():
                 current_word = self.c_lib.get_current().decode()
                 
-                # *** 승패 결과 판단 및 저장 ***
+                # 승패 결과 판단 및 저장
                 if '_' not in current_word:
                     self.message = "You Won! "
-                    self.game_result = True  # 승리 시 True 반환 준비
+                    self.game_result = True  # 승리 시 True 반환
                 else:
                     self.message = "Game Over! You Lost! "
-                    self.game_result = False # 패배 시 False 반환 준비
+                    self.game_result = False # 패배 시 False 반환
                 
                 self._draw_screen() 
                 pygame.time.wait(3000)
@@ -89,11 +85,11 @@ class HangmanGame:
                     if 'a' <= key <= 'z':
                         result = self.c_lib.guess_char(key.encode())
                         if result == 1:
-                            self.message = f"✓ Correct! ({key})"
+                            self.message = f"Correct! ({key})"
                         elif result == 0:
-                            self.message = f"✗ Wrong! ({key})"
+                            self.message = f"Wrong! ({key})"
                         elif result == 2:
-                            self.message = f"⚠ Already used: {key}"
+                            self.message = f"Already used: {key}"
 
             self.clock.tick(30)
         

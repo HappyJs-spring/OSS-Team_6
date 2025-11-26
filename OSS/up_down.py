@@ -1,9 +1,6 @@
-# updown_module.py (업다운 게임 클래스)
-
 import ctypes
 import pygame
-import sys
-import time # 결과를 표시하기 위한 time.sleep 대신 pygame.time.wait 사용
+
 
 DLL_PATH = "./up_down.dll" # 컴파일된 DLL 경로
 
@@ -13,20 +10,19 @@ class UpDownGame:
         self.clock = clock
         self.input_buffer = ""
         self.message = ""
-        self.game_result = None # True: 승리, False: 패배, None: 진행 중
+        self.game_result = None
 
-        # 폰트 초기화 (Pygame이 이미 init되었다고 가정)
+        # 폰트
         self.font_big = pygame.font.SysFont("malgun gothic", 60)
         self.font = pygame.font.SysFont("malgun gothic", 30)
 
-        # 1. DLL 로드 및 함수 정의
+        # 1. DLL 로드
         try:
             self.c_lib = ctypes.CDLL(DLL_PATH)
             self._setup_c_functions()
             self.c_lib.init_game()
         except OSError:
             print(f"오류: {DLL_PATH} 파일을 로드할 수 없습니다. DLL 경로 확인 필요.")
-            # 게임 실행이 불가능함을 알리고 종료
             self.game_result = False
             
     def _setup_c_functions(self):
@@ -61,7 +57,7 @@ class UpDownGame:
     def run(self):
         """업다운 게임의 메인 루프"""
         
-        # DLL 로드에 실패했다면 바로 False 반환
+        # DLL 로드에 실패
         if self.game_result is not None: 
             return self.game_result
 
@@ -69,7 +65,7 @@ class UpDownGame:
         while running:
             self._draw_screen()
             
-            # 게임 종료 조건 확인 (승리 또는 시도 횟수 소진)
+            # 게임 종료 조건 확인
             if self.c_lib.is_finished():
                 answer = self.c_lib.get_answer()
                 
@@ -94,7 +90,7 @@ class UpDownGame:
                 if event.type == pygame.KEYDOWN:
                     
                     if event.unicode.isdigit():
-                        # 최대 입력 길이 제한 (예: 5자리)
+                        # 최대 입력 길이 제한 (현재: 5자리)
                         if len(self.input_buffer) < 5:
                             self.input_buffer += event.unicode
                             self.message = ""
@@ -114,7 +110,7 @@ class UpDownGame:
 
                             if result == 0: # 정답 (Correct)
                                 self.message = f"Correct! {guess}"
-                                # running = False # is_finished에서 처리되도록 변경
+                                
                             elif result == 1: # Up
                                 self.message = "Up! (더 크게!)"
                             elif result == 2: # Down

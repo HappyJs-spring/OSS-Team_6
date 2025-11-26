@@ -9,7 +9,7 @@ class DialogueManager:
         self.text_color = text_color
         self.box_color = box_color
         
-        # 대화창 위치 및 크기 (화면 하단에 고정)
+        # 대화창 위치 및 크기
         self.box_rect = pygame.Rect(50, screen.get_height() - 180, screen.get_width() - 60, 180)
         self.text_start_pos = (self.box_rect.left + 20, self.box_rect.top + 20)
         
@@ -29,12 +29,12 @@ class DialogueManager:
         self.finished = False
         self.is_displaying = True
         
-        # 텍스트를 대화창 폭에 맞춰 여러 줄로 나눕니다. (간단 버전)
+        # 텍스트를 대화창 폭에 맞춰 여러 줄로
         self.lines = self._wrap_text(text)
         
     def _wrap_text(self, text):
         """텍스트를 대화창 폭에 맞게 줄 바꿈 처리합니다."""
-        max_width = self.box_rect.width - 40 # 패딩 고려
+        max_width = self.box_rect.width - 40 # 패딩
         words = text.split(' ')
         lines = []
         current_line = ""
@@ -51,24 +51,24 @@ class DialogueManager:
         return lines
 
     def update(self):
-        """텍스트 애니메이션을 업데이트합니다."""
+        """텍스트 애니메이션 업데이트"""
         if not self.is_displaying or self.finished:
             return
 
         # 글자 수 증가
-        self.current_char_count += self.char_per_sec * (1 / 30.0) # 30FPS 기준
+        self.current_char_count += self.char_per_sec * (1 / 30.0) # 30FPS
         
         if self.current_char_count >= len(self.full_text):
             self.current_char_count = len(self.full_text)
             self.finished = True
     
     def draw(self):
-        """대화창과 텍스트를 화면에 그립니다."""
+        """대화창과 텍스트 화면 그리기 """
         if not self.is_displaying:
             return
             
-        # 1. 배경 박스 그리기 (쯔꾸르 스타일)
-        pygame.draw.rect(self.screen, self.box_color, self.box_rect, border_radius=10)
+        # 1. 배경 박스 그리기
+        pygame.draw.rect(self.screen, self.box_color, self.box_rect, border_radius=10) #배경색
         pygame.draw.rect(self.screen, (255, 255, 255), self.box_rect, 3, border_radius=10) # 테두리
 
         # 2. 텍스트 출력
@@ -78,7 +78,7 @@ class DialogueManager:
         for line in self.lines:
             chars_to_draw = int(self.current_char_count) - total_chars_drawn
             if chars_to_draw <= 0:
-                break # 더 이상 출력할 글자가 없음
+                break
             
             # 현재 줄에서 출력할 부분만 잘라냄
             segment_to_render = line[:chars_to_draw]
@@ -92,7 +92,7 @@ class DialogueManager:
                 break # 현재 줄에서 타이핑이 끝나야 함
                 
     def wait_for_input(self):
-        """텍스트 출력이 완료될 때까지, 또는 사용자가 키를 누를 때까지 대기하고 즉시 종료합니다."""
+        """텍스트 출력이 완료될 때까지, 또는 사용자가 키를 누를 때까지 대기하고 즉시 종료"""
         
         if not hasattr(self, 'clock'):
             self.clock = pygame.time.Clock()
@@ -116,7 +116,7 @@ class DialogueManager:
                         # 전체 텍스트 표시가 완료되었으면, 대화창 닫기
                         self.is_displaying = False
                         
-                        # ⭐️⭐️⭐️ 핵심 수정: 이벤트 큐를 비워 다음 단계 지연을 막습니다. ⭐️⭐️⭐️
+                        #핵심 수정: 이벤트 큐를 비워 다음 단계 지연 해결
                         pygame.event.clear() 
                         
                         return # 메인 스토리로 즉시 복귀

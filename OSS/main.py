@@ -1,7 +1,10 @@
 import pygame
 import sys
+
 from hangman import HangmanGame 
 from up_down import UpDownGame
+from find_card import FindCard
+
 from dialogue_manager import DialogueManager
 
 
@@ -47,6 +50,18 @@ def game_story_sequence():
     display_story_text("교수님께 들키지 않기 위해 조용히 교수실로 갔는데")
     display_story_text("교수실 문이 잠겨있어 업다운 게임으로 교수실 문을 연다.")
 
+    # -- test new game ---
+    game_result_findcard = run_game(FindCard)
+    
+    if game_result_findcard == "QUIT":
+        return
+    
+    if game_result_findcard is True: # 카드 찾기 게임 승리
+        display_story_text("성공! 다음 단계를 진행.", 3000)
+    else: # 패배
+        display_story_text("실패. 게임 종료.", 4000)
+        return # 스토리 종료
+
     # --- 1단계: (업다운) ---
     display_story_text("교수실 문을 열어라!", 3000)
     
@@ -56,9 +71,9 @@ def game_story_sequence():
         return
         
     if game_result_updown is True: # 업다운 승리
-        display_story_text("잠금해제!\n잠긴 문이 열립니다!", 4000)
+        display_story_text("잠금해제! 잠긴 문이 열립니다!", 4000)
     else: # 업다운 패배
-        display_story_text("문을 여는데 실패했습니다..\n교수님게 발각되어 학점 F를 받게되었습니다.", 4000)
+        display_story_text("문을 여는데 실패했습니다.. 교수님게 발각되어 학점 F를 받게되었습니다.", 4000)
         return
         
     # --- 2단계: (행맨) ---
@@ -76,11 +91,11 @@ def game_story_sequence():
     if game_result_hangman is True: # 행맨 승리
         display_story_text("성공! 다음 단계를 진행.", 3000)
     else: # 행맨 패배
-        display_story_text("실패.\n게임 종료.", 4000)
+        display_story_text("실패. 게임 종료.", 4000)
         return # 스토리 종료
     
     # --- 4단계: 에필로그 ---
-    display_story_text("모든 여정이 끝났습니다.\n게임을 종료합니다.", 3000)
+    display_story_text("모든 여정이 끝났습니다. 게임을 종료합니다.", 3000)
 
 
 if __name__ == "__main__":

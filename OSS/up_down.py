@@ -1,8 +1,9 @@
 import ctypes
 import pygame
+import os
 
-
-DLL_PATH = "./up_down.dll" # 컴파일된 DLL 경로
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+DLL_PATH = os.path.join(BASE_DIR, "up_down.dll")
 
 class UpDownGame:
     def __init__(self, screen, clock):

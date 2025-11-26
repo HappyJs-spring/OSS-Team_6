@@ -26,7 +26,7 @@ int main()
 		for (;;)
 		{
 			PlayerKeyAction();
-			GamePan(false);
+			GamePan(FALSE);
 
 			if (NumOpen == 0)
 			{
@@ -76,13 +76,13 @@ void InitGame()
 		}
 	}
 
-	GamePan(true);
+	GamePan(TRUE);
 	delay(2000);
 	clrscr();
-	GamePan(false);
+	GamePan(FALSE);
 }
 
-void GamePan(bool Start)
+void GamePan(BOOL Start)
 {
 	SetColor(WHITE);
 	gotoxy(50, 2);     printf(" ┌──────────────────────┐ ");
@@ -108,7 +108,7 @@ void GamePan(bool Start)
 		for (x = 0; x < 4; x++)
 		{
 			gotoxy((x * 5 + 2) + 15, (y * 3 + 2) + 3);
-			if (Start == true || Card[x][y].St == OPEN)
+			if (Start == TRUE || Card[x][y].St == OPEN)
 			{
 				SetColor(VIOLET);
 				printf("%s", NumToWord(x, y));
@@ -181,7 +181,7 @@ void Hint(int hx, int hy)
 				if (Card[y][x].Num == Card[hy][hx].Num)
 				{
 					Card[y][x].St = HINT;
-					GamePan(false);
+					GamePan(FALSE);
 					Card[y][x].St = HIDDEN;
 				}
 			}

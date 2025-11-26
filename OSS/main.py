@@ -1,11 +1,35 @@
 import pygame
 import sys
+import json # 추가
+import os # 추가
 
 from hangman import HangmanGame 
 from up_down import UpDownGame
 from find_card import FindCard
-
 from dialogue_manager import DialogueManager
+
+def draw_player_status(screen, font, player):
+    health_surf = font.render(f"HP: {player['health']}", True, (255, 50, 50))
+    clue_surf = font.render(f"Clue: {player['clue']}", True, (255, 255, 0))
+
+    x = SCREEN_WIDTH - 200
+    y = 20
+
+    pygame.draw.rect(screen, (0, 0, 0), (x - 20, y - 20, 180, 100))
+    pygame.draw.rect(screen, (255, 255, 255), (x - 20, y - 20, 180, 100), 2)
+
+    screen.blit(health_surf, (x, y))
+    screen.blit(clue_surf, (x, y + 40))
+
+
+BASE = os.path.dirname(os.path.abspath(__file__))  # main.py가 있는 폴더
+json_path = os.path.join(BASE, "test", "game.json")  # test/game.json을 지정
+
+with open(json_path, "r", encoding="utf-8") as f:
+    GAME_DATA = json.load(f)
+
+
+player = GAME_DATA["player"]  
 
 
 pygame.init()
@@ -23,6 +47,8 @@ def display_story_text(text, nexttime = 600):
     dialogue_box.wait_for_input()
     
     screen.fill((0, 0, 0)) 
+
+    draw_player_status(screen, font, player)
     pygame.display.flip()
     
     

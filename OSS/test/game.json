@@ -1,0 +1,31 @@
+{
+  "player": {
+    "health": 100,
+    "clue": 0,
+    "escaped": false,
+    "submitted": false
+  },
+
+  "ending_rules": {
+    "bad": "health == 0 OR detected_by_professor == true",
+    "happy": "escaped == true AND health > 0 AND clue < 100",
+    "hidden": "escaped == true AND health > 0 AND clue == 100"
+  },
+
+  "prologue": {
+    "description": "당신은 충북대학교 컴퓨터공학과 학생입니다. 기말대체 과제를 제출하지 못해 새벽에 E8-1 건물로 몰래 들어왔습니다."
+  },
+
+  "inciting_incident": {
+    "door_locked": true,
+    "minigame_updown": true,
+    "hiding_classroom": true
+  },
+
+  "conclusion": {
+    "ending_types": ["bad", "happy", "hidden"],
+    "bad_condition": "health == 0 OR detected_by_professor == true",
+    "happy_condition": "escaped == true AND health > 0 AND clue < 100",
+    "hidden_condition": "escaped == true AND health > 0 AND clue == 100"
+  }
+}

@@ -107,7 +107,7 @@ void PlayerSpacebar()
 			else
 			{
 				Card[nx][ny].St = TEMP;
-				GamePan(false);
+				GamePan(FALSE);
 				delay(300);
 				Card[nx][ny].St = HIDDEN;
 				Card[tx][ty].St = HIDDEN;

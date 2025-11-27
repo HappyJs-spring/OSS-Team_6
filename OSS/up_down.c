@@ -25,19 +25,25 @@ DLLEXPORT int guess_number(int num) {
         return last_result; 
     }
 
-    if (remaining_attempts <= 0) {
+    // 이미 끝난 게임이면 invalid 반환
+    if (is_finished()) {
         last_result = 3;
         return last_result;
     }
 
-    remaining_attempts--;
-
+    // 정답 처리 (기회 감소 없음)
     if (num == answer) {
         last_result = 0;
-    } else if (num < answer) {
-        last_result = 1; // Up
+        return last_result;
+    }
+
+    // 정답이 아니면 기회 소모
+    remaining_attempts--;
+
+    if (num < answer) {
+        last_result = 1;
     } else {
-        last_result = 2; // Down
+        last_result = 2;
     }
 
     return last_result;
@@ -52,8 +58,12 @@ DLLEXPORT int get_answer() {
 }
 
 DLLEXPORT int is_finished() {
-    if (remaining_attempts <= 0) return 1;
+    // 정답을 우선으로 확인하고
     if (last_result == 0) return 1;
+
+    // 기회를 소진하게 수정
+    if (remaining_attempts <= 0) return 1;
+
     return 0;
 }
 

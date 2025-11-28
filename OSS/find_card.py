@@ -1,7 +1,6 @@
 import ctypes
 import pygame
 import os
-import numpy as np
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 ASSET_DIR = os.path.join(BASE_DIR, "asset")
@@ -25,10 +24,10 @@ class FindCard:
         self.font_big = pygame.font.SysFont("malgun gothic", 60)
         self.font = pygame.font.SysFont("malgun gothic", 26)
 
-        # 이미지 로드 (안전한 여백 제거 포함)
+        # PNG(투명 배경) 이미지 로드 + 자동 여백 제거
         self.symbol_images = self._load_symbol_images()
 
-        # DLL
+        # DLL 초기화
         try:
             self.c_lib = ctypes.CDLL(DLL_PATH)
             self._setup_c_functions()
@@ -43,8 +42,17 @@ class FindCard:
 
         self._calculate_center_positions()
 
+        # 틀린 카드 자동 뒤집기용
+        self.flip_pending = False
+        self.flip_time = 0
+
+        # 🔥 게임 시작 시 전체 카드 미리보기 모드
+        self.preview_mode = True
+        self.preview_duration = 2000  # ms (2초 정도)
+        self.preview_end_time = pygame.time.get_ticks() + self.preview_duration
+
     # ---------------------------------------------------------
-    # 중앙 정렬 계산
+    # 카드 배치 좌표 계산
     # ---------------------------------------------------------
     def _calculate_center_positions(self):
         board_w = self.CARD_SIZE * 4 + self.GAP * 3
@@ -54,30 +62,10 @@ class FindCard:
         self.START_Y = (self.SCREEN_H - board_h) // 2
 
     # ---------------------------------------------------------
-    # 안전한 JPG/PNG 여백 제거 (numpy 기반)
+    # 투명 PNG 여백 제거
     # ---------------------------------------------------------
-    def _trim_image_safe(self, img, tolerance=20):
-        """배경색(좌상단 픽셀과 비슷한 색) 제거 — PNG/JPG 모두 안정적"""
-
-        arr = pygame.surfarray.pixels3d(img).copy()  # (w,h,3)
-        arr = np.transpose(arr, (1, 0, 2))  # (h,w,3)
-
-        h, w, _ = arr.shape
-        bg = arr[0, 0]  # 좌상단 색
-
-        # 배경색과 비슷한 픽셀 마스크
-        diff = np.abs(arr - bg)
-        mask = np.sum(diff, axis=2) > tolerance  # True = 캐릭터
-
-        coords = np.argwhere(mask)
-
-        if coords.size == 0:
-            return img  # 트리밍 불가 → 원래 이미지 사용
-
-        y1, x1 = coords.min(axis=0)
-        y2, x2 = coords.max(axis=0)
-
-        rect = pygame.Rect(x1, y1, x2 - x1 + 1, y2 - y1 + 1)
+    def _trim_image_alpha(self, img):
+        rect = img.get_bounding_rect()  # 투명 픽셀 기준 자동 트림
         trimmed = img.subsurface(rect).copy()
         return trimmed
 
@@ -96,14 +84,13 @@ class FindCard:
             try:
                 img = pygame.image.load(path).convert_alpha()
 
-                # 🔥 안정적인 여백 제거 적용
-                img = self._trim_image_safe(img, tolerance=25)
+                # 자동 여백 제거
+                img = self._trim_image_alpha(img)
 
                 images.append(img)
             except Exception as e:
                 print("이미지 로드 실패:", name, e)
                 images.append(None)
-
         return images
 
     # ---------------------------------------------------------
@@ -128,7 +115,7 @@ class FindCard:
         )
 
     # ---------------------------------------------------------
-    # 카드 중심에 꽉 차게 이미지 배치
+    # 카드 중앙에 이미지 크게 배치
     # ---------------------------------------------------------
     def _draw_image_center(self, image, rect):
         if image:
@@ -193,7 +180,14 @@ class FindCard:
         for y in range(4):
             for x in range(4):
                 rect = self._card_rect(x, y)
-                self._draw_soft_card(rect, self.states_arr[idx], self.nums_arr[idx])
+
+                # 🔥 미리보기 모드일 때는 상태 상관 없이 전부 OPEN처럼 그리기
+                if self.preview_mode:
+                    state = 1  # OPEN
+                else:
+                    state = self.states_arr[idx]
+
+                self._draw_soft_card(rect, state, self.nums_arr[idx])
                 idx += 1
 
         msg = self.font.render(self.message, True, (60,60,70))
@@ -204,28 +198,50 @@ class FindCard:
     # ---------------------------------------------------------
     def run(self):
         while True:
+
+            # 게임이 끝났는지 체크
             if self.c_lib.is_finished():
                 self.message = "성공!"
                 self._draw_board()
                 pygame.time.wait(1500)
                 return True
 
+            now = pygame.time.get_ticks()
+
+            # 🔥 시작 미리보기 시간이 지났으면 플레이 모드로 전환
+            if self.preview_mode and now >= self.preview_end_time:
+                self.preview_mode = False
+
+            # 이벤트 처리
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     return "QUIT"
 
                 if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+
+                    # 미리보기 중이거나, 틀린 카드 뒤집기 기다리는 중이면 클릭 무시
+                    if self.preview_mode or self.flip_pending:
+                        continue
+
                     mx, my = event.pos
+
                     for y in range(4):
                         for x in range(4):
                             if self._card_rect(x, y).collidepoint(mx, my):
+
                                 r = self.c_lib.select_card(x, y)
 
+                                # 틀린 경우 → 자동 뒤집기 예약
                                 if r == 2:
-                                    self._draw_board()
-                                    pygame.time.wait(700)
-                                    self.c_lib.reset_temp()
+                                    self.flip_pending = True
+                                    self.flip_time = now + 700
                                 break
 
+            # 🔥 틀린 카드 자동 뒤집기
+            if self.flip_pending and pygame.time.get_ticks() >= self.flip_time:
+                self.c_lib.reset_temp()
+                self.flip_pending = False
+
+            # 화면 갱신
             self._draw_board()
-            self.clock.tick(30)
+            self.clock.tick(60)

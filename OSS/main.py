@@ -33,16 +33,16 @@ player = GAME_DATA["player"]
 
 
 pygame.init()
-# SCREEN_WIDTH, SCREEN_HEIGHT = 1500, 700
-# screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
+SCREEN_WIDTH, SCREEN_HEIGHT = 1500, 700
+screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 
-# 모니터 해상도 자동 인식
-info = pygame.display.Info()
-SCREEN_WIDTH = info.current_w
-SCREEN_HEIGHT = info.current_h
+# # 모니터 해상도 자동 인식
+# info = pygame.display.Info()
+# SCREEN_WIDTH = info.current_w
+# SCREEN_HEIGHT = info.current_h
 
-# 전체 화면 모드로 실행
-screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT), pygame.FULLSCREEN)
+# # 전체 화면 모드로 실행
+# screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT), pygame.FULLSCREEN)
 
 pygame.display.set_caption("Story Game Sequence")
 clock = pygame.time.Clock()

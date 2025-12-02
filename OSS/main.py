@@ -6,6 +6,7 @@ import os
 from hangman import HangmanGame 
 from up_down import UpDownGame
 from find_card import FindCard
+from timer_10 import Timer
 from dialogue_manager import DialogueManager
 
 def draw_player_status(screen, font, player):
@@ -162,8 +163,20 @@ def game_story_sequence():
         return # 스토리 종료
     
     # 6. B:last 홍보 부스 (10초에 맞춰 버튼 입력하는 게임) -----------------------------------
-    
+    game_result_timer = run_game(Timer)
 
+    if game_result_timer == "QUIT":
+        return
+
+    if game_result_timer is True:
+        display_story_text("10초 맞추기 성공! 단서 +25", 3000)
+        player["clue"] += 25
+    else:
+        display_story_text("10초 맞추기 실패! 체력 -10", 3000)
+        player["health"] -= 10
+
+    
+    display_story_text("모든 여정이 끝났습니다. 게임을 종료합니다.", 3000)
     # 7.중도 앞 길가에서 쓰레기 발견 (중도 앞 길가에서 쓰레기를 발견함)-----------------------------------
     
 

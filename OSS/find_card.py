@@ -46,7 +46,7 @@ class FindCard:
         self.flip_pending = False
         self.flip_time = 0
 
-        # 🔥 게임 시작 시 전체 카드 미리보기 모드
+        # 게임 시작 시 전체 카드 미리보기 모드
         self.preview_mode = True
         self.preview_duration = 2000  # ms (2초 정도)
         self.preview_end_time = pygame.time.get_ticks() + self.preview_duration

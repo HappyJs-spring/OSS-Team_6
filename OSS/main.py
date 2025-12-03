@@ -7,6 +7,7 @@ from hangman import HangmanGame
 from up_down import UpDownGame
 from find_card import FindCard
 from timer_10 import Timer
+from BR31 import BR31
 
 from dialogue_manager import DialogueManager
 
@@ -81,6 +82,16 @@ def run_game(GameClass):
 def game_story_sequence():
     # """게임의 순차적인 스토리를 정의하는 메인 함수"""
 
+    game_result_BR31 = run_game(BR31)
+    if game_result_BR31 == "QUIT":
+        return
+    
+    if game_result_BR31 is True: # 행맨 승리
+        display_story_text("성공! 다음 단계를 진행.", 3000)
+    else: # 행맨 패배
+        display_story_text("실패. 게임 종료.", 4000)
+        return # 스토리 종료
+    
     # # 1  ------------------ <프롤로그> ---------------------------  
     # display_story_text("당신은 충북대학교 컴퓨터공학과 학생입니다. 당일 자정까지 전공과목의 기말대체 과제 제출이 있었으나 깜빡하고 제출하지 못했습니다. 해당 과제를 제출하지 못하면 당신은 F를 받고야 맙니다. 당신은 교수님 몰래 과제를 제출하기 위해 교수님들이 모두 퇴근하신 새벽에 전공 교수님 사무실이 위치한 공과대학 건물에 왔습니다.")
 

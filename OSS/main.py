@@ -34,16 +34,16 @@ player = GAME_DATA["player"]
 
 
 pygame.init()
-SCREEN_WIDTH, SCREEN_HEIGHT = 1500, 700
-screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
+# SCREEN_WIDTH, SCREEN_HEIGHT = 1500, 700
+# screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 
-# # 모니터 해상도 자동 인식
-# info = pygame.display.Info()
-# SCREEN_WIDTH = info.current_w
-# SCREEN_HEIGHT = info.current_h
+# 모니터 해상도 자동 인식 
+info = pygame.display.Info()
+SCREEN_WIDTH = info.current_w
+SCREEN_HEIGHT = info.current_h
 
-# # 전체 화면 모드로 실행
-# screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT), pygame.FULLSCREEN)
+# 전체 화면 모드로 실행
+screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT), pygame.FULLSCREEN)
 
 pygame.display.set_caption("Story Game Sequence")
 clock = pygame.time.Clock()
@@ -55,20 +55,25 @@ def display_story_text(text, nexttime = 600):
     
     dialogue_box.set_text(text)
     dialogue_box.wait_for_input()
-    
-    screen.fill((0, 0, 0)) 
 
-    draw_player_status(screen, font, player) 
-    pygame.display.flip()
-    
-    
     start_time = pygame.time.get_ticks()
     while pygame.time.get_ticks() - start_time < nexttime:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
                 sys.exit()
-        clock.tick(30)
+        
+        # 화면 갱신
+        screen.fill((0, 0, 0))
+
+        # 스토리 텍스트 출력
+        dialogue_box.draw()
+
+        # HUD 출력 (대화 중에만 표시되게)
+        draw_player_status(screen, font, player)
+
+        pygame.display.flip()
+        clock.tick(60)
 
 
 def run_game(GameClass):
@@ -78,23 +83,23 @@ def run_game(GameClass):
 
 
 def game_story_sequence():
-    # """게임의 순차적인 스토리를 정의하는 메인 함수"""
+    """게임의 순차적인 스토리를 정의하는 메인 함수"""
     
-    # # 1  ------------------ <프롤로그> ---------------------------  
-    # display_story_text("당신은 충북대학교 컴퓨터공학과 학생입니다. 당일 자정까지 전공과목의 기말대체 과제 제출이 있었으나 깜빡하고 제출하지 못했습니다. 해당 과제를 제출하지 못하면 당신은 F를 받고야 맙니다. 당신은 교수님 몰래 과제를 제출하기 위해 교수님들이 모두 퇴근하신 새벽에 전공 교수님 사무실이 위치한 공과대학 건물에 왔습니다.")
+    # 1  ------------------ <프롤로그> ---------------------------  
+    display_story_text("당신은 충북대학교 컴퓨터공학과 학생입니다. 당일 자정까지 전공과목의 기말대체 과제 제출이 있었으나 깜빡하고 제출하지 못했습니다. 해당 과제를 제출하지 못하면 당신은 F를 받고야 맙니다. 당신은 교수님 몰래 과제를 제출하기 위해 교수님들이 모두 퇴근하신 새벽에 전공 교수님 사무실이 위치한 공과대학 건물에 왔습니다.")
 
-    # display_story_text("나 : (일부러 교수님이 모두 퇴근하신 시간대에 왔으니까. 과제 제출만하면 될꺼야!)")
-    # display_story_text("(공대건물 4층으로 조용히 올라간다.)")
-    # display_story_text("(당신은 연구실 불이 켜져 있는 것을 보고 깜짝 놀란다.)")
-    # display_story_text("나 : 분명 이 시간엔 아무도 없을 거라 생각했는데, 누구지?")
-    # display_story_text("(당신은 연구실에서 교수님을 발견한다.)")
-    # display_story_text("나 : 이런 교수님이 아직도 퇴근하지 않으셨을 줄이야… 교수님 몰래 과제를 제출하고 빨리 나가야겠어..!")
+    display_story_text("나 : (일부러 교수님이 모두 퇴근하신 시간대에 왔으니까. 과제 제출만하면 될꺼야!)")
+    display_story_text("(공대건물 4층으로 조용히 올라간다.)")
+    display_story_text("(당신은 연구실 불이 켜져 있는 것을 보고 깜짝 놀란다.)")
+    display_story_text("나 : 분명 이 시간엔 아무도 없을 거라 생각했는데, 누구지?")
+    display_story_text("(당신은 연구실에서 교수님을 발견한다.)")
+    display_story_text("나 : 이런 교수님이 아직도 퇴근하지 않으셨을 줄이야… 교수님 몰래 과제를 제출하고 빨리 나가야겠어..!")
 
-    # # 2.—---------------------------------------------
-    # # 업다운 게임
-    # display_story_text("(교수연구실 앞으로 이동한다.)")
-    # display_story_text("나 : 이런.. 교수연구실 문이 잠겨있잖아.. 5번 틀리면 경보가 울릴테니 그 전에 숫자를 맞춰야겠어..")
-    # display_story_text("교수실 문을 열어라!", 3000)
+    # 2.—---------------------------------------------
+    # 업다운 게임
+    display_story_text("(교수연구실 앞으로 이동한다.)")
+    display_story_text("나 : 이런.. 교수연구실 문이 잠겨있잖아.. 5번 틀리면 경보가 울릴테니 그 전에 숫자를 맞춰야겠어..")
+    display_story_text("교수실 문을 열어라!", 3000)
     
     # game_result_updown = run_game(UpDownGame)
     

@@ -9,18 +9,23 @@ from find_card import FindCard
 from timer_10 import Timer
 from dialogue_manager import DialogueManager
 
-def draw_player_status(screen, font, player):
-    health_surf = font.render(f"HP: {player['health']}", True, (255, 50, 50))
-    clue_surf = font.render(f"Clue: {player['clue']}", True, (255, 255, 0))
+def draw_player_status(screen, font, player, status_img):
+    img_w, img_h = status_img.get_size()
 
-    x = SCREEN_WIDTH - 200
+    # 화면 오른쪽 상단 배치
+    x = SCREEN_WIDTH - img_w - 20
     y = 20
 
-    pygame.draw.rect(screen, (0, 0, 0), (x - 20, y - 20, 180, 100))
-    pygame.draw.rect(screen, (255, 255, 255), (x - 20, y - 20, 180, 100), 2)
+    # UI 이미지 표시
+    screen.blit(status_img, (x, y))
 
-    screen.blit(health_surf, (x, y))
-    screen.blit(clue_surf, (x, y + 40))
+    # HP / Clue 텍스트
+    hp_surf = font.render(f"HP: {player['health']}", True, (255, 0, 0))
+    clue_surf = font.render(f"Clue: {player['clue']}", True, (255, 255, 0))
+
+    screen.blit(hp_surf, (x + 120, y + 40))
+    screen.blit(clue_surf, (x + 120, y + 90))
+
 
 
 BASE = os.path.dirname(os.path.abspath(__file__))  # main.py가 있는 폴더
@@ -34,20 +39,32 @@ player = GAME_DATA["player"]
 
 
 pygame.init()
-# SCREEN_WIDTH, SCREEN_HEIGHT = 1500, 700
-# screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 
-# 모니터 해상도 자동 인식 
-info = pygame.display.Info()
-SCREEN_WIDTH = info.current_w
-SCREEN_HEIGHT = info.current_h
-
-# 전체 화면 모드로 실행
-screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT), pygame.FULLSCREEN)
+SCREEN_WIDTH, SCREEN_HEIGHT = 1500, 700
+screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 
 pygame.display.set_caption("Story Game Sequence")
 clock = pygame.time.Clock()
 font = pygame.font.SysFont("malgun gothic", 40)
+
+# 상태창 이미지 로드
+STATUS_DIR = os.path.join(BASE, "UI", "Status")
+STATUS_IMG_PATH = os.path.join(STATUS_DIR, "status_0.PNG")
+status_img = pygame.image.load(STATUS_IMG_PATH).convert_alpha()
+
+# 원하는 크기로 리사이즈 (예: 300x180)
+STATUS_WIDTH = 300
+STATUS_HEIGHT = 180
+status_img = pygame.transform.smoothscale(status_img, (STATUS_WIDTH, STATUS_HEIGHT))
+
+# # 모니터 해상도 자동 인식 
+# info = pygame.display.Info()
+# SCREEN_WIDTH = info.current_w
+# SCREEN_HEIGHT = info.current_h
+
+# # 전체 화면 모드로 실행
+# screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT), pygame.FULLSCREEN)
+
 dialogue_box = DialogueManager(screen, font)
 
 def display_story_text(text, nexttime = 600):
@@ -55,6 +72,7 @@ def display_story_text(text, nexttime = 600):
     
     dialogue_box.set_text(text)
     dialogue_box.wait_for_input()
+
 
     start_time = pygame.time.get_ticks()
     while pygame.time.get_ticks() - start_time < nexttime:
@@ -70,7 +88,7 @@ def display_story_text(text, nexttime = 600):
         dialogue_box.draw()
 
         # HUD 출력 (대화 중에만 표시되게)
-        draw_player_status(screen, font, player)
+        draw_player_status(screen, font, player, status_img)
 
         pygame.display.flip()
         clock.tick(60)

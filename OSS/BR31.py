@@ -1,7 +1,6 @@
 import ctypes
 import pygame
 import os
-import time
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 DLL_PATH = os.path.join(BASE_DIR, "BR31.dll")
@@ -20,11 +19,12 @@ class BR31:
             self.c = ctypes.CDLL(DLL_PATH)
             self._setup_functions()
             self.c.init_game()
-        except OSError:
-            print("DLL 로드 실패")
+        except Exception as e:
+            print("DLL 로드 실패:", e)
             self.game_over = True
 
     def _setup_functions(self):
+        # DLL 안의 함수 시그니처를 맞춤
         self.c.init_game.restype = None
         self.c.player_turn.argtypes = [ctypes.c_int]
         self.c.player_turn.restype = ctypes.c_int
@@ -34,83 +34,65 @@ class BR31:
         self.c.get_result.restype = ctypes.c_int
 
     # ---------------------------------------------------------
-    def draw_screen(self, highlight=False):
-        """화면 그림. highlight=True면 숫자를 밝게 강조함."""
+    def draw_screen(self, show_number=None, highlight=False):
+        """화면 그리기. show_number가 주어지면 그 숫자를 표시(애니메이션용 임시 값)."""
         self.screen.fill((25, 25, 40))
 
-        current = self.c.get_current()
-        t_title = self.font_mid.render("Baskin Robbins 31", True, (240, 240, 240))
-        self.screen.blit(t_title, (50, 40))
+        title = self.font_mid.render("Baskin Robbins 31", True, (240, 240, 240))
+        self.screen.blit(title, (50, 40))
+
+        # 보여줄 숫자 결정 (애니메이션용 임시값 우선)
+        if show_number is None:
+            current = self.c.get_current()
+        else:
+            current = show_number
 
         color = (255, 240, 120) if highlight else (250, 250, 250)
-        t_num = self.font_big.render(str(current), True, color)
-        self.screen.blit(t_num, (60, 160))
+        num_surf = self.font_big.render(str(current), True, color)
+        self.screen.blit(num_surf, (60, 160))
 
-        t_msg = self.font_mid.render(self.message, True, (200, 200, 200))
-        self.screen.blit(t_msg, (50, 280))
+        msg_surf = self.font_mid.render(self.message, True, (200, 200, 200))
+        self.screen.blit(msg_surf, (50, 280))
 
-        t_info = self.font.render("Press 1, 2, 3 to call numbers", True, (180, 180, 180))
-        self.screen.blit(t_info, (50, 350))
+        info = self.font.render("Press 1, 2, or 3 to call numbers", True, (180, 180, 180))
+        self.screen.blit(info, (50, 350))
 
-        pygame.display.flip()
+        pygame.display.update()
 
     # ---------------------------------------------------------
-    def animate_increase(self, target):
+    def _player_step_animation(self, steps, step_delay=200):
         """
-        현재 숫자에서 target까지 하나씩 증가하는 애니메이션
-        예) 12 → 13 → 14 → 15
+        플레이어가 steps 만큼 말할 때,
+        실제로 player_turn(1)을 호출해서 DLL current를 1씩 올리고,
+        각 스텝마다 화면을 갱신해 애니메이션으로 보여준다.
         """
-        while True:
-            current = self.c.get_current()
-            if current >= target:
-                break
-
-            # 1 증가시키기 위한 내부용 (C코드 직접 증가는 안됨 → 애니메이션용 표시만)
-            self.c.current = current + 1  # DLL 값 증가 X → get_current() 값 유지됨
-
-            # 화면 표시(강조)
+        for i in range(steps):
+            # 실제 DLL 상태를 1 증가시킨다
+            r = self.c.player_turn(1)   # 1씩 올리기
+            # r == -1 이면 즉시 패배(31을 말함) — 루프 종료
+            # 화면에는 증가된 current가 반영되어 보인다.
             self.draw_screen(highlight=True)
-            pygame.time.wait(200)
-
-            # 실제 현재값 증가 반영 (강제 반영)
-            self.c.get_current.restype = ctypes.c_int
-            # DLL 내부 current를 직접 바꿀 수 없어 아래 방식 사용
-            # → 강제 값 업데이트를 위해 player_turn(0) 이용 (0은 의미없는 호출)
-            # 혹은 별도 업데이트 함수가 필요하지만 여기서는 단순화
-            self._force_update_current(current + 1)
-
-            # 일반 화면
+            pygame.time.delay(step_delay)  # ms
             self.draw_screen()
-
-    def _force_update_current(self, new_value):
-        """DLL 구조상 current 값을 직접 바꿀 수 없어서 강제 업데이트용 헬퍼"""
-        # DLL C코드에서 현재값을 수정하는 함수가 필요하지만,
-        # 여기서는 ctypes의 '메모리 직접 접근'으로 해결
-        addr = ctypes.addressof(self.c)  # DLL 베이스 주소
-        # 실제 current가 배치되는 메모리 오프셋을 수동으로 찾는 건 어려우므로
-        # 간단하게 '가짜 증가 애니메이션 전용' 방식으로 대체
-        pass
-        # 주의: DLL 내부 current 변경은 player_turn 또는 computer_turn으로만 가능
-        # 따라서 애니메이션 후에 player_turn/comp 호출 전까지는 get_current 기준으로 다시 그린다.
-        # 핵심: 애니메이션은 시각 효과이며 DLL 데이터는 변하지 않음.
+            if r == -1:
+                return -1
+        return 1
 
     # ---------------------------------------------------------
-    def animate_player(self, count_before_call, num_called):
-        """player_turn 하기 전에 숫자가 num_called 만큼 차오르는 효과"""
-        for _ in range(num_called):
-            count_before_call += 1
-            self.draw_screen(highlight=True)
-            pygame.time.wait(200)
+    def _computer_animation_after_call(self, prev_current, step_delay=200):
+        """
+        컴퓨터가 이미 self.c.computer_turn()으로 내부적으로 current를
+        증가시킨 뒤에 호출한다. 컴퓨터가 부른 개수 = new_current - prev_current.
+        이 차이를 시각적으로 하나씩 증가하는 애니메이션으로 보여줌.
+        """
+        new_current = self.c.get_current()
+        steps = max(0, new_current - prev_current)
+        for i in range(1, steps + 1):
+            show_val = prev_current + i
+            self.draw_screen(show_number=show_val, highlight=True)
+            pygame.time.delay(step_delay)
             self.draw_screen()
-
-    # ---------------------------------------------------------
-    def animate_computer(self, num_called):
-        """컴퓨터의 호출 숫자를 1개씩 증가 표시"""
-        for _ in range(num_called):
-            current = self.c.get_current() + 1
-            self.draw_screen(highlight=True)
-            pygame.time.wait(200)
-            self.draw_screen()
+        return steps
 
     # ---------------------------------------------------------
     def run(self):
@@ -120,57 +102,66 @@ class BR31:
         running = True
 
         while running:
+            # 기본 화면
             self.draw_screen()
 
+            # 게임 종료 체크
             if self.c.is_finished():
-                result = self.c.get_result()
-                if result == 1:
+                res = self.c.get_result()
+                if res == 1:
                     self.message = "You Win!"
+                    self.draw_screen()
+                    pygame.time.delay(1800)
+                    return True
                 else:
                     self.message = "You Lose!"
-                self.draw_screen()
-                pygame.time.wait(2000)
-                return (result == 1)
+                    self.draw_screen()
+                    pygame.time.delay(1800)
+                    return False
 
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     return "QUIT"
 
                 if event.type == pygame.KEYDOWN:
-                    if event.key == pygame.K_1:
-                        num = 1
-                    elif event.key == pygame.K_2:
-                        num = 2
-                    elif event.key == pygame.K_3:
-                        num = 3
-                    else:
+                    key = event.unicode
+                    if key not in ('1', '2', '3'):
                         continue
+                    num = int(key)
 
-                    # 애니메이션: 숫자 하나씩 증가 표시
+                    # --- 플레이어 턴: 한 번에 num 호출하지 말고 1씩 나눠 호출해서 DLL 상태가 단계적으로 바뀌게 함 ---
                     self.message = f"You call {num}"
-                    before = self.c.get_current()
-                    self.animate_player(before, num)
+                    self.draw_screen()
+                    pygame.time.delay(120)
 
-                    # 실제 C 함수 실행
-                    r = self.c.player_turn(num)
+                    r = self._player_step_animation(num, step_delay=220)
                     if r == -1:
+                        # 플레이어가 31을 말해 패배 처리됨 (DLL에서 이미 상태 반영)
                         self.message = "You Lose!"
                         self.draw_screen()
-                        pygame.time.wait(1800)
+                        pygame.time.delay(1400)
                         return False
 
-                    pygame.time.wait(300)
+                    # 플레이어 후 짧은 휴지(턴 주기)
+                    pygame.time.delay(700)
 
-                    # 컴퓨터 턴
-                    c = self.c.computer_turn()
-                    if c == -1:
+                    # --- 컴퓨터 턴: 한 번에 호출 (컴퓨터 내부 전략에 따라 여러 개 증가)
+                    prev = self.c.get_current()
+                    com_ret = self.c.computer_turn()  # 이 호출이 current를 내부에서 증가시킴
+                    # com_ret may be -1 if computer reached 31 (then player wins)
+                    if com_ret == -1:
+                        # 컴퓨터가 31을 불러서 플레이어 승리
+                        # 하지만 컴퓨터 내부에서 이미 current가 변경되었으니 시각적으로 단계별로 표시
+                        self._computer_animation_after_call(prev, step_delay=220)
                         self.message = "You Win!"
                         self.draw_screen()
-                        pygame.time.wait(1800)
+                        pygame.time.delay(1400)
                         return True
 
-                    self.message = f"Computer calls {c}"
-                    self.animate_computer(c)
-                    pygame.time.wait(500)
+                    # 정상적으로 컴퓨터가 몇 개 불렀는지 시각적으로 표시
+                    self._computer_animation_after_call(prev, step_delay=220)
+                    self.message = f"Computer called {self.c.get_current() - prev}"
+                    self.draw_screen()
+                    pygame.time.delay(500)
 
             self.clock.tick(60)

@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
-#include "31_game.h"
+#include "BR31.h"
 
 #define MAX_TARGET 31
 #define MIN_CALL 1

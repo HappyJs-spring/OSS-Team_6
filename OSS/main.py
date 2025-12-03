@@ -80,16 +80,20 @@ def run_game(GameClass):
 def game_story_sequence():
     # """게임의 순차적인 스토리를 정의하는 메인 함수"""
     
-    # # 1 —--------------------------------------------- <프롤로그>
-    # display_story_text("e8-1 4층에 조용히 올라간다.");
-    # display_story_text("올라가보니 연구실에 교수님이 계시는걸 확인한다.")
-    # display_story_text("교수님께 들키지 않기 위해 조용히 교수실로 갔는데")
-    # display_story_text("교수실 문이 잠겨있어 업다운 게임으로 교수실 문을 연다.")
+    # # 1  ------------------ <프롤로그> ---------------------------  
+    # display_story_text("당신은 충북대학교 컴퓨터공학과 학생입니다. 당일 자정까지 전공과목의 기말대체 과제 제출이 있었으나 깜빡하고 제출하지 못했습니다. 해당 과제를 제출하지 못하면 당신은 F를 받고야 맙니다. 당신은 교수님 몰래 과제를 제출하기 위해 교수님들이 모두 퇴근하신 새벽에 전공 교수님 사무실이 위치한 공과대학 건물에 왔습니다.")
+
+    # display_story_text("나 : (일부러 교수님이 모두 퇴근하신 시간대에 왔으니까. 과제 제출만하면 될꺼야!)")
+    # display_story_text("(공대건물 4층으로 조용히 올라간다.)")
+    # display_story_text("(당신은 연구실 불이 켜져 있는 것을 보고 깜짝 놀란다.)")
+    # display_story_text("나 : 분명 이 시간엔 아무도 없을 거라 생각했는데, 누구지?")
+    # display_story_text("(당신은 연구실에서 교수님을 발견한다.)")
+    # display_story_text("나 : 이런 교수님이 아직도 퇴근하지 않으셨을 줄이야… 교수님 몰래 과제를 제출하고 빨리 나가야겠어..!")
 
     # # 2.—---------------------------------------------
-    
-    # # 3.—---------------------------------------------
-    # # (업다운 게임)
+    # # 업다운 게임
+    # display_story_text("(교수연구실 앞으로 이동한다.)")
+    # display_story_text("나 : 이런.. 교수연구실 문이 잠겨있잖아.. 5번 틀리면 경보가 울릴테니 그 전에 숫자를 맞춰야겠어..")
     # display_story_text("교수실 문을 열어라!", 3000)
     
     # game_result_updown = run_game(UpDownGame)
@@ -102,17 +106,18 @@ def game_story_sequence():
     # else: # 업다운 패배
     #     display_story_text("문을 여는데 실패했습니다.. 교수님게 발각되어 학점 F를 받게되었습니다.", 4000)
     #     return
-    
-    # # 4.—---------------------------------------------
-    # # (행맨게임)
-    # display_story_text("e8-1 4층에 조용히 올라간다.", 2000)
-    # display_story_text("올라가보니 연구실에 교수님이 계시는걸 확인한다..", 2000)
-    # display_story_text("교수님께 들키지 않기 위해 조용히 교수실로 갔는데", 2000)
-    # display_story_text("교수실 문이 잠겨있어 업다운 게임으로 교수실 문을 연다. ", 2000)
-    # display_story_text("첫 번째 게임: 행맨게임.", 3000)
-    
+
+    # # 3.—---------------------------------------------
+    # # 행맨게임
+    # display_story_text("(교수실 문을 여는데 성공했다.)")
+    # display_story_text("나 : 후.. 운 좋게 성공했다.")
+    # display_story_text("나 : 그나저나. 과제물이 있는 케비넷이 어딨지..?")
+    # display_story_text("나 : 찾았다!")
+    # display_story_text("(과제물 케비넷이 잠겨있다.)")
+
+    # display_story_text("나 : 이런..! 이번엔 영문자물쇠네.. 오랜 시간을 지체하면 교수님께 들킬거야..!")
+
     # game_result_hangman = run_game(HangmanGame)
-    
     # if game_result_hangman == "QUIT":
     #     return
     
@@ -121,11 +126,64 @@ def game_story_sequence():
     # else: # 행맨 패배
     #     display_story_text("실패. 게임 종료.", 4000)
     #     return # 스토리 종료
+    
+    # # 4.—---------------------------------------------
+    # # 올바른 대화 선택지
+    # display_story_text("(무사히 과제를 제출하고 교수연구실 밖으로 나왔다.)")
+    # display_story_text("나 : 후.. 이번에도 운이 좋았어.. 이제 빨리 나가야겠다.")
+    # display_story_text("(복도 끝에서 교수연구실 쪽으로 걸어오는 발소리가 들린다.)")
+    # display_story_text("나 : 누군가 온다..! 숨어야 해!")
+    # display_story_text("(급하게 오픈소스SW 강의실로 몸을 숨긴다.)")
+    # display_story_text("??? : 이 시간에 왜 강의실에 불이 켜져 있지?")
+    # display_story_text("(???이 들어온다.)")
+    # display_story_text("전공교수님 : 자네. 이 시간까지 강의실에서 뭐하는 건가?")
+
+    # display_story_text("1.강의실에 남아 공부하고 있었었다고 이야기한다.\n
+    # 2.과제 제출하러 왔다고 한다.") --------------------------------------------------- 수정
+
+    # //1번
+    # display_story_text("나 : 강의실에 남아서 복습하고 있었습니다.");
+    # display_story_text("전공교수님 : 훌륭한 학생이군. 열심히 하게.");
+    # display_story_text("(전공 교수님이 밖으로 나간다.)");
+    # display_story_text("나 : (휴… 살았다..)");
+
+    # //2번
+    # display_story_text("나 : 과제 제출하러 왔습니다.");
+    # display_story_text("전공교수 : 과제제출은 어제까지 인걸로 알고있는데..?");
+    # display_story_text("나 : 하하.. 들켰네.");
+    # //게임오버
 
     # # 5.—---------------------------------------------
+    # # 올바른 대화 선택지 2
 
+    # display_story_text("나 : 교수님과 다시 마주치기 전에 빨리 건물을 나가야겠어!")
+    # display_story_text("(1층으로 내려가던 중 3층에서 대학원생과 마주쳤다.)")
+    # display_story_text("대학원생 : 학생. 이 시간에 학교에는 어쩐일인가?")
+    # display_story_text("나 : (아.. 뭐하고 둘러대지?)")
+    # display_story_text("1. 공손하게 인사하고 공부하다가 집에 가려고 한다고 말한다.\n2.(말을 무시하고 지나친다)");
+    
+    # 1번
+    # display_story_text("나 : 안녕하세요. 선배님. 강의실에 남아서 공부하다가 집에 가는 중이에요.")
+    # display_story_text("대학원생 : 지금 교수님 연구 중이시라 예민하셔. 조심히가렴.")
+    # display_story_text("나 : 네. 알겠습니다.")
+    # display_story_text("(무사히 학과 건물을 빠져나왔다.)")
+    # display_story_text("(갑자기 뒤에서 전공교수님이 뛰어온다.)")
+    # display_story_text("전공교수님 : 자네 잠깐만 거기 서 보세..!")
+    # display_story_text("나 : (도망친다.)")
+    # display_story_text("전공교수님 : 헉헉… 분명 교수연구실 문과 과제물 케비넷이 잠겨있었는데..! 저 학생이 범인이 분명해 꼭 잡고야 말겠어..!")
 
-    # # 6.—---------------------------------------------
+    # 2번
+    # display_story_text("대학원생 : 이 자식봐라 수상한데? 거기 학생 잠깐 나 좀 볼까?");
+    # display_story_text("나 : 네..? 저..저요?");
+    # display_story_text("대학원생 : 그래. 지금 여기 학생 말고 또 누가 있나?");
+    # display_story_text("(갑자기 전공교수님이 뛰어온다)");
+    # display_story_text("전공교수님 : 이봐 자네! 그 학생 잡아!")
+    # display_story_text("대학원생 : 이 학생이요..?")
+    # display_story_text("(대학원생에게 붙잡혔다.)")
+    # display_story_text("전공교수 : 이 새벽에 강의실에 혼자 있던 것도 수상했는데, 교수실과 과제 제출 캐비닛까지 열려있다니!")
+    # display_story_text("나 : (아.. 망했다)")
+    # 게임오버
+
    
     # '''-------------------------------------
     # <전개, E8-1 건물 나감, 랜덤 이벤트 발생>

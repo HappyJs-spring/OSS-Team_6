@@ -27,10 +27,18 @@ class MusicGame:
         self.start_time = time.time()
         self.sequence = []
 
-        # 미리 seq 20개 받아놓기
+        # DLL에서 note 20개 미리 읽기
         for i in range(20):
-            self.sequence.append(chr(self.c.get_note(i)))
+            note = self.c.get_note(i)      # returns c_char → bytes
+            self.sequence.append(note.decode())  # "w","a","s","d"," "
 
+        # 애니메이션 관련
+        self.showing_computer = False
+        self.animation_step = 0
+        self.animation_delay = 0.7  # 애니메이션 한 칸 보여줄 시간
+        self.last_anim = time.time()
+
+    # DLL function settings
     def _setup(self):
         self.c.init_game.restype = None
         self.c.get_note.argtypes = [ctypes.c_int]
@@ -38,32 +46,34 @@ class MusicGame:
         self.c.check_input.argtypes = [ctypes.c_int, ctypes.c_char]
         self.c.check_input.restype = ctypes.c_int
 
-    # -------------------------------------------------------
+    # 화면 그리기 함수
     def draw_screen(self, message=""):
         self.screen.fill((25, 30, 45))
 
         # 남은 시간
-        left = 15 - int(time.time() - self.start_time)
-        t_time = self.font.render(f"남은 시간: {left}초", True, (255, 255, 110))
-        self.screen.blit(t_time, (50, 30))
+        if not self.showing_computer:
+            left = 15 - int(time.time() - self.start_time)
+            t_time = self.font.render(f"남은 시간: {left}초", True, (255, 255, 110))
+            self.screen.blit(t_time, (50, 30))
 
-        # 전체 화살표 출력
+        # 전체 시퀀스 출력
         x = 40
         y = 150
 
         for i, c in enumerate(self.sequence):
-            color = (255, 255, 255)
-
-            if i == self.index:
-                color = (255, 200, 80)
-
             arrow = self.arrow_to_text(c)
+            color = (100, 100, 100)
+
+            # 플레이어 턴
+            if i == self.index:
+                color = (255, 255, 255)
+
             text = self.font.render(arrow, True, color)
             self.screen.blit(text, (x + (i % 10) * 60, y + (i // 10) * 80))
 
-        # 메시지
-        msg = self.font.render(message, True, (180, 180, 180))
-        self.screen.blit(msg, (50, 350))
+        # 메시지 표시
+        msg = self.font.render(message, True, (200, 200, 200))
+        self.screen.blit(msg, (50, 400))
 
         pygame.display.flip()
 
@@ -72,7 +82,7 @@ class MusicGame:
         if c == 's': return "↓"
         if c == 'a': return "←"
         if c == 'd': return "→"
-        if c == ' ': return "o"
+        if c == ' ': return "●"
         return "?"
 
     # -------------------------------------------------------
@@ -80,10 +90,9 @@ class MusicGame:
         if self.c is None:
             return False
 
-        running = True
         message = ""
 
-        while running:
+        while True:
             self.draw_screen(message)
 
             # 시간 초과
@@ -106,7 +115,7 @@ class MusicGame:
                         continue
 
                     # C DLL 체크
-                    r = self.c.check_input(self.index, key)
+                    r = self.c.check_input(self.index, key.encode())
 
                     if r == 0:
                         self.draw_screen("틀렸습니다! 실패!")
@@ -115,8 +124,9 @@ class MusicGame:
 
                     self.index += 1
 
+                    # 모든 입력 성공 
                     if self.index >= 20:
-                        self.draw_screen("성공! 단서 +25")
+                        self.draw_screen("성공! 단서 획득!")
                         pygame.time.wait(1500)
                         return True
 

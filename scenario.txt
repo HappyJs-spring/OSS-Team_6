@@ -271,6 +271,7 @@ display_story_text("(단서 +25)")
 
 //무시하고 지나간다 선택 시
 display_story_text("(그냥 지나간다)")
+//environmentalist_angry.png 으로 등장
 display_story_text("환경봉사 동아리 부원 등장")
 display_story_text("환경봉사 동아리 부원: 학생! 여기서 쓰레기를 무시하고 지나가다니… 환경 의식이 너무 부족하군요!")
 display_story_text("나: 죄송합니다… 다음부터 꼭 챙길게요!")

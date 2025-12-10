@@ -71,24 +71,34 @@ status_img = pygame.transform.smoothscale(status_img, (STATUS_WIDTH, STATUS_HEIG
 dialogue_box = DialogueManager(screen, font)
 
 def display_story_text(text, nexttime=600, bg=None, ch=None):
-    global background   # 현재 선택된 배경 Surface
+    global background
     global character
 
-    # bg가 문자열이면 자동 로딩 dict에서 꺼내기
+    # --- 배경 처리 ---
     if isinstance(bg, str):
         if bg in backgrounds:
             background = backgrounds[bg]
         else:
             print(f"[WARNING] 배경 '{bg}' 파일이 없습니다.")
-    
-    # bg가 Surface일 경우 직접 지정도 가능
     elif bg is not None:
         background = bg
+
+    # --- 캐릭터 처리 ---
+    if isinstance(ch, str):
+        if ch in characters:
+            character = characters[ch]
+        elif ch is None:
+            character = None
+        else:
+            print(f"[WARNING] 캐릭터 '{ch}' 파일이 없습니다.")
+    elif ch is not None:
+        character = ch   # Surface 직접 넣기 가능
 
     dialogue_box.set_text(text)
     dialogue_box.wait_for_input()
 
     start_time = pygame.time.get_ticks()
+
     while pygame.time.get_ticks() - start_time < nexttime:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -98,7 +108,13 @@ def display_story_text(text, nexttime=600, bg=None, ch=None):
         # --- 배경 출력 ---
         screen.blit(background, (0, 0))
 
-        # --- 대사 ---
+        # --- 캐릭터 출력 (배경 위 / 대사창 아래에 위치해야 자연스러움) ---
+    if character is not None:
+        x = (SCREEN_WIDTH - character.get_width()) // 2    # 가운데 정렬
+        y = SCREEN_HEIGHT - character.get_height()         # 하단에 위치
+        screen.blit(character, (x, y))
+
+        # --- 대사창 ---
         dialogue_box.draw()
 
         # --- HUD ---
@@ -141,8 +157,29 @@ print("[INFO] Loaded backgrounds:", list(backgrounds.keys()))
 background = pygame.Surface((SCREEN_WIDTH, SCREEN_HEIGHT))
 background.fill((0, 0, 0))   # 기본 배경 = 검정색 (필요 없으면 삭제)
 
+CHAR_DIR = os.path.join(BASE, "character")
+characters = {}   # {"hero_smile": Surface, ...}
 
+for root, dirs, files in os.walk(CHAR_DIR):
+    for file in files:
+        if file.lower().endswith((".png", ".jpg", ".jpeg")):
+            full_path = os.path.join(root, file)
 
+            key = os.path.splitext(file)[0]  # "hero_smile" 같은 이름
+
+            img = pygame.image.load(full_path).convert_alpha()
+        
+            max_height = int(SCREEN_HEIGHT * 1.0)  # 화면 높이의 70%
+            scale_ratio = max_height / img.get_height()
+            new_width = int(img.get_width() * scale_ratio)
+
+            img = pygame.transform.smoothscale(img, (new_width, max_height))
+
+            characters[key] = img
+
+print("[INFO] Loaded characters:", list(characters.keys()))
+
+character = None   # 현재 화면에 표시될 캐릭터 Surface
 
 
 def game_story_sequence():
@@ -159,14 +196,14 @@ def game_story_sequence():
     #     return # 스토리 종료
 
     # 1  ------------------ <프롤로그> ---------------------------  
-    display_story_text("당신은 충북대학교 컴퓨터공학과 학생입니다. 당일 자정까지 전공과목의 기말대체 과제 제출이 있었으나 깜빡하고 제출하지 못했습니다. 해당 과제를 제출하지 못하면 당신은 F를 받고야 맙니다. 당신은 교수님 몰래 과제를 제출하기 위해 교수님들이 모두 퇴근하신 새벽에 전공 교수님 사무실이 위치한 공과대학 건물에 왔습니다.")
+    # display_story_text("당신은 충북대학교 컴퓨터공학과 학생입니다. 당일 자정까지 전공과목의 기말대체 과제 제출이 있었으나 깜빡하고 제출하지 못했습니다. 해당 과제를 제출하지 못하면 당신은 F를 받고야 맙니다. 당신은 교수님 몰래 과제를 제출하기 위해 교수님들이 모두 퇴근하신 새벽에 전공 교수님 사무실이 위치한 공과대학 건물에 왔습니다.")
 
-    display_story_text("나 : (일부러 교수님이 모두 퇴근하신 시간대에 왔으니까. 과제 제출만하면 될꺼야!)")
-    display_story_text("(공대건물 4층으로 조용히 올라간다.)", 600, bg="e8-1(5)")
-    display_story_text("(당신은 연구실 불이 켜져 있는 것을 보고 깜짝 놀란다.)")
-    display_story_text("나 : 분명 이 시간엔 아무도 없을 거라 생각했는데, 누구지?")
-    display_story_text("(당신은 연구실에서 교수님을 발견한다.)")
-    display_story_text("나 : 이런 교수님이 아직도 퇴근하지 않으셨을 줄이야… 교수님 몰래 과제를 제출하고 빨리 나가야겠어..!")
+    # display_story_text("나 : (일부러 교수님이 모두 퇴근하신 시간대에 왔으니까. 과제 제출만하면 될꺼야!)")
+    # display_story_text("(공대건물 4층으로 조용히 올라간다.)", 600, bg="e8-1(5)")
+    # display_story_text("(당신은 연구실 불이 켜져 있는 것을 보고 깜짝 놀란다.)")
+    # display_story_text("나 : 분명 이 시간엔 아무도 없을 거라 생각했는데, 누구지?")
+    # display_story_text("(당신은 연구실에서 교수님을 발견한다.)")
+    # display_story_text("나 : 이런 교수님이 아직도 퇴근하지 않으셨을 줄이야… 교수님 몰래 과제를 제출하고 빨리 나가야겠어..!")
 
     # # 2.—---------------------------------------------
     # # 업다운 게임

@@ -70,12 +70,17 @@ status_img = pygame.transform.smoothscale(status_img, (STATUS_WIDTH, STATUS_HEIG
 
 dialogue_box = DialogueManager(screen, font)
 
-def display_story_text(text, nexttime = 600):
-    """DialogueManager를 사용하여 스토리 텍스트를 표시하고 사용자의 입력을 기다립니다."""
-    
+def display_story_text(text, nexttime=600, bg=None):
+    """스토리 텍스트 + 선택적 배경 표시"""
+
+    global background   # ← 현재 배경을 바꾸기 위해 필요
+
+    # bg 지정되면 배경 변경
+    if bg is not None:
+        background = bg
+
     dialogue_box.set_text(text)
     dialogue_box.wait_for_input()
-
 
     start_time = pygame.time.get_ticks()
     while pygame.time.get_ticks() - start_time < nexttime:
@@ -83,14 +88,16 @@ def display_story_text(text, nexttime = 600):
             if event.type == pygame.QUIT:
                 pygame.quit()
                 sys.exit()
-        
-        # 화면 갱신
-        screen.fill((0, 0, 0))
 
-        # 스토리 텍스트 출력
+        # -----------------------
+        # 배경 먼저 그리기
+        # -----------------------
+        screen.blit(background, (0, 0))
+
+        # 대사 텍스트
         dialogue_box.draw()
 
-        # HUD 출력 (대화 중에만 표시되게)
+        # HUD
         draw_player_status(screen, font, player, status_img)
 
         pygame.display.flip()
@@ -101,6 +108,10 @@ def run_game(GameClass):
     """선택된 게임 클래스를 실행하고 결과를 반환합니다."""
     game_instance = GameClass(screen, clock)
     return game_instance.run()
+
+
+background = pygame.image.load(os.path.join(BASE, "background", "e8-1", "e8-1(1).jpg"))
+background = pygame.transform.scale(background, (SCREEN_WIDTH, SCREEN_HEIGHT))
 
 
 def game_story_sequence():
@@ -119,7 +130,7 @@ def game_story_sequence():
     # # 1  ------------------ <프롤로그> ---------------------------  
     # display_story_text("당신은 충북대학교 컴퓨터공학과 학생입니다. 당일 자정까지 전공과목의 기말대체 과제 제출이 있었으나 깜빡하고 제출하지 못했습니다. 해당 과제를 제출하지 못하면 당신은 F를 받고야 맙니다. 당신은 교수님 몰래 과제를 제출하기 위해 교수님들이 모두 퇴근하신 새벽에 전공 교수님 사무실이 위치한 공과대학 건물에 왔습니다.")
 
-    display_story_text("나 : (일부러 교수님이 모두 퇴근하신 시간대에 왔으니까. 과제 제출만하면 될꺼야!)")
+    display_story_text("나 : (일부러 교수님이 모두 퇴근하신 시간대에 왔으니까. 과제 제출만하면 될꺼야!)", 600, bg=background)
     display_story_text("(공대건물 4층으로 조용히 올라간다.)")
     display_story_text("(당신은 연구실 불이 켜져 있는 것을 보고 깜짝 놀란다.)")
     display_story_text("나 : 분명 이 시간엔 아무도 없을 거라 생각했는데, 누구지?")

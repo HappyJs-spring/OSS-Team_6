@@ -25,19 +25,25 @@ class UpDownGame:
 
         # 이미지 로드(안전하게)
         try:
-            lock_path = os.path.join(BASE_DIR, "images1.png")
-            person_path = os.path.join(BASE_DIR, "images2.png")
+            BASE_DIR = os.path.dirname(os.path.abspath(__file__))   # OSS 폴더
+            PROJECT_ROOT = os.path.dirname(BASE_DIR)                # 프로젝트 최상위 폴더
+
+            IMG_DIR = os.path.join(PROJECT_ROOT, "UI", "up&down UI Image")
+
+            lock_path = os.path.join(IMG_DIR, "doorlock.png")
+            person_path = os.path.join(IMG_DIR, "player_back.png")
+
             if not os.path.isfile(lock_path):
                 raise FileNotFoundError(f"{lock_path} not found")
             if not os.path.isfile(person_path):
                 raise FileNotFoundError(f"{person_path} not found")
 
-            self.lock_img = pygame.image.load(lock_path).convert_alpha()
-            self.person_img = pygame.image.load(person_path).convert_alpha()
+            self.lock_img = pygame.image.load(person_path).convert_alpha()
+            self.person_img = pygame.image.load(lock_path).convert_alpha()
 
             # 크기 조정 (화면 크기 따라 상대적 조정 원하면 변경)
-            self.lock_img = pygame.transform.smoothscale(self.lock_img, (240, 380))
-            self.person_img = pygame.transform.smoothscale(self.person_img, (260, 350))
+            self.lock_img = pygame.transform.smoothscale(self.lock_img, (280, 400))
+            self.person_img = pygame.transform.smoothscale(self.person_img, (360, 600))
             self.images_ok = True
         except Exception as e:
             # 파일 없거나 로드 실패하면 에러 출력하고 도형으로 대체
@@ -77,7 +83,7 @@ class UpDownGame:
         self.screen.blit(title, (w//2 - title.get_width()//2, 40))
 
         # 이미지가 준비되어 있으면 blit, 아니면 도형으로 대체
-        lock_x, lock_y = 80, 150
+        lock_x, lock_y = 65, 160
         if self.images_ok and self.lock_img:
             self.screen.blit(self.lock_img, (lock_x, lock_y))
         else:
@@ -92,7 +98,7 @@ class UpDownGame:
                     pygame.draw.rect(self.screen, (90, 100, 110), (bx, by, btn_w, btn_h), border_radius=10)
             pygame.draw.rect(self.screen, (70, 80, 100), (lock_x + 20, lock_y + 260, 200, 65), border_radius=25)
 
-        person_x, person_y = w - 350, 150
+        person_x, person_y = w - 370, 100
         if self.images_ok and self.person_img:
             self.screen.blit(self.person_img, (person_x, person_y))
         else:

@@ -70,8 +70,9 @@ status_img = pygame.transform.smoothscale(status_img, (STATUS_WIDTH, STATUS_HEIG
 
 dialogue_box = DialogueManager(screen, font)
 
-def display_story_text(text, nexttime=600, bg=None):
+def display_story_text(text, nexttime=600, bg=None, ch=None):
     global background   # 현재 선택된 배경 Surface
+    global character
 
     # bg가 문자열이면 자동 로딩 dict에서 꺼내기
     if isinstance(bg, str):
@@ -116,6 +117,8 @@ def run_game(GameClass):
 
 # ==== 배경 자동 로드 시스템 ====
 # ==== 배경 자동 로드 시스템 ====
+
+
 BACKGROUND_DIR = os.path.join(BASE, "background")
 
 backgrounds = {}  # {"e8-1(1)": Surface, ...}
@@ -140,34 +143,36 @@ background.fill((0, 0, 0))   # 기본 배경 = 검정색 (필요 없으면 삭�
 
 
 
+
+
 def game_story_sequence():
-    # """게임의 순차적인 스토리를 정의하는 메인 함수"""
+    # # """게임의 순차적인 스토리를 정의하는 메인 함수"""
 
-    game_result_music = run_game(MusicGame)
-    if game_result_music == "QUIT":
-        return
+    # game_result_music = run_game(MusicGame)
+    # if game_result_music == "QUIT":
+    #     return
     
-    if game_result_music is True: # 행맨 승리
-        display_story_text("성공! 다음 단계를 진행.", 3000)
-    else: # 행맨 패배
-        display_story_text("실패. 게임 종료.", 4000)
-        return # 스토리 종료
+    # if game_result_music is True: # 행맨 승리
+    #     display_story_text("성공! 다음 단계를 진행.", 3000)
+    # else: # 행맨 패배
+    #     display_story_text("실패. 게임 종료.", 4000)
+    #     return # 스토리 종료
 
-    # # 1  ------------------ <프롤로그> ---------------------------  
-    # display_story_text("당신은 충북대학교 컴퓨터공학과 학생입니다. 당일 자정까지 전공과목의 기말대체 과제 제출이 있었으나 깜빡하고 제출하지 못했습니다. 해당 과제를 제출하지 못하면 당신은 F를 받고야 맙니다. 당신은 교수님 몰래 과제를 제출하기 위해 교수님들이 모두 퇴근하신 새벽에 전공 교수님 사무실이 위치한 공과대학 건물에 왔습니다.")
+    # 1  ------------------ <프롤로그> ---------------------------  
+    display_story_text("당신은 충북대학교 컴퓨터공학과 학생입니다. 당일 자정까지 전공과목의 기말대체 과제 제출이 있었으나 깜빡하고 제출하지 못했습니다. 해당 과제를 제출하지 못하면 당신은 F를 받고야 맙니다. 당신은 교수님 몰래 과제를 제출하기 위해 교수님들이 모두 퇴근하신 새벽에 전공 교수님 사무실이 위치한 공과대학 건물에 왔습니다.")
 
-    display_story_text("나 : (일부러 교수님이 모두 퇴근하신 시간대에 왔으니까. 과제 제출만하면 될꺼야!)", 600, bg="e8-1(1)")
-    display_story_text("(공대건물 4층으로 조용히 올라간다.)", 600, bg="e8-1(2)")
-    display_story_text("(당신은 연구실 불이 켜져 있는 것을 보고 깜짝 놀란다.)", 600, bg="n-14")
-    display_story_text("나 : 분명 이 시간엔 아무도 없을 거라 생각했는데, 누구지?", 600, bg="쿱스켓")
+    display_story_text("나 : (일부러 교수님이 모두 퇴근하신 시간대에 왔으니까. 과제 제출만하면 될꺼야!)")
+    display_story_text("(공대건물 4층으로 조용히 올라간다.)", 600, bg="e8-1(5)")
+    display_story_text("(당신은 연구실 불이 켜져 있는 것을 보고 깜짝 놀란다.)")
+    display_story_text("나 : 분명 이 시간엔 아무도 없을 거라 생각했는데, 누구지?")
     display_story_text("(당신은 연구실에서 교수님을 발견한다.)")
     display_story_text("나 : 이런 교수님이 아직도 퇴근하지 않으셨을 줄이야… 교수님 몰래 과제를 제출하고 빨리 나가야겠어..!")
 
-    # 2.—---------------------------------------------
-    # 업다운 게임
-    display_story_text("(교수연구실 앞으로 이동한다.)")
-    display_story_text("나 : 이런.. 교수연구실 문이 잠겨있잖아.. 5번 틀리면 경보가 울릴테니 그 전에 숫자를 맞춰야겠어..")
-    display_story_text("교수실 문을 열어라!", 3000)
+    # # 2.—---------------------------------------------
+    # # 업다운 게임
+    # display_story_text("(교수연구실 앞으로 이동한다.)", 600, bg="e8-1(2)")
+    # display_story_text("나 : 이런.. 교수연구실 문이 잠겨있잖아.. 5번 틀리면 경보가 울릴테니 그 전에 숫자를 맞춰야겠어..")
+    # display_story_text("교수실 문을 열어라!", 3000)
     
     # game_result_updown = run_game(UpDownGame)
     
@@ -202,14 +207,14 @@ def game_story_sequence():
     
     # # 4.—---------------------------------------------
     # # 올바른 대화 선택지
-    # display_story_text("(무사히 과제를 제출하고 교수연구실 밖으로 나왔다.)")
-    # display_story_text("나 : 후.. 이번에도 운이 좋았어.. 이제 빨리 나가야겠다.")
-    # display_story_text("(복도 끝에서 교수연구실 쪽으로 걸어오는 발소리가 들린다.)")
-    # display_story_text("나 : 누군가 온다..! 숨어야 해!")
-    # display_story_text("(급하게 오픈소스SW 강의실로 몸을 숨긴다.)")
-    # display_story_text("??? : 이 시간에 왜 강의실에 불이 켜져 있지?")
-    # display_story_text("(???이 들어온다.)")
-    # display_story_text("전공교수님 : 자네. 이 시간까지 강의실에서 뭐하는 건가?")
+    display_story_text("(무사히 과제를 제출하고 교수연구실 밖으로 나왔다.)")
+    display_story_text("나 : 후.. 이번에도 운이 좋았어.. 이제 빨리 나가야겠다.")
+    display_story_text("(복도 끝에서 교수연구실 쪽으로 걸어오는 발소리가 들린다.)", bg="e8-1(6)")
+    display_story_text("나 : 누군가 온다..! 숨어야 해!", bg="e8-1(1)")
+    display_story_text("(급하게 오픈소스SW 강의실로 몸을 숨긴다.)", bg="e8-1(4)")
+    display_story_text("??? : 이 시간에 왜 강의실에 불이 켜져 있지?", ch="professor")
+    display_story_text("(???이 들어온다.)")
+    display_story_text("전공교수님 : 자네. 이 시간까지 강의실에서 뭐하는 건가?")
 
     # display_story_text("1.강의실에 남아 공부하고 있었었다고 이야기한다.\n
     # 2.과제 제출하러 왔다고 한다.") --------------------------------------------------- 수정

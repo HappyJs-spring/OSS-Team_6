@@ -491,12 +491,12 @@ def game_story_sequence():
     display_story_text("(체력 -20)")
 
     # 8.중문에서 나타나는 보드게임 중독(홀덤 중독자) 학과 동기와 만남-----------------------------------
-    # display_story_text("하하하하하");
-    # display_story_text("나: 저게 무슨소리지?")
-    # display_story_text("나: 저 사람 컴공 동기인가? 왜 이렇게 진지하게 게임을 하고 있지?")
-    # display_story_text("동기: 오! 너도 들어와! 베스킨라빈스 31, 한 판 하자고!")
-    # display_story_text("동기: …지금? 체력도 좀 남았는데, 한 번만 해보지 뭐. 들어오쇼 ㅋ")
-    # display_story_text("동기: 규칙은 간단해, 31을 넘기지 않고 돌아가면서 최대 3개 최소 1개씩 숫자를 말하면 되고 31을 말하면 지는거에요!")
+    display_story_text("하하하하하", bg="n-14")
+    display_story_text("나: 저게 무슨소리지?")
+    display_story_text("나: 저 사람 컴공 동기인가? 왜 이렇게 진지하게 게임을 하고 있지?", ch="schoolmate_smile")
+    display_story_text("동기: 오! 너도 들어와! 베스킨라빈스 31, 한 판 하자고!")
+    display_story_text("동기: …지금? 체력도 좀 남았는데, 한 번만 해보지 뭐. 들어오쇼 ㅋ")
+    display_story_text("동기: 규칙은 간단해, 31을 넘기지 않고 돌아가면서 최대 3개 최소 1개씩 숫자를 말하면 되고 31을 말하면 지는거야!")
     game_result_BR31 = run_game(BR31)
     if game_result_BR31== "QUIT":
         return

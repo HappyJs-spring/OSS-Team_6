@@ -244,38 +244,38 @@ def game_story_sequence():
     
     # # 4.—---------------------------------------------
     # # 올바른 대화 선택지
-    # display_story_text("(무사히 과제를 제출하고 교수연구실 밖으로 나왔다.)")
-    # display_story_text("나 : 후.. 이번에도 운이 좋았어.. 이제 빨리 나가야겠다.")
-    # display_story_text("(복도 끝에서 교수연구실 쪽으로 걸어오는 발소리가 들린다.)", bg="e8-1(6)")
-    # display_story_text("나 : 누군가 온다..! 숨어야 해!", bg="e8-1(1)")
-    # display_story_text("(급하게 오픈소스SW 강의실로 몸을 숨긴다.)", bg="e8-1(4)")
-    # display_story_text("??? : 이 시간에 왜 강의실에 불이 켜져 있지?", ch="professor")
-    # display_story_text("(???이 들어온다.)")
-    # display_story_text("전공교수님 : 자네. 이 시간까지 강의실에서 뭐하는 건가?")
+    display_story_text("(무사히 과제를 제출하고 교수연구실 밖으로 나왔다.)")
+    display_story_text("나 : 후.. 이번에도 운이 좋았어.. 이제 빨리 나가야겠다.")
+    display_story_text("(복도 끝에서 교수연구실 쪽으로 걸어오는 발소리가 들린다.)", bg="e8-1(6)")
+    display_story_text("나 : 누군가 온다..! 숨어야 해!", bg="e8-1(1)")
+    display_story_text("(급하게 오픈소스SW 강의실로 몸을 숨긴다.)", bg="e8-1(4)")
+    display_story_text("??? : 이 시간에 왜 강의실에 불이 켜져 있지?", ch="professor")
+    display_story_text("(???이 들어온다.)")
+    display_story_text("전공교수님 : 자네. 이 시간까지 강의실에서 뭐하는 건가?")
 
     # display_story_text("1.강의실에 남아 공부하고 있었었다고 이야기한다.\n
     # 2.과제 제출하러 왔다고 한다.") --------------------------------------------------- 수정
 
     # //1번
-    # display_story_text("나 : 강의실에 남아서 복습하고 있었습니다.");
-    # display_story_text("전공교수님 : 훌륭한 학생이군. 열심히 하게.");
-    # display_story_text("(전공 교수님이 밖으로 나간다.)");
-    # display_story_text("나 : (휴… 살았다..)");
+    # display_story_text("나 : 강의실에 남아서 복습하고 있었습니다.", ch="professor_smile")
+    # display_story_text("전공교수님 : 훌륭한 학생이군. 열심히 하게.")
+    # display_story_text("(전공 교수님이 밖으로 나간다.)")
+    # display_story_text("나 : (휴… 살았다..)")
 
     # //2번
-    # display_story_text("나 : 과제 제출하러 왔습니다.");
-    # display_story_text("전공교수 : 과제제출은 어제까지 인걸로 알고있는데..?");
-    # display_story_text("나 : 하하.. 들켰네.");
+    # display_story_text("나 : 과제 제출하러 왔습니다.", ch="professor_angry")
+    # display_story_text("전공교수 : 과제제출은 어제까지 인걸로 알고있는데..?")
+    # display_story_text("나 : 하하.. 들켰네.")
     # //게임오버
 
     # # 5.—---------------------------------------------
     # # 올바른 대화 선택지 2
 
-    # display_story_text("나 : 교수님과 다시 마주치기 전에 빨리 건물을 나가야겠어!", bg="e8-1(3rd floor)")
-    # display_story_text("(1층으로 내려가던 중 3층에서 대학원생과 마주쳤다.)", ch="grad_student")
-    # display_story_text("대학원생 : 학생. 이 시간에 학교에는 어쩐일인가?")
-    # display_story_text("나 : (아.. 뭐라고 둘러대지?)")
-    # display_story_text("1. 공손하게 인사하고 공부하다가 집에 가려고 한다고 말한다.\n2.(말을 무시하고 지나친다)")
+    display_story_text("나 : 교수님과 다시 마주치기 전에 빨리 건물을 나가야겠어!", bg="e8-1(3rd floor)")
+    display_story_text("(1층으로 내려가던 중 3층에서 대학원생과 마주쳤다.)", ch="grad_student")
+    display_story_text("대학원생 : 학생. 이 시간에 학교에는 어쩐일인가?")
+    display_story_text("나 : (아.. 뭐라고 둘러대지?)")
+    display_story_text("1. 공손하게 인사하고 공부하다가 집에 가려고 한다고 말한다.\n2.(말을 무시하고 지나친다)")
     
     # 1번
     # display_story_text("나 : 안녕하세요. 선배님. 강의실에 남아서 공부하다가 집에 가는 중이에요.", ch="grad_student_smile")
@@ -312,21 +312,21 @@ def game_story_sequence():
     # '''
 
     # # 1.산책하던 충북대학교 총장과 마주침. -----------------------------------
-    # display_story_text("(멀리서 조용한 충북대 캠퍼스에서 한 사람의 실루엣이 보인다. 그가 다가왔다.)", bg="솔못", ch="president")
-    # display_story_text("총장 : 어? 이 시간에 학생이 여길 왜 다니고 있지?")
-    # display_story_text("총장 : 혹시… 나를 알아보겠나?")
-    # display_story_text("나 : 아..! 총장님..! (왜 하필 지금…!) 네, 당연하죠.")
-    # display_story_text("총장 : 그렇다면 내 이름이 무엇인지 말해보게.")
-    # display_story_text("(초성 : ㄱㅊㅅ)")
-    # display_story_text("1.김창섭\n2.고창섭\n3.김치신\n4.강창섭\n5구창섭")
+    display_story_text("(멀리서 조용한 충북대 캠퍼스에서 한 사람의 실루엣이 보인다. 그가 다가왔다.)", bg="솔못", ch="president")
+    display_story_text("총장 : 어? 이 시간에 학생이 여길 왜 다니고 있지?")
+    display_story_text("총장 : 혹시… 나를 알아보겠나?")
+    display_story_text("나 : 아..! 총장님..! (왜 하필 지금…!) 네, 당연하죠.")
+    display_story_text("총장 : 그렇다면 내 이름이 무엇인지 말해보게.")
+    display_story_text("(초성 : ㄱㅊㅅ)")
+    display_story_text("1.김창섭\n2.고창섭\n3.김치신\n4.강창섭\n5구창섭")
 
     # # 올바른 선택시
-    # display_story_text("총장 : 흠… 정확하게 알고 있군!", ch="president_smile")
-    # display_story_text("(기분이 좋아져 미소를 짓는다)")
-    # display_story_text("총장 : 이 정도면 우리 학교 학생으로서 충분히 자랑스럽네.")
-    # display_story_text("총장 : 오늘 만난 것도 인연이지. 자네에게 작은 도움을 주도록 하지.")
-    # display_story_text("(딱히 도움이 되진 않으나 총장의 호감도가 상승했다.)")
-    # display_story_text("(단서 +25)")
+    display_story_text("총장 : 흠… 정확하게 알고 있군!", ch="president_smile")
+    display_story_text("(기분이 좋아져 미소를 짓는다)")
+    display_story_text("총장 : 이 정도면 우리 학교 학생으로서 충분히 자랑스럽네.")
+    display_story_text("총장 : 오늘 만난 것도 인연이지. 자네에게 작은 도움을 주도록 하지.")
+    display_story_text("(딱히 도움이 되진 않으나 총장의 호감도가 상승했다.)")
+    display_story_text("(단서 +25)")
 
     # # //플레이어가 오답을 선택 시
     # display_story_text("총장 : …흠. 그렇군.", ch="president_disappointed")
@@ -336,31 +336,31 @@ def game_story_sequence():
 
 
     # # 2.공업 법규와 창업. 강봉희 교수를 만남 -----------------------------------
-    # display_story_text("(학연산 건물 앞을 지나가던 도중, 공업법규와 창업 강봉희 교수님을 만났다.)");
-    # display_story_text("강봉희 교수님 : 어이 학생. 잠깐 거기 서봐.");
-    # display_story_text("(당황하며 얼어붙는다.)");
-    # display_story_text("나 : 네.. 교수님… (큰일났다…!)");
-    # display_story_text("강봉희 교수님 : 마침 잘 됐군. 방금 APEC 회의 자료를 검토하고 있었거든.");
-    # display_story_text("강봉희 교수님 : APEC이 뭔지 정도는 알겠지? 아시아 태평양 경제협력체 말이야.");
-    # display_story_text("(강봉희 교수님이 서류를 덮고 플레이어를 바라본다)");
-    # display_story_text("강봉희 교수님 : 근데 말이지… 학생, 혹시 내 영어 이름을 알고 있나?!");
-    # display_story_text("나 : (뜨끔!)");
-    # display_story_text("강봉희 교수님 : 정확한 스펠링을 맞혀야 한다. 틀리면…");
-    # display_story_text("(강봉희 교수님이 씨익 웃는다)");
-    # display_story_text("강봉희 교수님 : 가차 없어 F를 주지!");
-    # display_story_text("\n입력 : ");
+    display_story_text("(학연산 건물 앞을 지나가던 도중, 공업법규와 창업 강봉희 교수님을 만났다.)", bg="학연산", ch="monica")
+    display_story_text("강봉희 교수님 : 어이 학생. 잠깐 거기 서봐.")
+    display_story_text("(당황하며 얼어붙는다.)")
+    display_story_text("나 : 네.. 교수님… (큰일났다…!)")
+    display_story_text("강봉희 교수님 : 마침 잘 됐군. 방금 APEC 회의 자료를 검토하고 있었거든.")
+    display_story_text("강봉희 교수님 : APEC이 뭔지 정도는 알겠지? 아시아 태평양 경제협력체 말이야.")
+    display_story_text("(강봉희 교수님이 서류를 덮고 플레이어를 바라본다)", ch="monica_serious")
+    display_story_text("강봉희 교수님 : 근데 말이지… 학생, 혹시 내 영어 이름을 알고 있나?!")
+    display_story_text("나 : (뜨끔!)")
+    display_story_text("강봉희 교수님 : 정확한 스펠링을 맞혀야 한다. 틀리면…", ch="monica_smile2")
+    display_story_text("(강봉희 교수님이 씨익 웃는다)")
+    display_story_text("강봉희 교수님 : 가차 없어 F를 주지!")
+    display_story_text("\n입력 : ")
 
     # # //정답 monica 
-    # display_story_text("강봉희 교수님 : 오~ 정확하군! MIONICA, 맞네.");
-    # display_story_text("강봉희 교수님 : 수업을 아주 집중해서 들었군. 대단한데?");
-    # display_story_text("(강봉희 교수님이 만족한 듯 고개를 끄덕인다.)");
-    # display_story_text("강봉희 교수님 : 좋아. 통과! 이만 가봐도 좋다네.");
-    # display_story_text("(단서 +25)");
+    display_story_text("강봉희 교수님 : 오~ 정확하군! MIONICA, 맞네.", ch="monica_smile")
+    display_story_text("강봉희 교수님 : 수업을 아주 집중해서 들었군. 대단한데?")
+    display_story_text("(강봉희 교수님이 만족한 듯 고개를 끄덕인다.)")
+    display_story_text("강봉희 교수님 : 좋아. 통과! 이만 가봐도 좋다네.")
+    display_story_text("(단서 +25)")
 
     # # //오답
-    # display_story_text("강봉희 교수님 : 땡! 틀렸어.");
+    # display_story_text("강봉희 교수님 : 땡! 틀렸어.", ch="monica_serious");
     # display_story_text("강봉희 교수님 : 이봐, 내가 뭐랬지? 스펠링 틀리면 F라고 했지?");
-    # display_story_text("(갑자기 진지해지며)");
+    # display_story_text("(갑자기 진지해지며)", ch="monica_smile2");
     # display_story_text("강봉희 교수님 : 자네… 공법창 F다.");
     # display_story_text("나 : 아이고.. 아이고.. (하지만 어차피 중간 성적대로 가면 D+였기 때문에 큰 타격이 없다. 교양이기도 하고)");
     # display_story_text("(공법창 학점 F확정^^)");

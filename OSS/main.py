@@ -351,7 +351,7 @@ def game_story_sequence():
     display_story_text("\n입력 : ")
 
     # # //정답 monica 
-    display_story_text("강봉희 교수님 : 오~ 정확하군! MIONICA, 맞네.", ch="monica_smile")
+    display_story_text("강봉희 교수님 : 오~ 정확하군! MONICA, 맞네.", ch="monica_smile")
     display_story_text("강봉희 교수님 : 수업을 아주 집중해서 들었군. 대단한데?")
     display_story_text("(강봉희 교수님이 만족한 듯 고개를 끄덕인다.)")
     display_story_text("강봉희 교수님 : 좋아. 통과! 이만 가봐도 좋다네.")
@@ -366,19 +366,19 @@ def game_story_sequence():
     # display_story_text("(공법창 학점 F확정^^)");
 
     # # 3.학연산 (충북 산학협력단 rise와 만남.) -----------------------------------
-    # display_story_text("(학연산 건물 앞을 지나던 중 산학협력단 관계자로 보이는 사람이 서류를 들고 이동중이다.)")
-    # display_story_text("RISE 관계자 : 학생, 잠시만요.")
-    # display_story_text("RISE 관계자 : 혹시 우리 충북대학교 산학협력단 RISE에 대해 알고 있나요?")
-    # display_story_text("1. RISE는 대학·기업·지역을 연결해 연구 및 기술개발을 지원하는 ‘산학협력단’입니다.\n2. 아이돌 아님?"\n3. 롤 챔프 아님?"\n4. 상승이라는 뜻 아님?"\n5. 로켓 발사 프로젝트 아님?")
+    display_story_text("(학연산 건물 앞을 지나던 중 산학협력단 관계자로 보이는 사람이 서류를 들고 이동중이다.)", bg="학연산", ch="rise")
+    display_story_text("RISE 관계자 : 학생, 잠시만요.")
+    display_story_text("RISE 관계자 : 혹시 우리 충북대학교 산학협력단 RISE에 대해 알고 있나요?")
+    display_story_text("1. RISE는 대학·기업·지역을 연결해 연구 및 기술개발을 지원하는 ‘산학협력단’입니다.\n2. 아이돌 아님?\n3. 롤 챔프 아님?\n4. 상승이라는 뜻 아님?\n5. 로켓 발사 프로젝트 아님?")
 
     # # //1번 선택 시
-    # display_story_text("RISE 관계자 : 맞습니다! RISE는 충북대의 산학연 협력, 기술사업화, 기업 지원을 담당하는 핵심 조직이에요.")
+    # display_story_text("RISE 관계자 : 맞습니다! RISE는 충북대의 산학연 협력, 기술사업화, 기업 지원을 담당하는 핵심 조직이에요.", ch="rise_smile")
     # display_story_text("RISE 관계자 : 학생이 아주 잘 알고 있네요.")
     # display_story_text("RISE 관계자 : 이해도가 높으니, 도움이 될 만한 정보를 더 드릴게요.")
     # display_story_text("(단서 +25)")
 
     # # //오답 선택 시
-    # display_story_text("RISE 관계자 : RISE는 ‘Regional Innovation & Start-up Education’의 약자로,")
+    # display_story_text("RISE 관계자 : RISE는 ‘Regional Innovation & Start-up Education’의 약자로,", ch="rise_smile")
     # display_story_text("충북대학교 산학협력단이 지역 기업·연구기관·정부와 협업하여 기술 개발 지원, 창업 보육 및 기업 컨설팅, 산학 공동 R&D, 지식재산(IP) 관리, 현장실습·취업 연계, 지역산업 혁신 프로젝트 등을 수행하는 기관입니다. 우리 학교의 연구 역량을 지역 산업과 직접 연결해")
     # display_story_text("학생·기업·지역사회가 함께 성장할 수 있도록 돕는 핵심 조직이죠.")
     # display_story_text("RISE 관계자 : 다음엔 꼭 맞추세요, 학생.")

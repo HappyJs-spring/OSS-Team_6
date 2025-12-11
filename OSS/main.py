@@ -508,11 +508,11 @@ def game_story_sequence():
         return # 스토리 종료
 
     # # //성공 시
-    # display_story_text("동기: 와! 대단한데? 역시 네가 우리 중에 제일 센스 있네!")
-    # display_story_text("(단서 +25)")
+    display_story_text("동기: 와! 대단한데? 역시 네가 우리 중에 제일 센스 있네!", ch="schoolmate_smile")
+    display_story_text("(단서 +25)")
 
     # # //(실패 시)
-    # display_story_text("동기:ㅋ 아쉽다! 넌 아직 부족하군.")
+    # display_story_text("동기:ㅋ 아쉽다! 넌 아직 부족하군.", ch="schoolmate_sneer")
     # display_story_text("이제 더 집중해야지, 그래도 열심히 하셨잖아~")
     # display_story_text("(체력 -50)")
 

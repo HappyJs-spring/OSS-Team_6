@@ -312,21 +312,21 @@ def game_story_sequence():
     # '''
 
     # # 1.산책하던 충북대학교 총장과 마주침. -----------------------------------
-    display_story_text("(멀리서 조용한 충북대 캠퍼스에서 한 사람의 실루엣이 보인다. 그가 다가왔다.)", bg="솔못", ch="president")
-    display_story_text("총장 : 어? 이 시간에 학생이 여길 왜 다니고 있지?")
-    display_story_text("총장 : 혹시… 나를 알아보겠나?")
-    display_story_text("나 : 아..! 총장님..! (왜 하필 지금…!) 네, 당연하죠.")
-    display_story_text("총장 : 그렇다면 내 이름이 무엇인지 말해보게.")
-    display_story_text("(초성 : ㄱㅊㅅ)")
-    display_story_text("1.김창섭\n2.고창섭\n3.김치신\n4.강창섭\n5구창섭")
+    # display_story_text("(멀리서 조용한 충북대 캠퍼스에서 한 사람의 실루엣이 보인다. 그가 다가왔다.)", bg="솔못", ch="president")
+    # display_story_text("총장 : 어? 이 시간에 학생이 여길 왜 다니고 있지?")
+    # display_story_text("총장 : 혹시… 나를 알아보겠나?")
+    # display_story_text("나 : 아..! 총장님..! (왜 하필 지금…!) 네, 당연하죠.")
+    # display_story_text("총장 : 그렇다면 내 이름이 무엇인지 말해보게.")
+    # display_story_text("(초성 : ㄱㅊㅅ)")
+    # display_story_text("1.김창섭\n2.고창섭\n3.김치신\n4.강창섭\n5구창섭")
 
     # # 올바른 선택시
-    display_story_text("총장 : 흠… 정확하게 알고 있군!", ch="president_smile")
-    display_story_text("(기분이 좋아져 미소를 짓는다)")
-    display_story_text("총장 : 이 정도면 우리 학교 학생으로서 충분히 자랑스럽네.")
-    display_story_text("총장 : 오늘 만난 것도 인연이지. 자네에게 작은 도움을 주도록 하지.")
-    display_story_text("(딱히 도움이 되진 않으나 총장의 호감도가 상승했다.)")
-    display_story_text("(단서 +25)")
+    # display_story_text("총장 : 흠… 정확하게 알고 있군!", ch="president_smile")
+    # display_story_text("(기분이 좋아져 미소를 짓는다)")
+    # display_story_text("총장 : 이 정도면 우리 학교 학생으로서 충분히 자랑스럽네.")
+    # display_story_text("총장 : 오늘 만난 것도 인연이지. 자네에게 작은 도움을 주도록 하지.")
+    # display_story_text("(딱히 도움이 되진 않으나 총장의 호감도가 상승했다.)")
+    # display_story_text("(단서 +25)")
 
     # # //플레이어가 오답을 선택 시
     # display_story_text("총장 : …흠. 그렇군.", ch="president_disappointed")
@@ -336,26 +336,26 @@ def game_story_sequence():
 
 
     # # 2.공업 법규와 창업. 강봉희 교수를 만남 -----------------------------------
-    display_story_text("(학연산 건물 앞을 지나가던 도중, 공업법규와 창업 강봉희 교수님을 만났다.)", bg="학연산", ch="monica")
-    display_story_text("강봉희 교수님 : 어이 학생. 잠깐 거기 서봐.")
-    display_story_text("(당황하며 얼어붙는다.)")
-    display_story_text("나 : 네.. 교수님… (큰일났다…!)")
-    display_story_text("강봉희 교수님 : 마침 잘 됐군. 방금 APEC 회의 자료를 검토하고 있었거든.")
-    display_story_text("강봉희 교수님 : APEC이 뭔지 정도는 알겠지? 아시아 태평양 경제협력체 말이야.")
-    display_story_text("(강봉희 교수님이 서류를 덮고 플레이어를 바라본다)", ch="monica_serious")
-    display_story_text("강봉희 교수님 : 근데 말이지… 학생, 혹시 내 영어 이름을 알고 있나?!")
-    display_story_text("나 : (뜨끔!)")
-    display_story_text("강봉희 교수님 : 정확한 스펠링을 맞혀야 한다. 틀리면…", ch="monica_smile2")
-    display_story_text("(강봉희 교수님이 씨익 웃는다)")
-    display_story_text("강봉희 교수님 : 가차 없어 F를 주지!")
-    display_story_text("\n입력 : ")
+    # display_story_text("(학연산 건물 앞을 지나가던 도중, 공업법규와 창업 강봉희 교수님을 만났다.)", bg="학연산", ch="monica")
+    # display_story_text("강봉희 교수님 : 어이 학생. 잠깐 거기 서봐.")
+    # display_story_text("(당황하며 얼어붙는다.)")
+    # display_story_text("나 : 네.. 교수님… (큰일났다…!)")
+    # display_story_text("강봉희 교수님 : 마침 잘 됐군. 방금 APEC 회의 자료를 검토하고 있었거든.")
+    # display_story_text("강봉희 교수님 : APEC이 뭔지 정도는 알겠지? 아시아 태평양 경제협력체 말이야.")
+    # display_story_text("(강봉희 교수님이 서류를 덮고 플레이어를 바라본다)", ch="monica_serious")
+    # display_story_text("강봉희 교수님 : 근데 말이지… 학생, 혹시 내 영어 이름을 알고 있나?!")
+    # display_story_text("나 : (뜨끔!)")
+    # display_story_text("강봉희 교수님 : 정확한 스펠링을 맞혀야 한다. 틀리면…", ch="monica_smile2")
+    # display_story_text("(강봉희 교수님이 씨익 웃는다)")
+    # display_story_text("강봉희 교수님 : 가차 없어 F를 주지!")
+    # display_story_text("\n입력 : ")
 
     # # //정답 monica 
-    display_story_text("강봉희 교수님 : 오~ 정확하군! MONICA, 맞네.", ch="monica_smile")
-    display_story_text("강봉희 교수님 : 수업을 아주 집중해서 들었군. 대단한데?")
-    display_story_text("(강봉희 교수님이 만족한 듯 고개를 끄덕인다.)")
-    display_story_text("강봉희 교수님 : 좋아. 통과! 이만 가봐도 좋다네.")
-    display_story_text("(단서 +25)")
+    # display_story_text("강봉희 교수님 : 오~ 정확하군! MONICA, 맞네.", ch="monica_smile")
+    # display_story_text("강봉희 교수님 : 수업을 아주 집중해서 들었군. 대단한데?")
+    # display_story_text("(강봉희 교수님이 만족한 듯 고개를 끄덕인다.)")
+    # display_story_text("강봉희 교수님 : 좋아. 통과! 이만 가봐도 좋다네.")
+    # display_story_text("(단서 +25)")
 
     # # //오답
     # display_story_text("강봉희 교수님 : 땡! 틀렸어.", ch="monica_serious");
@@ -366,10 +366,10 @@ def game_story_sequence():
     # display_story_text("(공법창 학점 F확정^^)");
 
     # # 3.학연산 (충북 산학협력단 rise와 만남.) -----------------------------------
-    display_story_text("(학연산 건물 앞을 지나던 중 산학협력단 관계자로 보이는 사람이 서류를 들고 이동중이다.)", bg="학연산", ch="rise")
-    display_story_text("RISE 관계자 : 학생, 잠시만요.")
-    display_story_text("RISE 관계자 : 혹시 우리 충북대학교 산학협력단 RISE에 대해 알고 있나요?")
-    display_story_text("1. RISE는 대학·기업·지역을 연결해 연구 및 기술개발을 지원하는 ‘산학협력단’입니다.\n2. 아이돌 아님?\n3. 롤 챔프 아님?\n4. 상승이라는 뜻 아님?\n5. 로켓 발사 프로젝트 아님?")
+    # display_story_text("(학연산 건물 앞을 지나던 중 산학협력단 관계자로 보이는 사람이 서류를 들고 이동중이다.)", bg="학연산", ch="rise")
+    # display_story_text("RISE 관계자 : 학생, 잠시만요.")
+    # display_story_text("RISE 관계자 : 혹시 우리 충북대학교 산학협력단 RISE에 대해 알고 있나요?")
+    # display_story_text("1. RISE는 대학·기업·지역을 연결해 연구 및 기술개발을 지원하는 ‘산학협력단’입니다.\n2. 아이돌 아님?\n3. 롤 챔프 아님?\n4. 상승이라는 뜻 아님?\n5. 로켓 발사 프로젝트 아님?")
 
     # # //1번 선택 시
     # display_story_text("RISE 관계자 : 맞습니다! RISE는 충북대의 산학연 협력, 기술사업화, 기업 지원을 담당하는 핵심 조직이에요.", ch="rise_smile")
@@ -387,18 +387,18 @@ def game_story_sequence():
     # display_story_text("(체력 -30)")
 
     # # 4.솔못 (커플 피하기 게임) -----------------------------------
-    # display_story_text("(솔못 근처를 조용히 지나가려는데, 벤치에 앉아 있는 닭살 커플이 갑자기 당신을 발견하고 말을 건다.)")
-    # display_story_text("커플남 : 어? 자기야, 저 사람 혼자 다닌다~ 우리랑 얘기 좀 하면 안 돼?")
-    # display_story_text("커플녀 : 그러게~ 솔못은 커플들이 오는 명소인데… 혼자 오니까 뭔가 신기하다~ 헤헤.")
-    # display_story_text("(둘이 서로 팔짱을 끼고 부비부비 거리며 다가온다.)")
-    # display_story_text("나 : (하…)")
+    display_story_text("(솔못 근처를 조용히 지나가려는데, 벤치에 앉아 있는 닭살 커플이 갑자기 당신을 발견하고 말을 건다.)", bg="솔못", ch="couple")
+    display_story_text("커플남 : 어? 자기야, 저 사람 혼자 다닌다~ 우리랑 얘기 좀 하면 안 돼?")
+    display_story_text("커플녀 : 그러게~ 솔못은 커플들이 오는 명소인데… 혼자 오니까 뭔가 신기하다~ 헤헤.")
+    display_story_text("(둘이 서로 팔짱을 끼고 부비부비 거리며 다가온다.)")
+    display_story_text("나 : (하…)")
 
     # # //커플 피하기 게임 시작
     # # //성공
     # display_story_text("(단서 +25)");
 
     # # //실패
-    # display_story_text("커플녀 : 솔못은 원래 커플 성지야~ 우리도 여기서 200일 기념했거든~ 헤헤.")
+    # display_story_text("커플녀 : 솔못은 원래 커플 성지야~ 우리도 여기서 200일 기념했거든~ 헤헤.", ch="couple_sneer")
     # display_story_text("커플남 : 맞아~ 여기 벤치에서 처음으로 손도 잡고~ 첫 데이트도 하고~")
     # display_story_text("(둘이 갑자기 과한 스킨십을 시전한다. 당신은 정신적으로 데미지를 입기 시작한다.)")
     # display_story_text("커플녀 : 너도 얼른 커플 만들어~ 요즘 혼자 다니면 외로워~")

@@ -474,8 +474,8 @@ def game_story_sequence():
     # display_story_text("홍보 관계자: 앗, 아쉽네요… 다음 기회에 다시 도전하세요!". ch="booth_promoter_disappointed");
 
     # 7.중도 앞 길가에서 쓰레기 발견 (중도 앞 길가에서 쓰레기를 발견함)-----------------------------------
-    # display_story_text("나:  어? 뭐지? 땅에 쓰레기가…")
-    # display_story_text("1.쓰레기를 줍는다\n2.무시하고 지나간다.")
+    display_story_text("나:  어? 뭐지? 땅에 쓰레기가…", bg="중앙도서관")
+    display_story_text("1.쓰레기를 줍는다\n2.무시하고 지나간다.")
 
     # # //쓰레기를 줍는다 선택 시
     # display_story_text("나: 에이, 귀찮아도… 환경은 지켜야지!")

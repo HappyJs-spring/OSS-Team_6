@@ -387,11 +387,11 @@ def game_story_sequence():
     # display_story_text("(체력 -30)")
 
     # # 4.솔못 (커플 피하기 게임) -----------------------------------
-    display_story_text("(솔못 근처를 조용히 지나가려는데, 벤치에 앉아 있는 닭살 커플이 갑자기 당신을 발견하고 말을 건다.)", bg="솔못", ch="couple")
-    display_story_text("커플남 : 어? 자기야, 저 사람 혼자 다닌다~ 우리랑 얘기 좀 하면 안 돼?")
-    display_story_text("커플녀 : 그러게~ 솔못은 커플들이 오는 명소인데… 혼자 오니까 뭔가 신기하다~ 헤헤.")
-    display_story_text("(둘이 서로 팔짱을 끼고 부비부비 거리며 다가온다.)")
-    display_story_text("나 : (하…)")
+    # display_story_text("(솔못 근처를 조용히 지나가려는데, 벤치에 앉아 있는 닭살 커플이 갑자기 당신을 발견하고 말을 건다.)", bg="솔못", ch="couple")
+    # display_story_text("커플남 : 어? 자기야, 저 사람 혼자 다닌다~ 우리랑 얘기 좀 하면 안 돼?")
+    # display_story_text("커플녀 : 그러게~ 솔못은 커플들이 오는 명소인데… 혼자 오니까 뭔가 신기하다~ 헤헤.")
+    # display_story_text("(둘이 서로 팔짱을 끼고 부비부비 거리며 다가온다.)")
+    # display_story_text("나 : (하…)")
 
     # # //커플 피하기 게임 시작
     # # //성공
@@ -407,14 +407,14 @@ def game_story_sequence():
     # display_story_text("(체력 -50)")
 
     # 5.coopsket (1+1 삼김 짝 맞추기) -----------------------------------
-    # display_story_text("나: 아 배고파.. 편의점좀 가야겠다..");
-    # display_story_text("(쿱스켓으로 배경이 바뀐다.)");
-    # display_story_text("편의점 직원: 어서오세요 손님~");
-    # display_story_text("편의점 직원: 오늘의 특별 이벤트! 삼김 1+1 COOPSKET 매칭 챌린지에 참여하시겠습니까?");
-    # display_story_text("나: 그게 뭔데요?");
-    # display_story_text("편의점 직원: 선반에 놓인 4×4 총 16개의 삼김 중, 같은 종류끼리 짝을 맞추면 공짜로 가져가시는 거죠!");
-    # display_story_text("(마침 돈도 얼마 없던참이라 좋은일이라고 생각했다.)");
-    # display_story_text("나: 오 좋은데요?");
+    display_story_text("나: 아 배고파.. 편의점좀 가야겠다..", bg="쿱스켓")
+    display_story_text("(쿱스켓으로 배경이 바뀐다.)", ch="clerk")
+    display_story_text("편의점 직원: 어서오세요 손님~")
+    display_story_text("편의점 직원: 오늘의 특별 이벤트! 삼김 1+1 COOPSKET 매칭 챌린지에 참여하시겠습니까?")
+    display_story_text("나: 그게 뭔데요?")
+    display_story_text("편의점 직원: 선반에 놓인 4×4 총 16개의 삼김 중, 같은 종류끼리 짝을 맞추면 공짜로 가져가시는 거죠!")
+    display_story_text("(마침 돈도 얼마 없던참이라 좋은일이라고 생각했다.)")
+    display_story_text("나: 오 좋은데요?")
 
     # # //같은종류의 짝을 다 맞췄을 시
     # display_story_text("나: 이거 다 가져가도 돼요?")

@@ -278,23 +278,23 @@ def game_story_sequence():
     display_story_text("1. 공손하게 인사하고 공부하다가 집에 가려고 한다고 말한다.\n2.(말을 무시하고 지나친다)")
     
     # 1번
-    # display_story_text("나 : 안녕하세요. 선배님. 강의실에 남아서 공부하다가 집에 가는 중이에요.")
-    # display_story_text("대학원생 : 지금 교수님 연구 중이시라 예민하셔. 조심히가렴.")
-    # display_story_text("나 : 네. 알겠습니다.")
-    # display_story_text("(무사히 학과 건물을 빠져나왔다.)")
-    # display_story_text("(갑자기 뒤에서 전공교수님이 뛰어온다.)")
-    # display_story_text("전공교수님 : 자네 잠깐만 거기 서 보세..!")
-    # display_story_text("나 : (도망친다.)")
-    # display_story_text("전공교수님 : 헉헉… 분명 교수연구실 문과 과제물 케비넷이 잠겨있었는데..! 저 학생이 범인이 분명해 꼭 잡고야 말겠어..!")
+    display_story_text("나 : 안녕하세요. 선배님. 강의실에 남아서 공부하다가 집에 가는 중이에요.", ch="grad_student_smile")
+    display_story_text("대학원생 : 지금 교수님 연구 중이시라 예민하셔. 조심히가렴.")
+    display_story_text("나 : 네. 알겠습니다.", bg="e8-1외부")
+    display_story_text("(무사히 학과 건물을 빠져나왔다.)", ch="professor_embarrassed")
+    display_story_text("(갑자기 뒤에서 전공교수님이 뛰어온다.)")
+    display_story_text("전공교수님 : 자네 잠깐만 거기 서 보세..!")
+    display_story_text("나 : (도망친다.)")
+    display_story_text("전공교수님 : 헉헉… 분명 교수연구실 문과 과제물 케비넷이 잠겨있었는데..! 저 학생이 범인이 분명해 꼭 잡고야 말겠어..!")
 
     # 2번
-    # display_story_text("대학원생 : 이 자식봐라 수상한데? 거기 학생 잠깐 나 좀 볼까?");
+    # display_story_text("대학원생 : 이 자식봐라 수상한데? 거기 학생 잠깐 나 좀 볼까?", ch="grad_student_angry");
     # display_story_text("나 : 네..? 저..저요?");
     # display_story_text("대학원생 : 그래. 지금 여기 학생 말고 또 누가 있나?");
     # display_story_text("(갑자기 전공교수님이 뛰어온다)");
-    # display_story_text("전공교수님 : 이봐 자네! 그 학생 잡아!")
+    # display_story_text("전공교수님 : 이봐 자네! 그 학생 잡아!", ch="grad_student_embrrassed")
     # display_story_text("대학원생 : 이 학생이요..?")
-    # display_story_text("(대학원생에게 붙잡혔다.)")
+    # display_story_text("(대학원생에게 붙잡혔다.)", ch="professor_angry")
     # display_story_text("전공교수 : 이 새벽에 강의실에 혼자 있던 것도 수상했는데, 교수실과 과제 제출 캐비닛까지 열려있다니!")
     # display_story_text("나 : (아.. 망했다)")
     # 게임오버

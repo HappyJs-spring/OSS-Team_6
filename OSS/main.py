@@ -196,20 +196,21 @@ def game_story_sequence():
     #     return # 스토리 종료
 
     # 1  ------------------ <프롤로그> ---------------------------  
-    # display_story_text("당신은 충북대학교 컴퓨터공학과 학생입니다. 당일 자정까지 전공과목의 기말대체 과제 제출이 있었으나 깜빡하고 제출하지 못했습니다. 해당 과제를 제출하지 못하면 당신은 F를 받고야 맙니다. 당신은 교수님 몰래 과제를 제출하기 위해 교수님들이 모두 퇴근하신 새벽에 전공 교수님 사무실이 위치한 공과대학 건물에 왔습니다.")
+    display_story_text("당신은 충북대학교 컴퓨터공학과 학생입니다. 당일 자정까지 전공과목의 기말대체 과제 제출이 있었으나 깜빡하고 제출하지 못했습니다.")
+    display_story_text("해당 과제를 제출하지 못하면 당신은 F를 받고야 맙니다. 당신은 교수님 몰래 과제를 제출하기 위해 교수님들이 모두 퇴근하신 새벽에 전공 교수님 사무실이 위치한 공과대학 건물에 왔습니다.")
 
-    # display_story_text("나 : (일부러 교수님이 모두 퇴근하신 시간대에 왔으니까. 과제 제출만하면 될꺼야!)")
-    # display_story_text("(공대건물 4층으로 조용히 올라간다.)", 600, bg="e8-1(5)")
-    # display_story_text("(당신은 연구실 불이 켜져 있는 것을 보고 깜짝 놀란다.)")
-    # display_story_text("나 : 분명 이 시간엔 아무도 없을 거라 생각했는데, 누구지?")
-    # display_story_text("(당신은 연구실에서 교수님을 발견한다.)")
-    # display_story_text("나 : 이런 교수님이 아직도 퇴근하지 않으셨을 줄이야… 교수님 몰래 과제를 제출하고 빨리 나가야겠어..!")
+    display_story_text("나 : (일부러 교수님이 모두 퇴근하신 시간대에 왔으니까. 과제 제출만하면 될꺼야!)", bg="e8-1(3rd stairs)")
+    display_story_text("(공대건물 4층으로 조용히 올라간다.)", bg="e8-1(6)")
+    display_story_text("(당신은 연구실 불이 켜져 있는 것을 보고 깜짝 놀란다.)")
+    display_story_text("나 : 분명 이 시간엔 아무도 없을 거라 생각했는데, 누구지?")
+    display_story_text("(당신은 연구실에서 교수님을 발견한다.)")
+    display_story_text("나 : 이런 교수님이 아직도 퇴근하지 않으셨을 줄이야… 교수님 몰래 과제를 제출하고 빨리 나가야겠어..!")
 
-    # # 2.—---------------------------------------------
-    # # 업다운 게임
-    # display_story_text("(교수연구실 앞으로 이동한다.)", 600, bg="e8-1(2)")
-    # display_story_text("나 : 이런.. 교수연구실 문이 잠겨있잖아.. 5번 틀리면 경보가 울릴테니 그 전에 숫자를 맞춰야겠어..")
-    # display_story_text("교수실 문을 열어라!", 3000)
+    # 2.—---------------------------------------------
+    # 업다운 게임
+    display_story_text("(교수연구실 앞으로 이동한다.)", 600, bg="e8-1(2)")
+    display_story_text("나 : 이런.. 교수연구실 문이 잠겨있잖아.. 5번 틀리면 경보가 울릴테니 그 전에 숫자를 맞춰야겠어..")
+    display_story_text("교수실 문을 열어라!", 3000)
     
     # game_result_updown = run_game(UpDownGame)
     
@@ -222,15 +223,15 @@ def game_story_sequence():
     #     display_story_text("문을 여는데 실패했습니다.. 교수님게 발각되어 학점 F를 받게되었습니다.", 4000)
     #     return
 
-    # # 3.—---------------------------------------------
-    # # 행맨게임
-    # display_story_text("(교수실 문을 여는데 성공했다.)")
-    # display_story_text("나 : 후.. 운 좋게 성공했다.")
-    # display_story_text("나 : 그나저나. 과제물이 있는 케비넷이 어딨지..?")
-    # display_story_text("나 : 찾았다!")
-    # display_story_text("(과제물 케비넷이 잠겨있다.)")
+    # 3.—---------------------------------------------
+    # 행맨게임
+    display_story_text("(교수실 문을 여는데 성공했다.)")
+    display_story_text("나 : 후.. 운 좋게 성공했다.")
+    display_story_text("나 : 그나저나. 과제물이 있는 케비넷이 어딨지..?")
+    display_story_text("나 : 찾았다!")
+    display_story_text("(과제물 케비넷이 잠겨있다.)")
 
-    # display_story_text("나 : 이런..! 이번엔 영문자물쇠네.. 오랜 시간을 지체하면 교수님께 들킬거야..!")
+    display_story_text("나 : 이런..! 이번엔 영문자물쇠네.. 오랜 시간을 지체하면 교수님께 들킬거야..!")
 
     # game_result_hangman = run_game(HangmanGame)
     # if game_result_hangman == "QUIT":
@@ -253,14 +254,12 @@ def game_story_sequence():
     display_story_text("(???이 들어온다.)")
     display_story_text("전공교수님 : 자네. 이 시간까지 강의실에서 뭐하는 건가?")
 
-    # display_story_text("1.강의실에 남아 공부하고 있었었다고 이야기한다.\n
-    # 2.과제 제출하러 왔다고 한다.") --------------------------------------------------- 수정
-
+    display_story_text("1.강의실에 남아 공부하고 있었었다고 이야기한다.\n2.과제 제출하러 왔다고 한다.")
     # //1번
-    # display_story_text("나 : 강의실에 남아서 복습하고 있었습니다.", ch="professor_smile")
-    # display_story_text("전공교수님 : 훌륭한 학생이군. 열심히 하게.")
-    # display_story_text("(전공 교수님이 밖으로 나간다.)")
-    # display_story_text("나 : (휴… 살았다..)")
+    display_story_text("나 : 강의실에 남아서 복습하고 있었습니다.", ch="professor_smile")
+    display_story_text("전공교수님 : 훌륭한 학생이군. 열심히 하게.")
+    display_story_text("(전공 교수님이 밖으로 나간다.)")
+    display_story_text("나 : (휴… 살았다..)")
 
     # //2번
     # display_story_text("나 : 과제 제출하러 왔습니다.", ch="professor_angry")
@@ -278,14 +277,14 @@ def game_story_sequence():
     display_story_text("1. 공손하게 인사하고 공부하다가 집에 가려고 한다고 말한다.\n2.(말을 무시하고 지나친다)")
     
     # 1번
-    # display_story_text("나 : 안녕하세요. 선배님. 강의실에 남아서 공부하다가 집에 가는 중이에요.", ch="grad_student_smile")
-    # display_story_text("대학원생 : 지금 교수님 연구 중이시라 예민하셔. 조심히가렴.")
-    # display_story_text("나 : 네. 알겠습니다.", bg="e8-1외부")
-    # display_story_text("(무사히 학과 건물을 빠져나왔다.)", ch="professor_embarrassed")
-    # display_story_text("(갑자기 뒤에서 전공교수님이 뛰어온다.)")
-    # display_story_text("전공교수님 : 자네 잠깐만 거기 서 보세..!")
-    # display_story_text("나 : (도망친다.)")
-    # display_story_text("전공교수님 : 헉헉… 분명 교수연구실 문과 과제물 케비넷이 잠겨있었는데..! 저 학생이 범인이 분명해 꼭 잡고야 말겠어..!")
+    display_story_text("나 : 안녕하세요. 선배님. 강의실에 남아서 공부하다가 집에 가는 중이에요.", ch="grad_student_smile")
+    display_story_text("대학원생 : 지금 교수님 연구 중이시라 예민하셔. 조심히가렴.")
+    display_story_text("나 : 네. 알겠습니다.", bg="e8-1외부")
+    display_story_text("(무사히 학과 건물을 빠져나왔다.)", ch="professor_embarrassed")
+    display_story_text("(갑자기 뒤에서 전공교수님이 뛰어온다.)")
+    display_story_text("전공교수님 : 자네 잠깐만 거기 서 보세..!")
+    display_story_text("나 : (도망친다.)")
+    display_story_text("전공교수님 : 헉헉… 분명 교수연구실 문과 과제물 케비넷이 잠겨있었는데..! 저 학생이 범인이 분명해 꼭 잡고야 말겠어..!")
 
     # 2번
     # display_story_text("대학원생 : 이 자식봐라 수상한데? 거기 학생 잠깐 나 좀 볼까?", ch="grad_student_angry");
@@ -474,8 +473,8 @@ def game_story_sequence():
     # display_story_text("홍보 관계자: 앗, 아쉽네요… 다음 기회에 다시 도전하세요!". ch="booth_promoter_disappointed");
 
     # 7.중도 앞 길가에서 쓰레기 발견 (중도 앞 길가에서 쓰레기를 발견함)-----------------------------------
-    display_story_text("나:  어? 뭐지? 땅에 쓰레기가…", bg="중앙도서관")
-    display_story_text("1.쓰레기를 줍는다\n2.무시하고 지나간다.")
+    # display_story_text("나:  어? 뭐지? 땅에 쓰레기가…", bg="중앙도서관")
+    # display_story_text("1.쓰레기를 줍는다\n2.무시하고 지나간다.")
 
     # # //쓰레기를 줍는다 선택 시
     # display_story_text("나: 에이, 귀찮아도… 환경은 지켜야지!")
@@ -483,33 +482,33 @@ def game_story_sequence():
     # display_story_text("(단서 +25)")
 
     # # //무시하고 지나간다 선택 시
-    display_story_text("(그냥 지나간다)", ch="environmentalist_angry")
-    display_story_text("환경봉사 동아리 부원 등장")
-    display_story_text("환경봉사 동아리 부원: 학생! 여기서 쓰레기를 무시하고 지나가다니… 환경 의식이 너무 부족하군요!")
-    display_story_text("나: 죄송합니다… 다음부터 꼭 챙길게요!", ch="environmentalist")
-    display_story_text("환경봉사 동아리 부원: 좋아요, 이번 한 번만 봐줄게요. 앞으로는 주의하세요!")
-    display_story_text("(체력 -20)")
+    # display_story_text("(그냥 지나간다)", ch="environmentalist_angry")
+    # display_story_text("환경봉사 동아리 부원 등장")
+    # display_story_text("환경봉사 동아리 부원: 학생! 여기서 쓰레기를 무시하고 지나가다니… 환경 의식이 너무 부족하군요!")
+    # display_story_text("나: 죄송합니다… 다음부터 꼭 챙길게요!", ch="environmentalist")
+    # display_story_text("환경봉사 동아리 부원: 좋아요, 이번 한 번만 봐줄게요. 앞으로는 주의하세요!")
+    # display_story_text("(체력 -20)")
 
     # 8.중문에서 나타나는 보드게임 중독(홀덤 중독자) 학과 동기와 만남-----------------------------------
-    display_story_text("하하하하하", bg="n-14")
-    display_story_text("나: 저게 무슨소리지?")
-    display_story_text("나: 저 사람 컴공 동기인가? 왜 이렇게 진지하게 게임을 하고 있지?", ch="schoolmate_smile")
-    display_story_text("동기: 오! 너도 들어와! 베스킨라빈스 31, 한 판 하자고!")
-    display_story_text("동기: …지금? 체력도 좀 남았는데, 한 번만 해보지 뭐. 들어오쇼 ㅋ")
-    display_story_text("동기: 규칙은 간단해, 31을 넘기지 않고 돌아가면서 최대 3개 최소 1개씩 숫자를 말하면 되고 31을 말하면 지는거야!")
-    game_result_BR31 = run_game(BR31)
-    if game_result_BR31== "QUIT":
-        return
+    # display_story_text("하하하하하", bg="n-14")
+    # display_story_text("나: 저게 무슨소리지?")
+    # display_story_text("나: 저 사람 컴공 동기인가? 왜 이렇게 진지하게 게임을 하고 있지?", ch="schoolmate_smile")
+    # display_story_text("동기: 오! 너도 들어와! 베스킨라빈스 31, 한 판 하자고!")
+    # display_story_text("동기: …지금? 체력도 좀 남았는데, 한 번만 해보지 뭐. 들어오쇼 ㅋ")
+    # display_story_text("동기: 규칙은 간단해, 31을 넘기지 않고 돌아가면서 최대 3개 최소 1개씩 숫자를 말하면 되고 31을 말하면 지는거야!")
+    # game_result_BR31 = run_game(BR31)
+    # if game_result_BR31== "QUIT":
+    #     return
     
-    if game_result_BR31 is True: # 행맨 승리
-        display_story_text("성공! 다음 단계를 진행.", 3000)
-    else: # 행맨 패배
-        display_story_text("실패. 게임 종료.", 4000)
-        return # 스토리 종료
+    # if game_result_BR31 is True: # 행맨 승리
+    #     display_story_text("성공! 다음 단계를 진행.", 3000)
+    # else: # 행맨 패배
+    #     display_story_text("실패. 게임 종료.", 4000)
+    #     return # 스토리 종료
 
     # # //성공 시
-    display_story_text("동기: 와! 대단한데? 역시 네가 우리 중에 제일 센스 있네!", ch="schoolmate_smile")
-    display_story_text("(단서 +25)")
+    # display_story_text("동기: 와! 대단한데? 역시 네가 우리 중에 제일 센스 있네!", ch="schoolmate_smile")
+    # display_story_text("(단서 +25)")
 
     # # //(실패 시)
     # display_story_text("동기:ㅋ 아쉽다! 넌 아직 부족하군.", ch="schoolmate_sneer")

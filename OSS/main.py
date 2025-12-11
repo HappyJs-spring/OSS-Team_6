@@ -271,11 +271,11 @@ def game_story_sequence():
     # # 5.—---------------------------------------------
     # # 올바른 대화 선택지 2
 
-    # display_story_text("나 : 교수님과 다시 마주치기 전에 빨리 건물을 나가야겠어!")
-    # display_story_text("(1층으로 내려가던 중 3층에서 대학원생과 마주쳤다.)")
-    # display_story_text("대학원생 : 학생. 이 시간에 학교에는 어쩐일인가?")
-    # display_story_text("나 : (아.. 뭐하고 둘러대지?)")
-    # display_story_text("1. 공손하게 인사하고 공부하다가 집에 가려고 한다고 말한다.\n2.(말을 무시하고 지나친다)");
+    display_story_text("나 : 교수님과 다시 마주치기 전에 빨리 건물을 나가야겠어!", bg="e8-1(3rd floor)")
+    display_story_text("(1층으로 내려가던 중 3층에서 대학원생과 마주쳤다.)", ch="grad_student")
+    display_story_text("대학원생 : 학생. 이 시간에 학교에는 어쩐일인가?")
+    display_story_text("나 : (아.. 뭐라고 둘러대지?)")
+    display_story_text("1. 공손하게 인사하고 공부하다가 집에 가려고 한다고 말한다.\n2.(말을 무시하고 지나친다)")
     
     # 1번
     # display_story_text("나 : 안녕하세요. 선배님. 강의실에 남아서 공부하다가 집에 가는 중이에요.")

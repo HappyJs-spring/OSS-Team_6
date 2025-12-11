@@ -244,14 +244,14 @@ def game_story_sequence():
     
     # # 4.—---------------------------------------------
     # # 올바른 대화 선택지
-    display_story_text("(무사히 과제를 제출하고 교수연구실 밖으로 나왔다.)")
-    display_story_text("나 : 후.. 이번에도 운이 좋았어.. 이제 빨리 나가야겠다.")
-    display_story_text("(복도 끝에서 교수연구실 쪽으로 걸어오는 발소리가 들린다.)", bg="e8-1(6)")
-    display_story_text("나 : 누군가 온다..! 숨어야 해!", bg="e8-1(1)")
-    display_story_text("(급하게 오픈소스SW 강의실로 몸을 숨긴다.)", bg="e8-1(4)")
-    display_story_text("??? : 이 시간에 왜 강의실에 불이 켜져 있지?", ch="professor")
-    display_story_text("(???이 들어온다.)")
-    display_story_text("전공교수님 : 자네. 이 시간까지 강의실에서 뭐하는 건가?")
+    # display_story_text("(무사히 과제를 제출하고 교수연구실 밖으로 나왔다.)")
+    # display_story_text("나 : 후.. 이번에도 운이 좋았어.. 이제 빨리 나가야겠다.")
+    # display_story_text("(복도 끝에서 교수연구실 쪽으로 걸어오는 발소리가 들린다.)", bg="e8-1(6)")
+    # display_story_text("나 : 누군가 온다..! 숨어야 해!", bg="e8-1(1)")
+    # display_story_text("(급하게 오픈소스SW 강의실로 몸을 숨긴다.)", bg="e8-1(4)")
+    # display_story_text("??? : 이 시간에 왜 강의실에 불이 켜져 있지?", ch="professor")
+    # display_story_text("(???이 들어온다.)")
+    # display_story_text("전공교수님 : 자네. 이 시간까지 강의실에서 뭐하는 건가?")
 
     # display_story_text("1.강의실에 남아 공부하고 있었었다고 이야기한다.\n
     # 2.과제 제출하러 왔다고 한다.") --------------------------------------------------- 수정
@@ -271,21 +271,21 @@ def game_story_sequence():
     # # 5.—---------------------------------------------
     # # 올바른 대화 선택지 2
 
-    display_story_text("나 : 교수님과 다시 마주치기 전에 빨리 건물을 나가야겠어!", bg="e8-1(3rd floor)")
-    display_story_text("(1층으로 내려가던 중 3층에서 대학원생과 마주쳤다.)", ch="grad_student")
-    display_story_text("대학원생 : 학생. 이 시간에 학교에는 어쩐일인가?")
-    display_story_text("나 : (아.. 뭐라고 둘러대지?)")
-    display_story_text("1. 공손하게 인사하고 공부하다가 집에 가려고 한다고 말한다.\n2.(말을 무시하고 지나친다)")
+    # display_story_text("나 : 교수님과 다시 마주치기 전에 빨리 건물을 나가야겠어!", bg="e8-1(3rd floor)")
+    # display_story_text("(1층으로 내려가던 중 3층에서 대학원생과 마주쳤다.)", ch="grad_student")
+    # display_story_text("대학원생 : 학생. 이 시간에 학교에는 어쩐일인가?")
+    # display_story_text("나 : (아.. 뭐라고 둘러대지?)")
+    # display_story_text("1. 공손하게 인사하고 공부하다가 집에 가려고 한다고 말한다.\n2.(말을 무시하고 지나친다)")
     
     # 1번
-    display_story_text("나 : 안녕하세요. 선배님. 강의실에 남아서 공부하다가 집에 가는 중이에요.", ch="grad_student_smile")
-    display_story_text("대학원생 : 지금 교수님 연구 중이시라 예민하셔. 조심히가렴.")
-    display_story_text("나 : 네. 알겠습니다.", bg="e8-1외부")
-    display_story_text("(무사히 학과 건물을 빠져나왔다.)", ch="professor_embarrassed")
-    display_story_text("(갑자기 뒤에서 전공교수님이 뛰어온다.)")
-    display_story_text("전공교수님 : 자네 잠깐만 거기 서 보세..!")
-    display_story_text("나 : (도망친다.)")
-    display_story_text("전공교수님 : 헉헉… 분명 교수연구실 문과 과제물 케비넷이 잠겨있었는데..! 저 학생이 범인이 분명해 꼭 잡고야 말겠어..!")
+    # display_story_text("나 : 안녕하세요. 선배님. 강의실에 남아서 공부하다가 집에 가는 중이에요.", ch="grad_student_smile")
+    # display_story_text("대학원생 : 지금 교수님 연구 중이시라 예민하셔. 조심히가렴.")
+    # display_story_text("나 : 네. 알겠습니다.", bg="e8-1외부")
+    # display_story_text("(무사히 학과 건물을 빠져나왔다.)", ch="professor_embarrassed")
+    # display_story_text("(갑자기 뒤에서 전공교수님이 뛰어온다.)")
+    # display_story_text("전공교수님 : 자네 잠깐만 거기 서 보세..!")
+    # display_story_text("나 : (도망친다.)")
+    # display_story_text("전공교수님 : 헉헉… 분명 교수연구실 문과 과제물 케비넷이 잠겨있었는데..! 저 학생이 범인이 분명해 꼭 잡고야 말겠어..!")
 
     # 2번
     # display_story_text("대학원생 : 이 자식봐라 수상한데? 거기 학생 잠깐 나 좀 볼까?", ch="grad_student_angry");
@@ -312,16 +312,16 @@ def game_story_sequence():
     # '''
 
     # # 1.산책하던 충북대학교 총장과 마주침. -----------------------------------
-    # display_story_text("(멀리서 조용한 충북대 캠퍼스에서 한 사람의 실루엣이 보인다. 그가 다가왔다.)")
+    # display_story_text("(멀리서 조용한 충북대 캠퍼스에서 한 사람의 실루엣이 보인다. 그가 다가왔다.)", bg="솔못", ch="president")
     # display_story_text("총장 : 어? 이 시간에 학생이 여길 왜 다니고 있지?")
     # display_story_text("총장 : 혹시… 나를 알아보겠나?")
     # display_story_text("나 : 아..! 총장님..! (왜 하필 지금…!) 네, 당연하죠.")
     # display_story_text("총장 : 그렇다면 내 이름이 무엇인지 말해보게.")
-    # display_story_text("(초성 : ㄱㅊㅅ)");
+    # display_story_text("(초성 : ㄱㅊㅅ)")
     # display_story_text("1.김창섭\n2.고창섭\n3.김치신\n4.강창섭\n5구창섭")
 
     # # 올바른 선택시
-    # display_story_text("총장 : 흠… 정확하게 알고 있군!")
+    # display_story_text("총장 : 흠… 정확하게 알고 있군!", ch="president_smile")
     # display_story_text("(기분이 좋아져 미소를 짓는다)")
     # display_story_text("총장 : 이 정도면 우리 학교 학생으로서 충분히 자랑스럽네.")
     # display_story_text("총장 : 오늘 만난 것도 인연이지. 자네에게 작은 도움을 주도록 하지.")
@@ -329,7 +329,7 @@ def game_story_sequence():
     # display_story_text("(단서 +25)")
 
     # # //플레이어가 오답을 선택 시
-    # display_story_text("총장 : …흠. 그렇군.")
+    # display_story_text("총장 : …흠. 그렇군.", ch="president_disappointed")
     # display_story_text("(씁쓸한 표정을 짓는다.)")
     # display_story_text("총장 : 내 이름도 모르는 학생이 요즘 왜 이렇게 많나… 하여간… 에휴…")
     # display_story_text("(총장이 실망했다. 하지만 딱히 상관은 없다.)")

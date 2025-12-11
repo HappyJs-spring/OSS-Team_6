@@ -417,16 +417,16 @@ def game_story_sequence():
     display_story_text("나: 오 좋은데요?")
 
     # # //같은종류의 짝을 다 맞췄을 시
-    # display_story_text("나: 이거 다 가져가도 돼요?")
-    # display_story_text("편의점 직원: 다 가져가도 됩니다!")
-    # display_story_text("나: 배부르니까 하나만 먹을게요~ 많이파세요~~")
-    # display_story_text("편의점 직원: 감사합니다 또오세요~ “)
-    # display_story_text(”( 단서 +25)")
+    display_story_text("나: 이거 다 가져가도 돼요?")
+    display_story_text("편의점 직원: 다 가져가도 됩니다!")
+    display_story_text("나: 배부르니까 하나만 먹을게요~ 많이파세요~~")
+    display_story_text("편의점 직원: 감사합니다 또오세요~ ")
+    display_story_text("( 단서 +25)")
 
     # # //같은종류의 짝 다 맞추지 못했을 시
-    # display_story_text(“편의점 직원: 아이고.. 아쉽네요..”)
-    # display_story_text("나: 이걸로 결제 해 주세요….( 카드를 건넨다)“)
-    # display_story_text(”(체력 30 감소)")
+    display_story_text("편의점 직원: 아이고.. 아쉽네요..")
+    display_story_text("나: 이걸로 결제 해 주세요….( 카드를 건넨다)")
+    display_story_text("(체력 30 감소)")
 
 
     game_result_findcard = run_game(FindCard)

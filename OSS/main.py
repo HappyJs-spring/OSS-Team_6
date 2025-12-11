@@ -483,12 +483,12 @@ def game_story_sequence():
     # display_story_text("(단서 +25)")
 
     # # //무시하고 지나간다 선택 시
-    # display_story_text("(그냥 지나간다)")
-    # display_story_text("환경봉사 동아리 부원 등장")
-    # display_story_text("환경봉사 동아리 부원: 학생! 여기서 쓰레기를 무시하고 지나가다니… 환경 의식이 너무 부족하군요!")
-    # display_story_text("나: 죄송합니다… 다음부터 꼭 챙길게요!")
-    # display_story_text("환경봉사 동아리 부원: 좋아요, 이번 한 번만 봐줄게요. 앞으로는 주의하세요!")
-    # display_story_text("(체력 -20)")
+    display_story_text("(그냥 지나간다)", ch="environmentalist_angry")
+    display_story_text("환경봉사 동아리 부원 등장")
+    display_story_text("환경봉사 동아리 부원: 학생! 여기서 쓰레기를 무시하고 지나가다니… 환경 의식이 너무 부족하군요!")
+    display_story_text("나: 죄송합니다… 다음부터 꼭 챙길게요!", ch="environmentalist")
+    display_story_text("환경봉사 동아리 부원: 좋아요, 이번 한 번만 봐줄게요. 앞으로는 주의하세요!")
+    display_story_text("(체력 -20)")
 
     # 8.중문에서 나타나는 보드게임 중독(홀덤 중독자) 학과 동기와 만남-----------------------------------
     # display_story_text("하하하하하");

@@ -407,49 +407,49 @@ def game_story_sequence():
     # display_story_text("(체력 -50)")
 
     # 5.coopsket (1+1 삼김 짝 맞추기) -----------------------------------
-    display_story_text("나: 아 배고파.. 편의점좀 가야겠다..", bg="쿱스켓")
-    display_story_text("(쿱스켓으로 배경이 바뀐다.)", ch="clerk")
-    display_story_text("편의점 직원: 어서오세요 손님~")
-    display_story_text("편의점 직원: 오늘의 특별 이벤트! 삼김 1+1 COOPSKET 매칭 챌린지에 참여하시겠습니까?")
-    display_story_text("나: 그게 뭔데요?")
-    display_story_text("편의점 직원: 선반에 놓인 4×4 총 16개의 삼김 중, 같은 종류끼리 짝을 맞추면 공짜로 가져가시는 거죠!")
-    display_story_text("(마침 돈도 얼마 없던참이라 좋은일이라고 생각했다.)")
-    display_story_text("나: 오 좋은데요?")
+    # display_story_text("나: 아 배고파.. 편의점좀 가야겠다..", bg="쿱스켓")
+    # display_story_text("(쿱스켓으로 배경이 바뀐다.)", ch="clerk")
+    # display_story_text("편의점 직원: 어서오세요 손님~")
+    # display_story_text("편의점 직원: 오늘의 특별 이벤트! 삼김 1+1 COOPSKET 매칭 챌린지에 참여하시겠습니까?")
+    # display_story_text("나: 그게 뭔데요?")
+    # display_story_text("편의점 직원: 선반에 놓인 4×4 총 16개의 삼김 중, 같은 종류끼리 짝을 맞추면 공짜로 가져가시는 거죠!")
+    # display_story_text("(마침 돈도 얼마 없던참이라 좋은일이라고 생각했다.)")
+    # display_story_text("나: 오 좋은데요?")
 
     # # //같은종류의 짝을 다 맞췄을 시
-    display_story_text("나: 이거 다 가져가도 돼요?")
-    display_story_text("편의점 직원: 다 가져가도 됩니다!")
-    display_story_text("나: 배부르니까 하나만 먹을게요~ 많이파세요~~")
-    display_story_text("편의점 직원: 감사합니다 또오세요~ ")
-    display_story_text("( 단서 +25)")
+    # display_story_text("나: 이거 다 가져가도 돼요?")
+    # display_story_text("편의점 직원: 다 가져가도 됩니다!")
+    # display_story_text("나: 배부르니까 하나만 먹을게요~ 많이파세요~~")
+    # display_story_text("편의점 직원: 감사합니다 또오세요~ ")
+    # display_story_text("( 단서 +25)")
 
     # # //같은종류의 짝 다 맞추지 못했을 시
-    display_story_text("편의점 직원: 아이고.. 아쉽네요..")
-    display_story_text("나: 이걸로 결제 해 주세요….( 카드를 건넨다)")
-    display_story_text("(체력 30 감소)")
+    # display_story_text("편의점 직원: 아이고.. 아쉽네요..")
+    # display_story_text("나: 이걸로 결제 해 주세요….( 카드를 건넨다)")
+    # display_story_text("(체력 30 감소)")
 
 
-    game_result_findcard = run_game(FindCard)
+    # game_result_findcard = run_game(FindCard)
     
-    if game_result_findcard == "QUIT":
-        return
+    # if game_result_findcard == "QUIT":
+    #     return
     
-    if game_result_findcard is True: # 카드 찾기 게임 승리 
-        display_story_text("성공! 다음 단계를 진행.", 3000)
-    else: # 패배
-        display_story_text("실패. 게임 종료.", 4000)
-        return # 스토리 종료
+    # if game_result_findcard is True: # 카드 찾기 게임 승리 
+    #     display_story_text("성공! 다음 단계를 진행.", 3000)
+    # else: # 패배
+    #     display_story_text("실패. 게임 종료.", 4000)
+    #     return # 스토리 종료
     
 
     # 6. B:last 홍보 부스 (10초에 맞춰 버튼 입력하는 게임) -----------------------------------
-    # display_story_text("나: 조금 걷다가… 아, 저기 부스가 있네. 뭐하는 곳이지?")
-    # # //(배경 부스로 바뀜)
-    # display_story_text("홍보 관계자: 어서 오세요, 손님! 오늘은 특별한 체험 이벤트가 있어요!")
-    # display_story_text("B:last 10초 버튼 챌린지’에 참여하시겠어요?")
-    # display_story_text("나: …버튼을 10초 안에 맞춘다고요?")
-    # display_story_text("나: 오 재밌겠는데?")
-    # display_story_text("홍보 관계자: 좋아요! 10초 안에 화면에 나타나는 버튼을 정확히 누르세요!")
-    # display_story_text("성공하면 단서 +25, 실패하면 체력이 조금 줄어듭니다. 준비, 시작!");
+    display_story_text("나: 조금 걷다가… 아, 저기 부스가 있네. 뭐하는 곳이지?", bg="중도부스")
+    # //(배경 부스로 바뀜)
+    display_story_text("홍보 관계자: 어서 오세요, 손님! 오늘은 특별한 체험 이벤트가 있어요!", ch="booth_promoter")
+    display_story_text("B:last 10초 버튼 챌린지’에 참여하시겠어요?")
+    display_story_text("나: …버튼을 10초 안에 맞춘다고요?")
+    display_story_text("나: 오 재밌겠는데?")
+    display_story_text("홍보 관계자: 좋아요! 10초 안에 화면에 나타나는 버튼을 정확히 누르세요!")
+    display_story_text("성공하면 단서 +25, 실패하면 체력이 조금 줄어듭니다. 준비, 시작!")
 
 
     game_result_timer = run_game(Timer)

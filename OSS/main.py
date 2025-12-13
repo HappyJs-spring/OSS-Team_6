@@ -196,20 +196,21 @@ def game_story_sequence():
     #     return # 스토리 종료
 
     # 1  ------------------ <프롤로그> ---------------------------  
-    # display_story_text("당신은 충북대학교 컴퓨터공학과 학생입니다. 당일 자정까지 전공과목의 기말대체 과제 제출이 있었으나 깜빡하고 제출하지 못했습니다. 해당 과제를 제출하지 못하면 당신은 F를 받고야 맙니다. 당신은 교수님 몰래 과제를 제출하기 위해 교수님들이 모두 퇴근하신 새벽에 전공 교수님 사무실이 위치한 공과대학 건물에 왔습니다.")
+    display_story_text("당신은 충북대학교 컴퓨터공학과 학생입니다. 당일 자정까지 전공과목의 기말대체 과제 제출이 있었으나 깜빡하고 제출하지 못했습니다.")
+    display_story_text("해당 과제를 제출하지 못하면 당신은 F를 받고야 맙니다. 당신은 교수님 몰래 과제를 제출하기 위해 교수님들이 모두 퇴근하신 새벽에 전공 교수님 사무실이 위치한 공과대학 건물에 왔습니다.")
 
-    # display_story_text("나 : (일부러 교수님이 모두 퇴근하신 시간대에 왔으니까. 과제 제출만하면 될꺼야!)")
-    # display_story_text("(공대건물 4층으로 조용히 올라간다.)", 600, bg="e8-1(5)")
-    # display_story_text("(당신은 연구실 불이 켜져 있는 것을 보고 깜짝 놀란다.)")
-    # display_story_text("나 : 분명 이 시간엔 아무도 없을 거라 생각했는데, 누구지?")
-    # display_story_text("(당신은 연구실에서 교수님을 발견한다.)")
-    # display_story_text("나 : 이런 교수님이 아직도 퇴근하지 않으셨을 줄이야… 교수님 몰래 과제를 제출하고 빨리 나가야겠어..!")
+    display_story_text("나 : (일부러 교수님이 모두 퇴근하신 시간대에 왔으니까. 과제 제출만하면 될꺼야!)", bg="e8-1(3rd stairs)")
+    display_story_text("(공대건물 4층으로 조용히 올라간다.)", bg="e8-1(6)")
+    display_story_text("(당신은 연구실 불이 켜져 있는 것을 보고 깜짝 놀란다.)")
+    display_story_text("나 : 분명 이 시간엔 아무도 없을 거라 생각했는데, 누구지?")
+    display_story_text("(당신은 연구실에서 교수님을 발견한다.)")
+    display_story_text("나 : 이런 교수님이 아직도 퇴근하지 않으셨을 줄이야… 교수님 몰래 과제를 제출하고 빨리 나가야겠어..!")
 
-    # # 2.—---------------------------------------------
-    # # 업다운 게임
-    # display_story_text("(교수연구실 앞으로 이동한다.)", 600, bg="e8-1(2)")
-    # display_story_text("나 : 이런.. 교수연구실 문이 잠겨있잖아.. 5번 틀리면 경보가 울릴테니 그 전에 숫자를 맞춰야겠어..")
-    # display_story_text("교수실 문을 열어라!", 3000)
+    # 2.—---------------------------------------------
+    # 업다운 게임
+    display_story_text("(교수연구실 앞으로 이동한다.)", 600, bg="e8-1(2)")
+    display_story_text("나 : 이런.. 교수연구실 문이 잠겨있잖아.. 5번 틀리면 경보가 울릴테니 그 전에 숫자를 맞춰야겠어..")
+    display_story_text("교수실 문을 열어라!", 3000)
     
     # game_result_updown = run_game(UpDownGame)
     
@@ -222,15 +223,15 @@ def game_story_sequence():
     #     display_story_text("문을 여는데 실패했습니다.. 교수님게 발각되어 학점 F를 받게되었습니다.", 4000)
     #     return
 
-    # # 3.—---------------------------------------------
-    # # 행맨게임
-    # display_story_text("(교수실 문을 여는데 성공했다.)")
-    # display_story_text("나 : 후.. 운 좋게 성공했다.")
-    # display_story_text("나 : 그나저나. 과제물이 있는 케비넷이 어딨지..?")
-    # display_story_text("나 : 찾았다!")
-    # display_story_text("(과제물 케비넷이 잠겨있다.)")
+    # 3.—---------------------------------------------
+    # 행맨게임
+    display_story_text("(교수실 문을 여는데 성공했다.)")
+    display_story_text("나 : 후.. 운 좋게 성공했다.")
+    display_story_text("나 : 그나저나. 과제물이 있는 케비넷이 어딨지..?")
+    display_story_text("나 : 찾았다!")
+    display_story_text("(과제물 케비넷이 잠겨있다.)")
 
-    # display_story_text("나 : 이런..! 이번엔 영문자물쇠네.. 오랜 시간을 지체하면 교수님께 들킬거야..!")
+    display_story_text("나 : 이런..! 이번엔 영문자물쇠네.. 오랜 시간을 지체하면 교수님께 들킬거야..!")
 
     # game_result_hangman = run_game(HangmanGame)
     # if game_result_hangman == "QUIT":
@@ -253,48 +254,46 @@ def game_story_sequence():
     display_story_text("(???이 들어온다.)")
     display_story_text("전공교수님 : 자네. 이 시간까지 강의실에서 뭐하는 건가?")
 
-    # display_story_text("1.강의실에 남아 공부하고 있었었다고 이야기한다.\n
-    # 2.과제 제출하러 왔다고 한다.") --------------------------------------------------- 수정
-
+    display_story_text("1.강의실에 남아 공부하고 있었었다고 이야기한다.\n2.과제 제출하러 왔다고 한다.")
     # //1번
-    # display_story_text("나 : 강의실에 남아서 복습하고 있었습니다.");
-    # display_story_text("전공교수님 : 훌륭한 학생이군. 열심히 하게.");
-    # display_story_text("(전공 교수님이 밖으로 나간다.)");
-    # display_story_text("나 : (휴… 살았다..)");
+    display_story_text("나 : 강의실에 남아서 복습하고 있었습니다.", ch="professor_smile")
+    display_story_text("전공교수님 : 훌륭한 학생이군. 열심히 하게.")
+    display_story_text("(전공 교수님이 밖으로 나간다.)")
+    display_story_text("나 : (휴… 살았다..)")
 
     # //2번
-    # display_story_text("나 : 과제 제출하러 왔습니다.");
-    # display_story_text("전공교수 : 과제제출은 어제까지 인걸로 알고있는데..?");
-    # display_story_text("나 : 하하.. 들켰네.");
+    # display_story_text("나 : 과제 제출하러 왔습니다.", ch="professor_angry")
+    # display_story_text("전공교수 : 과제제출은 어제까지 인걸로 알고있는데..?")
+    # display_story_text("나 : 하하.. 들켰네.")
     # //게임오버
 
     # # 5.—---------------------------------------------
     # # 올바른 대화 선택지 2
 
-    # display_story_text("나 : 교수님과 다시 마주치기 전에 빨리 건물을 나가야겠어!")
-    # display_story_text("(1층으로 내려가던 중 3층에서 대학원생과 마주쳤다.)")
-    # display_story_text("대학원생 : 학생. 이 시간에 학교에는 어쩐일인가?")
-    # display_story_text("나 : (아.. 뭐하고 둘러대지?)")
-    # display_story_text("1. 공손하게 인사하고 공부하다가 집에 가려고 한다고 말한다.\n2.(말을 무시하고 지나친다)");
+    display_story_text("나 : 교수님과 다시 마주치기 전에 빨리 건물을 나가야겠어!", bg="e8-1(3rd floor)")
+    display_story_text("(1층으로 내려가던 중 3층에서 대학원생과 마주쳤다.)", ch="grad_student")
+    display_story_text("대학원생 : 학생. 이 시간에 학교에는 어쩐일인가?")
+    display_story_text("나 : (아.. 뭐라고 둘러대지?)")
+    display_story_text("1. 공손하게 인사하고 공부하다가 집에 가려고 한다고 말한다.\n2.(말을 무시하고 지나친다)")
     
     # 1번
-    # display_story_text("나 : 안녕하세요. 선배님. 강의실에 남아서 공부하다가 집에 가는 중이에요.")
-    # display_story_text("대학원생 : 지금 교수님 연구 중이시라 예민하셔. 조심히가렴.")
-    # display_story_text("나 : 네. 알겠습니다.")
-    # display_story_text("(무사히 학과 건물을 빠져나왔다.)")
-    # display_story_text("(갑자기 뒤에서 전공교수님이 뛰어온다.)")
-    # display_story_text("전공교수님 : 자네 잠깐만 거기 서 보세..!")
-    # display_story_text("나 : (도망친다.)")
-    # display_story_text("전공교수님 : 헉헉… 분명 교수연구실 문과 과제물 케비넷이 잠겨있었는데..! 저 학생이 범인이 분명해 꼭 잡고야 말겠어..!")
+    display_story_text("나 : 안녕하세요. 선배님. 강의실에 남아서 공부하다가 집에 가는 중이에요.", ch="grad_student_smile")
+    display_story_text("대학원생 : 지금 교수님 연구 중이시라 예민하셔. 조심히가렴.")
+    display_story_text("나 : 네. 알겠습니다.", bg="e8-1외부")
+    display_story_text("(무사히 학과 건물을 빠져나왔다.)", ch="professor_embarrassed")
+    display_story_text("(갑자기 뒤에서 전공교수님이 뛰어온다.)")
+    display_story_text("전공교수님 : 자네 잠깐만 거기 서 보세..!")
+    display_story_text("나 : (도망친다.)")
+    display_story_text("전공교수님 : 헉헉… 분명 교수연구실 문과 과제물 케비넷이 잠겨있었는데..! 저 학생이 범인이 분명해 꼭 잡고야 말겠어..!")
 
     # 2번
-    # display_story_text("대학원생 : 이 자식봐라 수상한데? 거기 학생 잠깐 나 좀 볼까?");
+    # display_story_text("대학원생 : 이 자식봐라 수상한데? 거기 학생 잠깐 나 좀 볼까?", ch="grad_student_angry");
     # display_story_text("나 : 네..? 저..저요?");
     # display_story_text("대학원생 : 그래. 지금 여기 학생 말고 또 누가 있나?");
     # display_story_text("(갑자기 전공교수님이 뛰어온다)");
-    # display_story_text("전공교수님 : 이봐 자네! 그 학생 잡아!")
+    # display_story_text("전공교수님 : 이봐 자네! 그 학생 잡아!", ch="grad_student_embrrassed")
     # display_story_text("대학원생 : 이 학생이요..?")
-    # display_story_text("(대학원생에게 붙잡혔다.)")
+    # display_story_text("(대학원생에게 붙잡혔다.)", ch="professor_angry")
     # display_story_text("전공교수 : 이 새벽에 강의실에 혼자 있던 것도 수상했는데, 교수실과 과제 제출 캐비닛까지 열려있다니!")
     # display_story_text("나 : (아.. 망했다)")
     # 게임오버
@@ -312,16 +311,16 @@ def game_story_sequence():
     # '''
 
     # # 1.산책하던 충북대학교 총장과 마주침. -----------------------------------
-    # display_story_text("(멀리서 조용한 충북대 캠퍼스에서 한 사람의 실루엣이 보인다. 그가 다가왔다.)")
+    # display_story_text("(멀리서 조용한 충북대 캠퍼스에서 한 사람의 실루엣이 보인다. 그가 다가왔다.)", bg="솔못", ch="president")
     # display_story_text("총장 : 어? 이 시간에 학생이 여길 왜 다니고 있지?")
     # display_story_text("총장 : 혹시… 나를 알아보겠나?")
     # display_story_text("나 : 아..! 총장님..! (왜 하필 지금…!) 네, 당연하죠.")
     # display_story_text("총장 : 그렇다면 내 이름이 무엇인지 말해보게.")
-    # display_story_text("(초성 : ㄱㅊㅅ)");
+    # display_story_text("(초성 : ㄱㅊㅅ)")
     # display_story_text("1.김창섭\n2.고창섭\n3.김치신\n4.강창섭\n5구창섭")
 
     # # 올바른 선택시
-    # display_story_text("총장 : 흠… 정확하게 알고 있군!")
+    # display_story_text("총장 : 흠… 정확하게 알고 있군!", ch="president_smile")
     # display_story_text("(기분이 좋아져 미소를 짓는다)")
     # display_story_text("총장 : 이 정도면 우리 학교 학생으로서 충분히 자랑스럽네.")
     # display_story_text("총장 : 오늘 만난 것도 인연이지. 자네에게 작은 도움을 주도록 하지.")
@@ -329,56 +328,56 @@ def game_story_sequence():
     # display_story_text("(단서 +25)")
 
     # # //플레이어가 오답을 선택 시
-    # display_story_text("총장 : …흠. 그렇군.")
+    # display_story_text("총장 : …흠. 그렇군.", ch="president_disappointed")
     # display_story_text("(씁쓸한 표정을 짓는다.)")
     # display_story_text("총장 : 내 이름도 모르는 학생이 요즘 왜 이렇게 많나… 하여간… 에휴…")
     # display_story_text("(총장이 실망했다. 하지만 딱히 상관은 없다.)")
 
 
     # # 2.공업 법규와 창업. 강봉희 교수를 만남 -----------------------------------
-    # display_story_text("(학연산 건물 앞을 지나가던 도중, 공업법규와 창업 강봉희 교수님을 만났다.)");
-    # display_story_text("강봉희 교수님 : 어이 학생. 잠깐 거기 서봐.");
-    # display_story_text("(당황하며 얼어붙는다.)");
-    # display_story_text("나 : 네.. 교수님… (큰일났다…!)");
-    # display_story_text("강봉희 교수님 : 마침 잘 됐군. 방금 APEC 회의 자료를 검토하고 있었거든.");
-    # display_story_text("강봉희 교수님 : APEC이 뭔지 정도는 알겠지? 아시아 태평양 경제협력체 말이야.");
-    # display_story_text("(강봉희 교수님이 서류를 덮고 플레이어를 바라본다)");
-    # display_story_text("강봉희 교수님 : 근데 말이지… 학생, 혹시 내 영어 이름을 알고 있나?!");
-    # display_story_text("나 : (뜨끔!)");
-    # display_story_text("강봉희 교수님 : 정확한 스펠링을 맞혀야 한다. 틀리면…");
-    # display_story_text("(강봉희 교수님이 씨익 웃는다)");
-    # display_story_text("강봉희 교수님 : 가차 없어 F를 주지!");
-    # display_story_text("\n입력 : ");
+    # display_story_text("(학연산 건물 앞을 지나가던 도중, 공업법규와 창업 강봉희 교수님을 만났다.)", bg="학연산", ch="monica")
+    # display_story_text("강봉희 교수님 : 어이 학생. 잠깐 거기 서봐.")
+    # display_story_text("(당황하며 얼어붙는다.)")
+    # display_story_text("나 : 네.. 교수님… (큰일났다…!)")
+    # display_story_text("강봉희 교수님 : 마침 잘 됐군. 방금 APEC 회의 자료를 검토하고 있었거든.")
+    # display_story_text("강봉희 교수님 : APEC이 뭔지 정도는 알겠지? 아시아 태평양 경제협력체 말이야.")
+    # display_story_text("(강봉희 교수님이 서류를 덮고 플레이어를 바라본다)", ch="monica_serious")
+    # display_story_text("강봉희 교수님 : 근데 말이지… 학생, 혹시 내 영어 이름을 알고 있나?!")
+    # display_story_text("나 : (뜨끔!)")
+    # display_story_text("강봉희 교수님 : 정확한 스펠링을 맞혀야 한다. 틀리면…", ch="monica_smile2")
+    # display_story_text("(강봉희 교수님이 씨익 웃는다)")
+    # display_story_text("강봉희 교수님 : 가차 없어 F를 주지!")
+    # display_story_text("\n입력 : ")
 
     # # //정답 monica 
-    # display_story_text("강봉희 교수님 : 오~ 정확하군! MIONICA, 맞네.");
-    # display_story_text("강봉희 교수님 : 수업을 아주 집중해서 들었군. 대단한데?");
-    # display_story_text("(강봉희 교수님이 만족한 듯 고개를 끄덕인다.)");
-    # display_story_text("강봉희 교수님 : 좋아. 통과! 이만 가봐도 좋다네.");
-    # display_story_text("(단서 +25)");
+    # display_story_text("강봉희 교수님 : 오~ 정확하군! MONICA, 맞네.", ch="monica_smile")
+    # display_story_text("강봉희 교수님 : 수업을 아주 집중해서 들었군. 대단한데?")
+    # display_story_text("(강봉희 교수님이 만족한 듯 고개를 끄덕인다.)")
+    # display_story_text("강봉희 교수님 : 좋아. 통과! 이만 가봐도 좋다네.")
+    # display_story_text("(단서 +25)")
 
     # # //오답
-    # display_story_text("강봉희 교수님 : 땡! 틀렸어.");
+    # display_story_text("강봉희 교수님 : 땡! 틀렸어.", ch="monica_serious");
     # display_story_text("강봉희 교수님 : 이봐, 내가 뭐랬지? 스펠링 틀리면 F라고 했지?");
-    # display_story_text("(갑자기 진지해지며)");
+    # display_story_text("(갑자기 진지해지며)", ch="monica_smile2");
     # display_story_text("강봉희 교수님 : 자네… 공법창 F다.");
     # display_story_text("나 : 아이고.. 아이고.. (하지만 어차피 중간 성적대로 가면 D+였기 때문에 큰 타격이 없다. 교양이기도 하고)");
     # display_story_text("(공법창 학점 F확정^^)");
 
     # # 3.학연산 (충북 산학협력단 rise와 만남.) -----------------------------------
-    # display_story_text("(학연산 건물 앞을 지나던 중 산학협력단 관계자로 보이는 사람이 서류를 들고 이동중이다.)")
+    # display_story_text("(학연산 건물 앞을 지나던 중 산학협력단 관계자로 보이는 사람이 서류를 들고 이동중이다.)", bg="학연산", ch="rise")
     # display_story_text("RISE 관계자 : 학생, 잠시만요.")
     # display_story_text("RISE 관계자 : 혹시 우리 충북대학교 산학협력단 RISE에 대해 알고 있나요?")
-    # display_story_text("1. RISE는 대학·기업·지역을 연결해 연구 및 기술개발을 지원하는 ‘산학협력단’입니다.\n2. 아이돌 아님?"\n3. 롤 챔프 아님?"\n4. 상승이라는 뜻 아님?"\n5. 로켓 발사 프로젝트 아님?")
+    # display_story_text("1. RISE는 대학·기업·지역을 연결해 연구 및 기술개발을 지원하는 ‘산학협력단’입니다.\n2. 아이돌 아님?\n3. 롤 챔프 아님?\n4. 상승이라는 뜻 아님?\n5. 로켓 발사 프로젝트 아님?")
 
     # # //1번 선택 시
-    # display_story_text("RISE 관계자 : 맞습니다! RISE는 충북대의 산학연 협력, 기술사업화, 기업 지원을 담당하는 핵심 조직이에요.")
+    # display_story_text("RISE 관계자 : 맞습니다! RISE는 충북대의 산학연 협력, 기술사업화, 기업 지원을 담당하는 핵심 조직이에요.", ch="rise_smile")
     # display_story_text("RISE 관계자 : 학생이 아주 잘 알고 있네요.")
     # display_story_text("RISE 관계자 : 이해도가 높으니, 도움이 될 만한 정보를 더 드릴게요.")
     # display_story_text("(단서 +25)")
 
     # # //오답 선택 시
-    # display_story_text("RISE 관계자 : RISE는 ‘Regional Innovation & Start-up Education’의 약자로,")
+    # display_story_text("RISE 관계자 : RISE는 ‘Regional Innovation & Start-up Education’의 약자로,", ch="rise_smile")
     # display_story_text("충북대학교 산학협력단이 지역 기업·연구기관·정부와 협업하여 기술 개발 지원, 창업 보육 및 기업 컨설팅, 산학 공동 R&D, 지식재산(IP) 관리, 현장실습·취업 연계, 지역산업 혁신 프로젝트 등을 수행하는 기관입니다. 우리 학교의 연구 역량을 지역 산업과 직접 연결해")
     # display_story_text("학생·기업·지역사회가 함께 성장할 수 있도록 돕는 핵심 조직이죠.")
     # display_story_text("RISE 관계자 : 다음엔 꼭 맞추세요, 학생.")
@@ -387,7 +386,7 @@ def game_story_sequence():
     # display_story_text("(체력 -30)")
 
     # # 4.솔못 (커플 피하기 게임) -----------------------------------
-    # display_story_text("(솔못 근처를 조용히 지나가려는데, 벤치에 앉아 있는 닭살 커플이 갑자기 당신을 발견하고 말을 건다.)")
+    # display_story_text("(솔못 근처를 조용히 지나가려는데, 벤치에 앉아 있는 닭살 커플이 갑자기 당신을 발견하고 말을 건다.)", bg="솔못", ch="couple")
     # display_story_text("커플남 : 어? 자기야, 저 사람 혼자 다닌다~ 우리랑 얘기 좀 하면 안 돼?")
     # display_story_text("커플녀 : 그러게~ 솔못은 커플들이 오는 명소인데… 혼자 오니까 뭔가 신기하다~ 헤헤.")
     # display_story_text("(둘이 서로 팔짱을 끼고 부비부비 거리며 다가온다.)")
@@ -398,7 +397,7 @@ def game_story_sequence():
     # display_story_text("(단서 +25)");
 
     # # //실패
-    # display_story_text("커플녀 : 솔못은 원래 커플 성지야~ 우리도 여기서 200일 기념했거든~ 헤헤.")
+    # display_story_text("커플녀 : 솔못은 원래 커플 성지야~ 우리도 여기서 200일 기념했거든~ 헤헤.", ch="couple_sneer")
     # display_story_text("커플남 : 맞아~ 여기 벤치에서 처음으로 손도 잡고~ 첫 데이트도 하고~")
     # display_story_text("(둘이 갑자기 과한 스킨십을 시전한다. 당신은 정신적으로 데미지를 입기 시작한다.)")
     # display_story_text("커플녀 : 너도 얼른 커플 만들어~ 요즘 혼자 다니면 외로워~")
@@ -407,74 +406,74 @@ def game_story_sequence():
     # display_story_text("(체력 -50)")
 
     # 5.coopsket (1+1 삼김 짝 맞추기) -----------------------------------
-    # display_story_text("나: 아 배고파.. 편의점좀 가야겠다..");
-    # display_story_text("(쿱스켓으로 배경이 바뀐다.)");
-    # display_story_text("편의점 직원: 어서오세요 손님~");
-    # display_story_text("편의점 직원: 오늘의 특별 이벤트! 삼김 1+1 COOPSKET 매칭 챌린지에 참여하시겠습니까?");
-    # display_story_text("나: 그게 뭔데요?");
-    # display_story_text("편의점 직원: 선반에 놓인 4×4 총 16개의 삼김 중, 같은 종류끼리 짝을 맞추면 공짜로 가져가시는 거죠!");
-    # display_story_text("(마침 돈도 얼마 없던참이라 좋은일이라고 생각했다.)");
-    # display_story_text("나: 오 좋은데요?");
+    # display_story_text("나: 아 배고파.. 편의점좀 가야겠다..", bg="쿱스켓")
+    # display_story_text("(쿱스켓으로 배경이 바뀐다.)", ch="clerk")
+    # display_story_text("편의점 직원: 어서오세요 손님~")
+    # display_story_text("편의점 직원: 오늘의 특별 이벤트! 삼김 1+1 COOPSKET 매칭 챌린지에 참여하시겠습니까?")
+    # display_story_text("나: 그게 뭔데요?")
+    # display_story_text("편의점 직원: 선반에 놓인 4×4 총 16개의 삼김 중, 같은 종류끼리 짝을 맞추면 공짜로 가져가시는 거죠!")
+    # display_story_text("(마침 돈도 얼마 없던참이라 좋은일이라고 생각했다.)")
+    # display_story_text("나: 오 좋은데요?")
 
     # # //같은종류의 짝을 다 맞췄을 시
     # display_story_text("나: 이거 다 가져가도 돼요?")
     # display_story_text("편의점 직원: 다 가져가도 됩니다!")
     # display_story_text("나: 배부르니까 하나만 먹을게요~ 많이파세요~~")
-    # display_story_text("편의점 직원: 감사합니다 또오세요~ “)
-    # display_story_text(”( 단서 +25)")
+    # display_story_text("편의점 직원: 감사합니다 또오세요~ ")
+    # display_story_text("( 단서 +25)")
 
     # # //같은종류의 짝 다 맞추지 못했을 시
-    # display_story_text(“편의점 직원: 아이고.. 아쉽네요..”)
-    # display_story_text("나: 이걸로 결제 해 주세요….( 카드를 건넨다)“)
-    # display_story_text(”(체력 30 감소)")
+    # display_story_text("편의점 직원: 아이고.. 아쉽네요..")
+    # display_story_text("나: 이걸로 결제 해 주세요….( 카드를 건넨다)")
+    # display_story_text("(체력 30 감소)")
 
 
-    game_result_findcard = run_game(FindCard)
+    # game_result_findcard = run_game(FindCard)
     
-    if game_result_findcard == "QUIT":
-        return
+    # if game_result_findcard == "QUIT":
+    #     return
     
-    if game_result_findcard is True: # 카드 찾기 게임 승리 
-        display_story_text("성공! 다음 단계를 진행.", 3000)
-    else: # 패배
-        display_story_text("실패. 게임 종료.", 4000)
-        return # 스토리 종료
+    # if game_result_findcard is True: # 카드 찾기 게임 승리 
+    #     display_story_text("성공! 다음 단계를 진행.", 3000)
+    # else: # 패배
+    #     display_story_text("실패. 게임 종료.", 4000)
+    #     return # 스토리 종료
     
 
     # 6. B:last 홍보 부스 (10초에 맞춰 버튼 입력하는 게임) -----------------------------------
-    # display_story_text("나: 조금 걷다가… 아, 저기 부스가 있네. 뭐하는 곳이지?")
+    # display_story_text("나: 조금 걷다가… 아, 저기 부스가 있네. 뭐하는 곳이지?", bg="중도부스")
     # # //(배경 부스로 바뀜)
-    # display_story_text("홍보 관계자: 어서 오세요, 손님! 오늘은 특별한 체험 이벤트가 있어요!")
+    # display_story_text("홍보 관계자: 어서 오세요, 손님! 오늘은 특별한 체험 이벤트가 있어요!", ch="booth_promoter")
     # display_story_text("B:last 10초 버튼 챌린지’에 참여하시겠어요?")
     # display_story_text("나: …버튼을 10초 안에 맞춘다고요?")
     # display_story_text("나: 오 재밌겠는데?")
     # display_story_text("홍보 관계자: 좋아요! 10초 안에 화면에 나타나는 버튼을 정확히 누르세요!")
-    # display_story_text("성공하면 단서 +25, 실패하면 체력이 조금 줄어듭니다. 준비, 시작!");
+    # display_story_text("성공하면 단서 +25, 실패하면 체력이 조금 줄어듭니다. 준비, 시작!")
 
 
-    game_result_timer = run_game(Timer)
+    # game_result_timer = run_game(Timer)
 
-    if game_result_timer == "QUIT":
-        return
+    # if game_result_timer == "QUIT":
+    #     return
 
-    if game_result_timer is True:
-        display_story_text("10초 맞추기 성공! 단서 +25", 3000)
-        player["clue"] += 25
-    else:
-        display_story_text("10초 맞추기 실패! 체력 -10", 3000)
-        player["health"] -= 10
+    # if game_result_timer is True:
+    #     display_story_text("10초 맞추기 성공! 단서 +25", 3000)
+    #     player["clue"] += 25
+    # else:
+    #     display_story_text("10초 맞추기 실패! 체력 -10", 3000)
+    #     player["health"] -= 10
 
     # # //성공
-    # display_story_text("와! 대단하시네요! 완벽하게 성공하셨습니다!");
+    # display_story_text("와! 대단하시네요! 완벽하게 성공하셨습니다!", ch="booth_promoter_smile");
     # display_story_text("나: 오예!");
     # display_story_text("홍보 관계자: 좋아요, 덕분에 오늘도 즐거운 이벤트였어요! 또 오세요~");
     # display_story_text("단서 +25");
 
     # # //실패 시
-    # display_story_text("홍보 관계자: 앗, 아쉽네요… 다음 기회에 다시 도전하세요!");
+    # display_story_text("홍보 관계자: 앗, 아쉽네요… 다음 기회에 다시 도전하세요!". ch="booth_promoter_disappointed");
 
     # 7.중도 앞 길가에서 쓰레기 발견 (중도 앞 길가에서 쓰레기를 발견함)-----------------------------------
-    # display_story_text("나:  어? 뭐지? 땅에 쓰레기가…")
+    # display_story_text("나:  어? 뭐지? 땅에 쓰레기가…", bg="중앙도서관")
     # display_story_text("1.쓰레기를 줍는다\n2.무시하고 지나간다.")
 
     # # //쓰레기를 줍는다 선택 시
@@ -483,36 +482,36 @@ def game_story_sequence():
     # display_story_text("(단서 +25)")
 
     # # //무시하고 지나간다 선택 시
-    # display_story_text("(그냥 지나간다)")
+    # display_story_text("(그냥 지나간다)", ch="environmentalist_angry")
     # display_story_text("환경봉사 동아리 부원 등장")
     # display_story_text("환경봉사 동아리 부원: 학생! 여기서 쓰레기를 무시하고 지나가다니… 환경 의식이 너무 부족하군요!")
-    # display_story_text("나: 죄송합니다… 다음부터 꼭 챙길게요!")
+    # display_story_text("나: 죄송합니다… 다음부터 꼭 챙길게요!", ch="environmentalist")
     # display_story_text("환경봉사 동아리 부원: 좋아요, 이번 한 번만 봐줄게요. 앞으로는 주의하세요!")
     # display_story_text("(체력 -20)")
 
     # 8.중문에서 나타나는 보드게임 중독(홀덤 중독자) 학과 동기와 만남-----------------------------------
-    # display_story_text("하하하하하");
+    # display_story_text("하하하하하", bg="n-14")
     # display_story_text("나: 저게 무슨소리지?")
-    # display_story_text("나: 저 사람 컴공 동기인가? 왜 이렇게 진지하게 게임을 하고 있지?")
+    # display_story_text("나: 저 사람 컴공 동기인가? 왜 이렇게 진지하게 게임을 하고 있지?", ch="schoolmate_smile")
     # display_story_text("동기: 오! 너도 들어와! 베스킨라빈스 31, 한 판 하자고!")
     # display_story_text("동기: …지금? 체력도 좀 남았는데, 한 번만 해보지 뭐. 들어오쇼 ㅋ")
-    # display_story_text("동기: 규칙은 간단해, 31을 넘기지 않고 돌아가면서 최대 3개 최소 1개씩 숫자를 말하면 되고 31을 말하면 지는거에요!")
-    game_result_BR31 = run_game(BR31)
-    if game_result_BR31== "QUIT":
-        return
+    # display_story_text("동기: 규칙은 간단해, 31을 넘기지 않고 돌아가면서 최대 3개 최소 1개씩 숫자를 말하면 되고 31을 말하면 지는거야!")
+    # game_result_BR31 = run_game(BR31)
+    # if game_result_BR31== "QUIT":
+    #     return
     
-    if game_result_BR31 is True: # 행맨 승리
-        display_story_text("성공! 다음 단계를 진행.", 3000)
-    else: # 행맨 패배
-        display_story_text("실패. 게임 종료.", 4000)
-        return # 스토리 종료
+    # if game_result_BR31 is True: # 행맨 승리
+    #     display_story_text("성공! 다음 단계를 진행.", 3000)
+    # else: # 행맨 패배
+    #     display_story_text("실패. 게임 종료.", 4000)
+    #     return # 스토리 종료
 
     # # //성공 시
-    # display_story_text("동기: 와! 대단한데? 역시 네가 우리 중에 제일 센스 있네!")
+    # display_story_text("동기: 와! 대단한데? 역시 네가 우리 중에 제일 센스 있네!", ch="schoolmate_smile")
     # display_story_text("(단서 +25)")
 
     # # //(실패 시)
-    # display_story_text("동기:ㅋ 아쉽다! 넌 아직 부족하군.")
+    # display_story_text("동기:ㅋ 아쉽다! 넌 아직 부족하군.", ch="schoolmate_sneer")
     # display_story_text("이제 더 집중해야지, 그래도 열심히 하셨잖아~")
     # display_story_text("(체력 -50)")
 

@@ -15,19 +15,54 @@ from dialogue_manager import DialogueManager
 def draw_player_status(screen, font, player, status_img):
     img_w, img_h = status_img.get_size()
 
-    # 화면 오른쪽 상단 배치
+    # 화면 오른쪽 상단
     x = SCREEN_WIDTH - img_w - 20
     y = 20
 
-    # UI 이미지 표시
+    # UI 이미지
     screen.blit(status_img, (x, y))
 
-    # HP / Clue 텍스트
-    hp_surf = font.render(f"HP: {player['health']}", True, (255, 0, 0))
-    clue_surf = font.render(f"Clue: {player['clue']}", True, (255, 255, 0))
+    # ========================
+    # 체력바 설정
+    # ========================
+    max_hp = 100
+    current_hp = player['health']
+    hp_ratio = max(0, current_hp / max_hp)
 
-    screen.blit(hp_surf, (x + 120, y + 40))
-    screen.blit(clue_surf, (x + 120, y + 90))
+    bar_x = x + 80
+    bar_y = y + 45
+    bar_width = 120
+    bar_height = 14
+
+    # 배경 바
+    pygame.draw.rect(
+        screen,
+        (60, 60, 60),
+        (bar_x, bar_y, bar_width, bar_height)
+    )
+
+    # 체력 바 색상
+    if hp_ratio > 0.6:
+        color = (0, 200, 0)
+    elif hp_ratio > 0.3:
+        color = (255, 200, 0)
+    else:
+        color = (200, 0, 0)
+
+    # 현재 체력
+    pygame.draw.rect(
+        screen,
+        color,
+        (bar_x, bar_y, bar_width * hp_ratio, bar_height)
+    )
+
+    pygame.draw.rect(
+        screen,
+        (0, 0, 0),
+        (bar_x, bar_y, bar_width, bar_height),
+        2
+    )
+
 
 
 
@@ -196,21 +231,21 @@ def game_story_sequence():
     #     return # 스토리 종료
 
     # 1  ------------------ <프롤로그> ---------------------------  
-    display_story_text("당신은 충북대학교 컴퓨터공학과 학생입니다. 당일 자정까지 전공과목의 기말대체 과제 제출이 있었으나 깜빡하고 제출하지 못했습니다.")
-    display_story_text("해당 과제를 제출하지 못하면 당신은 F를 받고야 맙니다. 당신은 교수님 몰래 과제를 제출하기 위해 교수님들이 모두 퇴근하신 새벽에 전공 교수님 사무실이 위치한 공과대학 건물에 왔습니다.")
+    # display_story_text("당신은 충북대학교 컴퓨터공학과 학생입니다. 당일 자정까지 전공과목의 기말대체 과제 제출이 있었으나 깜빡하고 제출하지 못했습니다.")
+    # display_story_text("해당 과제를 제출하지 못하면 당신은 F를 받고야 맙니다. 당신은 교수님 몰래 과제를 제출하기 위해 교수님들이 모두 퇴근하신 새벽에 전공 교수님 사무실이 위치한 공과대학 건물에 왔습니다.")
 
-    display_story_text("나 : (일부러 교수님이 모두 퇴근하신 시간대에 왔으니까. 과제 제출만하면 될꺼야!)", bg="e8-1(3rd stairs)")
-    display_story_text("(공대건물 4층으로 조용히 올라간다.)", bg="e8-1(6)")
-    display_story_text("(당신은 연구실 불이 켜져 있는 것을 보고 깜짝 놀란다.)")
-    display_story_text("나 : 분명 이 시간엔 아무도 없을 거라 생각했는데, 누구지?")
-    display_story_text("(당신은 연구실에서 교수님을 발견한다.)")
-    display_story_text("나 : 이런 교수님이 아직도 퇴근하지 않으셨을 줄이야… 교수님 몰래 과제를 제출하고 빨리 나가야겠어..!")
+    # display_story_text("나 : (일부러 교수님이 모두 퇴근하신 시간대에 왔으니까. 과제 제출만하면 될꺼야!)", bg="e8-1(3rd stairs)")
+    # display_story_text("(공대건물 4층으로 조용히 올라간다.)", bg="e8-1(6)")
+    # display_story_text("(당신은 연구실 불이 켜져 있는 것을 보고 깜짝 놀란다.)")
+    # display_story_text("나 : 분명 이 시간엔 아무도 없을 거라 생각했는데, 누구지?")
+    # display_story_text("(당신은 연구실에서 교수님을 발견한다.)")
+    # display_story_text("나 : 이런 교수님이 아직도 퇴근하지 않으셨을 줄이야… 교수님 몰래 과제를 제출하고 빨리 나가야겠어..!")
 
-    # 2.—---------------------------------------------
-    # 업다운 게임
-    display_story_text("(교수연구실 앞으로 이동한다.)", 600, bg="e8-1(2)")
-    display_story_text("나 : 이런.. 교수연구실 문이 잠겨있잖아.. 5번 틀리면 경보가 울릴테니 그 전에 숫자를 맞춰야겠어..")
-    display_story_text("교수실 문을 열어라!", 3000)
+    # # 2.—---------------------------------------------
+    # # 업다운 게임
+    # display_story_text("(교수연구실 앞으로 이동한다.)", 600, bg="e8-1(2)")
+    # display_story_text("나 : 이런.. 교수연구실 문이 잠겨있잖아.. 5번 틀리면 경보가 울릴테니 그 전에 숫자를 맞춰야겠어..")
+    # display_story_text("교수실 문을 열어라!", 3000)
     
     # game_result_updown = run_game(UpDownGame)
     
@@ -225,13 +260,13 @@ def game_story_sequence():
 
     # 3.—---------------------------------------------
     # 행맨게임
-    display_story_text("(교수실 문을 여는데 성공했다.)")
-    display_story_text("나 : 후.. 운 좋게 성공했다.")
-    display_story_text("나 : 그나저나. 과제물이 있는 케비넷이 어딨지..?")
-    display_story_text("나 : 찾았다!")
-    display_story_text("(과제물 케비넷이 잠겨있다.)")
+    # display_story_text("(교수실 문을 여는데 성공했다.)")
+    # display_story_text("나 : 후.. 운 좋게 성공했다.")
+    # display_story_text("나 : 그나저나. 과제물이 있는 케비넷이 어딨지..?")
+    # display_story_text("나 : 찾았다!")
+    # display_story_text("(과제물 케비넷이 잠겨있다.)")
 
-    display_story_text("나 : 이런..! 이번엔 영문자물쇠네.. 오랜 시간을 지체하면 교수님께 들킬거야..!")
+    # display_story_text("나 : 이런..! 이번엔 영문자물쇠네.. 오랜 시간을 지체하면 교수님께 들킬거야..!")
 
     # game_result_hangman = run_game(HangmanGame)
     # if game_result_hangman == "QUIT":

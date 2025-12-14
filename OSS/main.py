@@ -12,6 +12,136 @@ from music import MusicGame
 
 from dialogue_manager import DialogueManager
 
+def draw_wrapped_text(surface, text, font, color, rect, line_spacing=5):
+    """
+    rect 영역 안에서 자동 줄바꿈하여 텍스트 출력
+    """
+    words = text.split(" ")
+    lines = []
+    current_line = ""
+
+    for word in words:
+        test_line = current_line + word + " "
+        if font.size(test_line)[0] <= rect.width - 30:
+            current_line = test_line
+        else:
+            lines.append(current_line)
+            current_line = word + " "
+
+    lines.append(current_line)
+
+    y = rect.y + 15
+    for line in lines:
+        rendered = font.render(line, True, color)
+        surface.blit(rendered, (rect.x + 15, y))
+        y += rendered.get_height() + line_spacing
+
+
+def choice_dialogue(option1, option2):
+    box_width = 600
+    box_height = 140
+    margin = 40
+
+    box1_rect = pygame.Rect(
+        SCREEN_WIDTH // 2 - box_width - margin // 2,
+        SCREEN_HEIGHT - box_height - 50,
+        box_width,
+        box_height
+    )
+
+    box2_rect = pygame.Rect(
+        SCREEN_WIDTH // 2 + margin // 2,
+        SCREEN_HEIGHT - box_height - 50,
+        box_width,
+        box_height
+    )
+
+    clock_local = pygame.time.Clock()
+    blink_alpha = 0
+    blink_dir = 1
+
+    while True:
+        mouse_pos = pygame.mouse.get_pos()
+
+        hover_1 = box1_rect.collidepoint(mouse_pos)
+        hover_2 = box2_rect.collidepoint(mouse_pos)
+
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_1:
+                    return 1
+                if event.key == pygame.K_2:
+                    return 2
+
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                if hover_1:
+                    return 1
+                if hover_2:
+                    return 2
+
+        # 깜빡임 계산
+        blink_alpha += blink_dir * 6
+        if blink_alpha >= 120 or blink_alpha <= 30:
+            blink_dir *= -1
+
+        # 배경
+        screen.blit(background, (0, 0))
+
+        # 캐릭터
+        if character is not None:
+            x = (SCREEN_WIDTH - character.get_width()) // 2
+            y = SCREEN_HEIGHT - character.get_height()
+            screen.blit(character, (x, y))
+
+        # 색상 설정
+        def draw_box(rect, text, hovered):
+            base_color = (40, 40, 40)
+            hover_color = (80, 80, 80)
+            border_color = (255, 255, 255)
+
+            pygame.draw.rect(
+                screen,
+                hover_color if hovered else base_color,
+                rect,
+                border_radius=18
+            )
+
+            if hovered:
+                border_surface = pygame.Surface(rect.size, pygame.SRCALPHA)
+                pygame.draw.rect(
+                    border_surface,
+                    (255, 255, 255, blink_alpha),
+                    border_surface.get_rect(),
+                    4,
+                    border_radius=18
+                )
+                screen.blit(border_surface, rect.topleft)
+            else:
+                pygame.draw.rect(screen, border_color, rect, 2, border_radius=18)
+
+            draw_wrapped_text(
+                screen,
+                text,
+                font,
+                (255, 255, 255),
+                rect
+            )
+
+        draw_box(box1_rect, "1. " + option1, hover_1)
+        draw_box(box2_rect, "2. " + option2, hover_2)
+
+        # HUD
+        draw_player_status(screen, font, player, status_img)
+
+        pygame.display.flip()
+        clock_local.tick(60)
+
+
+
 def draw_player_status(screen, font, player, status_img):
     img_w, img_h = status_img.get_size()
 
@@ -218,7 +348,7 @@ character = None   # 현재 화면에 표시될 캐릭터 Surface
 
 
 def game_story_sequence():
-    # # """게임의 순차적인 스토리를 정의하는 메인 함수"""
+    '''# # """게임의 순차적인 스토리를 정의하는 메인 함수"""
 
     game_result_music = run_game(MusicGame)
     if game_result_music == "QUIT":
@@ -232,7 +362,8 @@ def game_story_sequence():
 
     # 1  ------------------ <프롤로그> ---------------------------  
     display_story_text("당신은 충북대학교 컴퓨터공학과 학생입니다. 당일 자정까지 전공과목의 기말대체 과제 제출이 있었으나 깜빡하고 제출하지 못했습니다.")
-    display_story_text("해당 과제를 제출하지 못하면 당신은 F를 받고야 맙니다. 당신은 교수님 몰래 과제를 제출하기 위해 교수님들이 모두 퇴근하신 새벽에 전공 교수님 사무실이 위치한 공과대학 건물에 왔습니다.")
+    display_story_text("해당 과제를 제출하지 못하면 당신은 F를 받고야 맙니다.")
+    display_story_text("당신은 교수님 몰래 과제를 제출하기 위해 교수님들이 모두 퇴근하신 새벽에 전공 교수님 사무실이 위치한 공과대학 건물에 왔습니다.")
 
     display_story_text("나 : (일부러 교수님이 모두 퇴근하신 시간대에 왔으니까. 과제 제출만하면 될꺼야!)", bg="e8-1(3rd stairs)")
     display_story_text("(공대건물 4층으로 조용히 올라간다.)", bg="e8-1(6)")
@@ -281,7 +412,7 @@ def game_story_sequence():
         display_story_text('자네 거기서 지금 뭐하는건가!')
         display_story_text("문을 여는데 실패했습니다.. 교수님게 발각되어 학점 F를 받게되었습니다.", 3000)
         return # 스토리 종료
-    
+    '''
     # # 4.—---------------------------------------------
     # # 올바른 대화 선택지
     display_story_text("(무사히 과제를 제출하고 교수연구실 밖으로 나왔다.)")
@@ -293,18 +424,24 @@ def game_story_sequence():
     display_story_text("(???이 들어온다.)")
     display_story_text("전공교수님 : 자네. 이 시간까지 강의실에서 뭐하는 건가?")
 
-    display_story_text("1.강의실에 남아 공부하고 있었었다고 이야기한다.\n2.과제 제출하러 왔다고 한다.")
-    # //1번
-    display_story_text("나 : 강의실에 남아서 복습하고 있었습니다.", ch="professor_smile")
-    display_story_text("전공교수님 : 훌륭한 학생이군. 열심히 하게.")
-    display_story_text("(전공 교수님이 밖으로 나간다.)")
-    display_story_text("나 : (휴… 살았다..)")
+    choice = choice_dialogue(
+    "강의실에 남아 공부하고 있었다고 이야기한다.",
+    "과제 제출하러 왔다고 말한다."
+    )
 
-    # //2번
-    # display_story_text("나 : 과제 제출하러 왔습니다.", ch="professor_angry")
-    # display_story_text("전공교수 : 과제제출은 어제까지 인걸로 알고있는데..?")
-    # display_story_text("나 : 하하.. 들켰네.")
-    # //게임오버
+    if choice == 1:
+        display_story_text("나 : 강의실에 남아서 복습하고 있었습니다.", ch="professor_smile")
+        display_story_text("전공교수님 : 훌륭한 학생이군. 열심히 하게.")
+        display_story_text("(전공 교수님이 밖으로 나간다.)")
+        display_story_text("나 : (휴… 살았다..)")
+
+    elif choice == 2:
+        display_story_text("나 : 과제 제출하러 왔습니다.", ch="professor_angry")
+        display_story_text("전공교수 : 과제제출은 어제까지 인걸로 알고있는데..?")
+        display_story_text("나 : 하하.. 들켰네.")
+        display_story_text("교수님게 발각되어 학점 F를 받게되었습니다.", 3000)
+        return
+
 
     # # 5.—---------------------------------------------
     # # 올바른 대화 선택지 2
@@ -313,29 +450,34 @@ def game_story_sequence():
     display_story_text("(1층으로 내려가던 중 3층에서 대학원생과 마주쳤다.)", ch="grad_student")
     display_story_text("대학원생 : 학생. 이 시간에 학교에는 어쩐일인가?")
     display_story_text("나 : (아.. 뭐라고 둘러대지?)")
-    display_story_text("1. 공손하게 인사하고 공부하다가 집에 가려고 한다고 말한다.\n2.(말을 무시하고 지나친다)")
     
-    # 1번
-    display_story_text("나 : 안녕하세요. 선배님. 강의실에 남아서 공부하다가 집에 가는 중이에요.", ch="grad_student_smile")
-    display_story_text("대학원생 : 지금 교수님 연구 중이시라 예민하셔. 조심히가렴.")
-    display_story_text("나 : 네. 알겠습니다.", bg="e8-1외부")
-    display_story_text("(무사히 학과 건물을 빠져나왔다.)", ch="professor_embarrassed")
-    display_story_text("(갑자기 뒤에서 전공교수님이 뛰어온다.)")
-    display_story_text("전공교수님 : 자네 잠깐만 거기 서 보세..!")
-    display_story_text("나 : (도망친다.)")
-    display_story_text("전공교수님 : 헉헉… 분명 교수연구실 문과 과제물 케비넷이 잠겨있었는데..! 저 학생이 범인이 분명해 꼭 잡고야 말겠어..!")
+    choice = choice_dialogue(
+    "강의실에 남아 공부하고 있었다고 이야기한다.",
+    "과제 제출하러 왔다고 말한다."
+)
 
-    # 2번
-    # display_story_text("대학원생 : 이 자식봐라 수상한데? 거기 학생 잠깐 나 좀 볼까?", ch="grad_student_angry");
-    # display_story_text("나 : 네..? 저..저요?");
-    # display_story_text("대학원생 : 그래. 지금 여기 학생 말고 또 누가 있나?");
-    # display_story_text("(갑자기 전공교수님이 뛰어온다)");
-    # display_story_text("전공교수님 : 이봐 자네! 그 학생 잡아!", ch="grad_student_embrrassed")
-    # display_story_text("대학원생 : 이 학생이요..?")
-    # display_story_text("(대학원생에게 붙잡혔다.)", ch="professor_angry")
-    # display_story_text("전공교수 : 이 새벽에 강의실에 혼자 있던 것도 수상했는데, 교수실과 과제 제출 캐비닛까지 열려있다니!")
-    # display_story_text("나 : (아.. 망했다)")
-    # 게임오버
+    if choice == 1:
+        display_story_text("나 : 안녕하세요. 선배님. 강의실에 남아서 공부하다가 집에 가는 중이에요.", ch="grad_student_smile")
+        display_story_text("대학원생 : 지금 교수님 연구 중이시라 예민하셔. 조심히가렴.")
+        display_story_text("나 : 네. 알겠습니다.", bg="e8-1외부")
+        display_story_text("(무사히 학과 건물을 빠져나왔다.)", ch="professor_embarrassed")
+        display_story_text("(갑자기 뒤에서 전공교수님이 뛰어온다.)")
+        display_story_text("전공교수님 : 자네 잠깐만 거기 서 보세..!")
+        display_story_text("나 : (도망친다.)")
+        display_story_text("전공교수님 : 헉헉… 분명 교수연구실 문과 과제물 케비넷이 잠겨있었는데..! 저 학생이 범인이 분명해 꼭 잡고야 말겠어..!")
+
+    elif choice == 2:
+        display_story_text("대학원생 : 이 자식봐라 수상한데? 거기 학생 잠깐 나 좀 볼까?", ch="grad_student_angry");
+        display_story_text("나 : 네..? 저..저요?");
+        display_story_text("대학원생 : 그래. 지금 여기 학생 말고 또 누가 있나?");
+        display_story_text("(갑자기 전공교수님이 뛰어온다)");
+        display_story_text("전공교수님 : 이봐 자네! 그 학생 잡아!", ch="grad_student_embrrassed")
+        display_story_text("대학원생 : 이 학생이요..?")
+        display_story_text("(대학원생에게 붙잡혔다.)", ch="professor_angry")
+        display_story_text("전공교수 : 이 새벽에 강의실에 혼자 있던 것도 수상했는데, 교수실과 과제 제출 캐비닛까지 열려있다니!")
+        display_story_text("나 : (아.. 망했다)")
+        display_story_text("교수님게 발각되어 학점 F를 받게되었습니다.", 3000)
+        return
 
    
     # '''-------------------------------------

@@ -654,36 +654,28 @@ def game_story_sequence():
     
 
     # 6. B:last 홍보 부스 (10초에 맞춰 버튼 입력하는 게임) -----------------------------------
-    # display_story_text("나: 조금 걷다가… 아, 저기 부스가 있네. 뭐하는 곳이지?", bg="중도부스")
-    # # //(배경 부스로 바뀜)
-    # display_story_text("홍보 관계자: 어서 오세요, 손님! 오늘은 특별한 체험 이벤트가 있어요!", ch="booth_promoter")
-    # display_story_text("B:last 10초 버튼 챌린지’에 참여하시겠어요?")
-    # display_story_text("나: …버튼을 10초 안에 맞춘다고요?")
-    # display_story_text("나: 오 재밌겠는데?")
-    # display_story_text("홍보 관계자: 좋아요! 10초 안에 화면에 나타나는 버튼을 정확히 누르세요!")
-    # display_story_text("성공하면 단서 +25, 실패하면 체력이 조금 줄어듭니다. 준비, 시작!")
+    display_story_text("나: 조금 걷다가… 아, 저기 부스가 있네. 뭐하는 곳이지?", bg="중도부스")
+    # //(배경 부스로 바뀜)
+    display_story_text("홍보 관계자: 어서 오세요, 손님! 오늘은 특별한 체험 이벤트가 있어요!", ch="booth_promoter")
+    display_story_text("B:last 10초 버튼 챌린지’에 참여하시겠어요?")
+    display_story_text("나: …버튼을 10초 안에 맞춘다고요?")
+    display_story_text("나: 오 재밌겠는데?")
+    display_story_text("홍보 관계자: 좋아요! 10초 안에 화면에 나타나는 버튼을 정확히 누르세요!")
+    display_story_text("성공하면 단서 +25, 실패하면 체력이 조금 줄어듭니다. 준비, 시작!")
 
 
-    # game_result_timer = run_game(Timer)
+    game_result_timer = run_game(Timer)
 
-    # if game_result_timer == "QUIT":
-    #     return
+    if game_result_timer == "QUIT":
+        return
 
-    # if game_result_timer is True:
-    #     display_story_text("10초 맞추기 성공! 단서 +25", 3000)
-    #     player["clue"] += 25
-    # else:
-    #     display_story_text("10초 맞추기 실패! 체력 -10", 3000)
-    #     player["health"] -= 10
-
-    # # //성공
-    # display_story_text("와! 대단하시네요! 완벽하게 성공하셨습니다!", ch="booth_promoter_smile");
-    # display_story_text("나: 오예!");
-    # display_story_text("홍보 관계자: 좋아요, 덕분에 오늘도 즐거운 이벤트였어요! 또 오세요~");
-    # display_story_text("단서 +25");
-
-    # # //실패 시
-    # display_story_text("홍보 관계자: 앗, 아쉽네요… 다음 기회에 다시 도전하세요!". ch="booth_promoter_disappointed");
+    if game_result_timer is True:
+        display_story_text("와! 대단하시네요! 완벽하게 성공하셨습니다!", ch="booth_promoter_smile")
+        display_story_text("나: 오예!")
+        display_story_text("홍보 관계자: 좋아요, 덕분에 오늘도 즐거운 이벤트였어요! 또 오세요~")
+        display_story_text("단서 획득!")
+    else:
+        display_story_text("홍보 관계자: 앗, 아쉽네요… 다음 기회에 다시 도전하세요!", ch="booth_promoter_disappointed")
 
     # 7.중도 앞 길가에서 쓰레기 발견 (중도 앞 길가에서 쓰레기를 발견함)-----------------------------------
     # display_story_text("나:  어? 뭐지? 땅에 쓰레기가…", bg="중앙도서관")

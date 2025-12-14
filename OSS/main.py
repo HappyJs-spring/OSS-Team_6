@@ -220,15 +220,15 @@ character = None   # 현재 화면에 표시될 캐릭터 Surface
 def game_story_sequence():
     # # """게임의 순차적인 스토리를 정의하는 메인 함수"""
 
-    # game_result_music = run_game(MusicGame)
-    # if game_result_music == "QUIT":
-    #     return
+    game_result_music = run_game(MusicGame)
+    if game_result_music == "QUIT":
+        return
     
-    # if game_result_music is True: # 행맨 승리
-    #     display_story_text("성공! 다음 단계를 진행.", 3000)
-    # else: # 행맨 패배
-    #     display_story_text("실패. 게임 종료.", 4000)
-    #     return # 스토리 종료
+    if game_result_music is True: # 행맨 승리
+        display_story_text("성공! 다음 단계를 진행.", 3000)
+    else: # 행맨 패배
+        display_story_text("실패. 게임 종료.", 4000)
+        return # 스토리 종료
 
     # 1  ------------------ <프롤로그> ---------------------------  
     # display_story_text("당신은 충북대학교 컴퓨터공학과 학생입니다. 당일 자정까지 전공과목의 기말대체 과제 제출이 있었으나 깜빡하고 제출하지 못했습니다.")
@@ -267,7 +267,7 @@ def game_story_sequence():
     # display_story_text("(과제물 케비넷이 잠겨있다.)")
 
     # display_story_text("나 : 이런..! 이번엔 영문자물쇠네.. 오랜 시간을 지체하면 교수님께 들킬거야..!")
-
+ 
     # game_result_hangman = run_game(HangmanGame)
     # if game_result_hangman == "QUIT":
     #     return
@@ -551,7 +551,7 @@ def game_story_sequence():
     # display_story_text("(체력 -50)")
 
 
-    # 9. 엔딩-----------------------------------
+ # 9. 엔딩-----------------------------------
 
 
 

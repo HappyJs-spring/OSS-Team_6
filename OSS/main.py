@@ -372,16 +372,6 @@ character = None   # 현재 화면에 표시될 캐릭터 Surface
 def game_story_sequence():
     '''# # """게임의 순차적인 스토리를 정의하는 메인 함수"""
 
-    game_result_music = run_game(MusicGame)
-    if game_result_music == "QUIT":
-        return
-    
-    if game_result_music is True: # 행맨 승리
-        display_story_text("성공! 다음 단계를 진행.", 3000)
-    else: # 행맨 패배
-        display_story_text("실패. 게임 종료.", 4000)
-        return # 스토리 종료
-
     # 1  ------------------ <프롤로그> ---------------------------  
     display_story_text("당신은 충북대학교 컴퓨터공학과 학생입니다. 당일 자정까지 전공과목의 기말대체 과제 제출이 있었으나 깜빡하고 제출하지 못했습니다.")
     display_story_text("해당 과제를 제출하지 못하면 당신은 F를 받고야 맙니다.")
@@ -582,80 +572,85 @@ def game_story_sequence():
         display_story_text("나 : 아이고.. 아이고.. (하지만 어차피 중간 성적대로 가면 D+였기 때문에 큰 타격이 없다. 교양이기도 하고)")
         display_story_text("(공법창 학점 F확정^^)")
 
+
     # # 3.학연산 (충북 산학협력단 rise와 만남.) -----------------------------------
-    # display_story_text("(학연산 건물 앞을 지나던 중 산학협력단 관계자로 보이는 사람이 서류를 들고 이동중이다.)", bg="학연산", ch="rise")
-    # display_story_text("RISE 관계자 : 학생, 잠시만요.")
-    # display_story_text("RISE 관계자 : 혹시 우리 충북대학교 산학협력단 RISE에 대해 알고 있나요?")
-    # display_story_text("1. RISE는 대학·기업·지역을 연결해 연구 및 기술개발을 지원하는 ‘산학협력단’입니다.\n2. 아이돌 아님?\n3. 롤 챔프 아님?\n4. 상승이라는 뜻 아님?\n5. 로켓 발사 프로젝트 아님?")
+    display_story_text("(학연산 건물 앞을 지나던 중 산학협력단 관계자로 보이는 사람이 서류를 들고 이동중이다.)", bg="학연산", ch="rise")
+    display_story_text("RISE 관계자 : 학생, 잠시만요.")
+    display_story_text("RISE 관계자 : 혹시 우리 충북대학교 산학협력단 RISE에 대해 알고 있나요?")
+    choice5 = choice_dialogue([
+        "아이돌 아님?",
+        "롤 챔프 아님?",
+        "상승이라는 뜻 아님?",
+        "RISE는 대학·기업·지역을 연결해 연구 및 기술개발을 지원하는 ‘산학협력단’입니다.",
+        "로켓 발사 프로젝트 아님?"])
 
-    # # //1번 선택 시
-    # display_story_text("RISE 관계자 : 맞습니다! RISE는 충북대의 산학연 협력, 기술사업화, 기업 지원을 담당하는 핵심 조직이에요.", ch="rise_smile")
-    # display_story_text("RISE 관계자 : 학생이 아주 잘 알고 있네요.")
-    # display_story_text("RISE 관계자 : 이해도가 높으니, 도움이 될 만한 정보를 더 드릴게요.")
-    # display_story_text("(단서 +25)")
-
-    # # //오답 선택 시
-    # display_story_text("RISE 관계자 : RISE는 ‘Regional Innovation & Start-up Education’의 약자로,", ch="rise_smile")
-    # display_story_text("충북대학교 산학협력단이 지역 기업·연구기관·정부와 협업하여 기술 개발 지원, 창업 보육 및 기업 컨설팅, 산학 공동 R&D, 지식재산(IP) 관리, 현장실습·취업 연계, 지역산업 혁신 프로젝트 등을 수행하는 기관입니다. 우리 학교의 연구 역량을 지역 산업과 직접 연결해")
-    # display_story_text("학생·기업·지역사회가 함께 성장할 수 있도록 돕는 핵심 조직이죠.")
-    # display_story_text("RISE 관계자 : 다음엔 꼭 맞추세요, 학생.")
-    # display_story_text("나 : (아.. 피곤해..)")
-    # display_story_text("(긴 설명으로 인해 체력이 감소합니다.)")
-    # display_story_text("(체력 -30)")
+    if choice5 == 0:
+        display_story_text("RISE 관계자 : 맞습니다! RISE는 충북대의 산학연 협력, 기술사업화, 기업 지원을 담당하는 핵심 조직이에요.", ch="rise_smile")
+        display_story_text("RISE 관계자 : 학생이 아주 잘 알고 있네요.")
+        display_story_text("RISE 관계자 : 이해도가 높으니, 도움이 될 만한 정보를 더 드릴게요.")
+        display_story_text("(단서 획득!)")
+    else:
+        display_story_text("RISE 관계자 : RISE는 ‘Regional Innovation & Start-up Education’의 약자로,", ch="rise_smile")
+        display_story_text("충북대학교 산학협력단이 지역 기업·연구기관·정부와 협업하여 기술 개발 지원, 창업 보육 및 기업 컨설팅, 산학 공동 R&D, 지식재산(IP) 관리, 현장실습·취업 연계, 지역산업 혁신 프로젝트 등을 수행하는 기관입니다. 우리 학교의 연구 역량을 지역 산업과 직접 연결해...")
+        display_story_text("...학생·기업·지역사회가 함께 성장할 수 있도록 돕는 핵심 조직이죠.")
+        display_story_text("RISE 관계자 : 다음엔 꼭 맞추세요, 학생.")
+        display_story_text("나 : (아.. 피곤해..)")
+        display_story_text("(긴 설명으로 인해 체력이 감소합니다.)")
+        display_story_text("(체력 -30)")
 
     # # 4.솔못 (커플 피하기 게임) -----------------------------------
-    # display_story_text("(솔못 근처를 조용히 지나가려는데, 벤치에 앉아 있는 닭살 커플이 갑자기 당신을 발견하고 말을 건다.)", bg="솔못", ch="couple")
-    # display_story_text("커플남 : 어? 자기야, 저 사람 혼자 다닌다~ 우리랑 얘기 좀 하면 안 돼?")
-    # display_story_text("커플녀 : 그러게~ 솔못은 커플들이 오는 명소인데… 혼자 오니까 뭔가 신기하다~ 헤헤.")
-    # display_story_text("(둘이 서로 팔짱을 끼고 부비부비 거리며 다가온다.)")
-    # display_story_text("나 : (하…)")
+    display_story_text("(솔못 근처를 조용히 지나가려는데, 벤치에 앉아 있는 닭살 커플이 갑자기 당신을 발견하고 말을 건다.)", bg="솔못", ch="couple")
+    display_story_text("커플남 : 어? 자기야, 저 사람 혼자 다닌다~ 우리랑 얘기 좀 하면 안 돼?")
+    display_story_text("커플녀 : 그러게~ 솔못은 커플들이 오는 명소인데… 혼자 오니까 뭔가 신기하다~ 헤헤.")
+    display_story_text("(둘이 서로 팔짱을 끼고 부비부비 거리며 다가온다.)")
+    display_story_text("나 : (하…)")
 
-    # # //커플 피하기 게임 시작
-    # # //성공
-    # display_story_text("(단서 +25)");
+    game_result_music = run_game(MusicGame)
+    if game_result_music == "QUIT":
+        return
+    
+    if game_result_music is True:
+        display_story_text("(커플을 피해 무사히 솔못을 빠져나갔다.)")
+        display_story_text("(단서 획득!)");
+    else: 
+        display_story_text("커플녀 : 솔못은 원래 커플 성지야~ 우리도 여기서 200일 기념했거든~ 헤헤.", ch="couple_sneer")
+        display_story_text("커플남 : 맞아~ 여기 벤치에서 처음으로 손도 잡고~ 첫 데이트도 하고~")
+        display_story_text("(둘이 갑자기 과한 스킨십을 시전한다. 당신은 정신적으로 데미지를 입기 시작한다.)")
+        display_story_text("커플녀 : 너도 얼른 커플 만들어~ 요즘 혼자 다니면 외로워~")
+        display_story_text("(당신은 닭살 커플의 과한 애정행각에 정신적 데미지를 입었습니다.)")
+        display_story_text("(당신은 털썩한 마음으로 솔못을 벗어난다.)")
+        display_story_text("(체력 -50)")
 
-    # # //실패
-    # display_story_text("커플녀 : 솔못은 원래 커플 성지야~ 우리도 여기서 200일 기념했거든~ 헤헤.", ch="couple_sneer")
-    # display_story_text("커플남 : 맞아~ 여기 벤치에서 처음으로 손도 잡고~ 첫 데이트도 하고~")
-    # display_story_text("(둘이 갑자기 과한 스킨십을 시전한다. 당신은 정신적으로 데미지를 입기 시작한다.)")
-    # display_story_text("커플녀 : 너도 얼른 커플 만들어~ 요즘 혼자 다니면 외로워~")
-    # display_story_text("(당신은 닭살 커플의 과한 애정행각에 정신적 데미지를 입었습니다.)")
-    # display_story_text("(당신은 털썩한 마음으로 솔못을 벗어난다.)")
-    # display_story_text("(체력 -50)")
+
+
+    
 
     # 5.coopsket (1+1 삼김 짝 맞추기) -----------------------------------
-    # display_story_text("나: 아 배고파.. 편의점좀 가야겠다..", bg="쿱스켓")
-    # display_story_text("(쿱스켓으로 배경이 바뀐다.)", ch="clerk")
-    # display_story_text("편의점 직원: 어서오세요 손님~")
-    # display_story_text("편의점 직원: 오늘의 특별 이벤트! 삼김 1+1 COOPSKET 매칭 챌린지에 참여하시겠습니까?")
-    # display_story_text("나: 그게 뭔데요?")
-    # display_story_text("편의점 직원: 선반에 놓인 4×4 총 16개의 삼김 중, 같은 종류끼리 짝을 맞추면 공짜로 가져가시는 거죠!")
-    # display_story_text("(마침 돈도 얼마 없던참이라 좋은일이라고 생각했다.)")
-    # display_story_text("나: 오 좋은데요?")
+    display_story_text("나: 아 배고파.. 편의점좀 가야겠다..", bg="쿱스켓")
+    display_story_text("(쿱스켓에 도착했다.)", ch="clerk")
+    display_story_text("편의점 직원: 어서오세요 손님~")
+    display_story_text("편의점 직원: 오늘의 특별 이벤트! 삼김 1+1 COOPSKET 매칭 챌린지에 참여하시겠습니까?")
+    display_story_text("나: 그게 뭔데요?")
+    display_story_text("편의점 직원: 선반에 놓인 4×4 총 16개의 삼김 중, 같은 종류끼리 짝을 맞추면 공짜로 가져가시는 거죠!")
+    display_story_text("(마침 돈도 얼마 없던참이라 좋은일이라고 생각했다.)")
+    display_story_text("나: 오 좋은데요?")
 
-    # # //같은종류의 짝을 다 맞췄을 시
-    # display_story_text("나: 이거 다 가져가도 돼요?")
-    # display_story_text("편의점 직원: 다 가져가도 됩니다!")
-    # display_story_text("나: 배부르니까 하나만 먹을게요~ 많이파세요~~")
-    # display_story_text("편의점 직원: 감사합니다 또오세요~ ")
-    # display_story_text("( 단서 +25)")
-
-    # # //같은종류의 짝 다 맞추지 못했을 시
-    # display_story_text("편의점 직원: 아이고.. 아쉽네요..")
-    # display_story_text("나: 이걸로 결제 해 주세요….( 카드를 건넨다)")
-    # display_story_text("(체력 30 감소)")
-
-
-    # game_result_findcard = run_game(FindCard)
+    game_result_findcard = run_game(FindCard)
     
-    # if game_result_findcard == "QUIT":
-    #     return
+    if game_result_findcard == "QUIT":
+        return
     
-    # if game_result_findcard is True: # 카드 찾기 게임 승리 
-    #     display_story_text("성공! 다음 단계를 진행.", 3000)
-    # else: # 패배
-    #     display_story_text("실패. 게임 종료.", 4000)
-    #     return # 스토리 종료
+    if game_result_findcard is True: # 카드 찾기 게임 승리 
+        display_story_text("나: 이거 다 가져가도 돼요?")
+        display_story_text("편의점 직원: 다 가져가도 됩니다!")
+        display_story_text("나: 배부르니까 하나만 먹을게요~ 많이파세요~~")
+        display_story_text("편의점 직원: 감사합니다 또오세요~ ")
+        display_story_text("( 단서 획득!)")
+    else:
+        display_story_text("편의점 직원: 아이고.. 아쉽네요..")
+        display_story_text("나: 이걸로 결제 해 주세요….( 카드를 건넨다)")
+        display_story_text("(체력 -30)")
+
     
 
     # 6. B:last 홍보 부스 (10초에 맞춰 버튼 입력하는 게임) -----------------------------------

@@ -677,48 +677,48 @@ def game_story_sequence():
     else:
         display_story_text("홍보 관계자: 앗, 아쉽네요… 다음 기회에 다시 도전하세요!", ch="booth_promoter_disappointed")
 
+
     # 7.중도 앞 길가에서 쓰레기 발견 (중도 앞 길가에서 쓰레기를 발견함)-----------------------------------
-    # display_story_text("나:  어? 뭐지? 땅에 쓰레기가…", bg="중앙도서관")
-    # display_story_text("1.쓰레기를 줍는다\n2.무시하고 지나간다.")
+    display_story_text("나:  어? 뭐지? 땅에 쓰레기가…", bg="중앙도서관")
 
-    # # //쓰레기를 줍는다 선택 시
-    # display_story_text("나: 에이, 귀찮아도… 환경은 지켜야지!")
-    # display_story_text("나: 흠… 손은 더러워졌지만, 뭔가 기분이 좋네")
-    # display_story_text("(단서 +25)")
+    choice6 = choice_dialogue([
+        "쓰레기를 줍는다",
+        "무시하고 지나간다."
+    ])
+    if choice6 == 0:
+        display_story_text("나: 에이, 귀찮아도… 환경은 지켜야지!")
+        display_story_text("나: 흠… 손은 더러워졌지만, 뭔가 기분이 좋네")
+        display_story_text("(단서 획득!)")
 
-    # # //무시하고 지나간다 선택 시
-    # display_story_text("(그냥 지나간다)", ch="environmentalist_angry")
-    # display_story_text("환경봉사 동아리 부원 등장")
-    # display_story_text("환경봉사 동아리 부원: 학생! 여기서 쓰레기를 무시하고 지나가다니… 환경 의식이 너무 부족하군요!")
-    # display_story_text("나: 죄송합니다… 다음부터 꼭 챙길게요!", ch="environmentalist")
-    # display_story_text("환경봉사 동아리 부원: 좋아요, 이번 한 번만 봐줄게요. 앞으로는 주의하세요!")
-    # display_story_text("(체력 -20)")
+    elif choice6 == 1:
+        display_story_text("(그냥 지나간다)", ch="environmentalist_angry")
+        display_story_text("환경봉사 동아리 부원 등장")
+        display_story_text("환경봉사 동아리 부원: 학생! 여기서 쓰레기를 무시하고 지나가다니… 환경 의식이 너무 부족하군요!")
+        display_story_text("나: 죄송합니다… 다음부터 꼭 챙길게요!", ch="environmentalist")
+        display_story_text("환경봉사 동아리 부원: 좋아요, 이번 한 번만 봐줄게요. 앞으로는 주의하세요!")
+        display_story_text("(체력 -20)")
+
+
 
     # 8.중문에서 나타나는 보드게임 중독(홀덤 중독자) 학과 동기와 만남-----------------------------------
-    # display_story_text("하하하하하", bg="n-14")
-    # display_story_text("나: 저게 무슨소리지?")
-    # display_story_text("나: 저 사람 컴공 동기인가? 왜 이렇게 진지하게 게임을 하고 있지?", ch="schoolmate_smile")
-    # display_story_text("동기: 오! 너도 들어와! 베스킨라빈스 31, 한 판 하자고!")
-    # display_story_text("동기: …지금? 체력도 좀 남았는데, 한 번만 해보지 뭐. 들어오쇼 ㅋ")
-    # display_story_text("동기: 규칙은 간단해, 31을 넘기지 않고 돌아가면서 최대 3개 최소 1개씩 숫자를 말하면 되고 31을 말하면 지는거야!")
-    # game_result_BR31 = run_game(BR31)
-    # if game_result_BR31== "QUIT":
-    #     return
+    display_story_text("하하하하하", bg="n-14")
+    display_story_text("나: 저게 무슨소리지?")
+    display_story_text("나: 저 사람 컴공 동기인가? 왜 이렇게 진지하게 게임을 하고 있지?", ch="schoolmate_smile")
+    display_story_text("동기: 오! 너도 들어와! 베스킨라빈스 31, 한 판 하자고!")
+    display_story_text("동기: …지금? 체력도 좀 남았는데, 한 번만 해보지 뭐. 들어오쇼 ㅋ")
+    display_story_text("동기: 규칙은 간단해, 31을 넘기지 않고 돌아가면서 최대 3개 최소 1개씩 숫자를 말하면 되고 31을 말하면 지는거야!")
     
-    # if game_result_BR31 is True: # 행맨 승리
-    #     display_story_text("성공! 다음 단계를 진행.", 3000)
-    # else: # 행맨 패배
-    #     display_story_text("실패. 게임 종료.", 4000)
-    #     return # 스토리 종료
-
-    # # //성공 시
-    # display_story_text("동기: 와! 대단한데? 역시 네가 우리 중에 제일 센스 있네!", ch="schoolmate_smile")
-    # display_story_text("(단서 +25)")
-
-    # # //(실패 시)
-    # display_story_text("동기:ㅋ 아쉽다! 넌 아직 부족하군.", ch="schoolmate_sneer")
-    # display_story_text("이제 더 집중해야지, 그래도 열심히 하셨잖아~")
-    # display_story_text("(체력 -50)")
+    game_result_BR31 = run_game(BR31)
+    if game_result_BR31== "QUIT":
+        return
+    
+    if game_result_BR31 is True:
+        display_story_text("동기: 와! 대단한데? 역시 네가 우리 중에 제일 센스 있네!", ch="schoolmate_smile")
+        display_story_text("(단서 +25)")
+    else:
+        display_story_text("동기:ㅋ 아쉽다! 넌 아직 부족하군.", ch="schoolmate_sneer")
+        display_story_text("이제 더 집중해야지, 그래도 열심히 하셨잖아~")
+        display_story_text("(체력 -50)")
 
 
  # 9. 엔딩-----------------------------------

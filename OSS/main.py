@@ -546,34 +546,41 @@ def game_story_sequence():
 
 
     # # 2.공업 법규와 창업. 강봉희 교수를 만남 -----------------------------------
-    # display_story_text("(학연산 건물 앞을 지나가던 도중, 공업법규와 창업 강봉희 교수님을 만났다.)", bg="학연산", ch="monica")
-    # display_story_text("강봉희 교수님 : 어이 학생. 잠깐 거기 서봐.")
-    # display_story_text("(당황하며 얼어붙는다.)")
-    # display_story_text("나 : 네.. 교수님… (큰일났다…!)")
-    # display_story_text("강봉희 교수님 : 마침 잘 됐군. 방금 APEC 회의 자료를 검토하고 있었거든.")
-    # display_story_text("강봉희 교수님 : APEC이 뭔지 정도는 알겠지? 아시아 태평양 경제협력체 말이야.")
-    # display_story_text("(강봉희 교수님이 서류를 덮고 플레이어를 바라본다)", ch="monica_serious")
-    # display_story_text("강봉희 교수님 : 근데 말이지… 학생, 혹시 내 영어 이름을 알고 있나?!")
-    # display_story_text("나 : (뜨끔!)")
-    # display_story_text("강봉희 교수님 : 정확한 스펠링을 맞혀야 한다. 틀리면…", ch="monica_smile2")
-    # display_story_text("(강봉희 교수님이 씨익 웃는다)")
-    # display_story_text("강봉희 교수님 : 가차 없어 F를 주지!")
-    # display_story_text("\n입력 : ")
+    display_story_text("(학연산 건물 앞을 지나가던 도중, 공업법규와 창업 강봉희 교수님을 만났다.)", bg="학연산", ch="monica")
+    display_story_text("강봉희 교수님 : 어이 학생. 잠깐 거기 서봐.")
+    display_story_text("(당황하며 얼어붙는다.)")
+    display_story_text("나 : 네.. 교수님… (큰일났다…!)")
+    display_story_text("강봉희 교수님 : 마침 잘 됐군. 방금 APEC 회의 자료를 검토하고 있었거든.")
+    display_story_text("강봉희 교수님 : APEC이 뭔지 정도는 알겠지? 아시아 태평양 경제협력체 말이야.")
+    display_story_text("(강봉희 교수님이 서류를 덮고 플레이어를 바라본다)", ch="monica_serious")
+    display_story_text("강봉희 교수님 : 근데 말이지… 학생, 혹시 내 영어 이름을 알고 있나?!")
+    display_story_text("나 : (뜨끔!)")
+    display_story_text("강봉희 교수님 : 정확한 스펠링을 맞혀야 한다. 틀리면…", ch="monica_smile2")
+    display_story_text("(강봉희 교수님이 씨익 웃는다)")
+    display_story_text("강봉희 교수님 : 가차 없어 F를 주지!")
 
-    # # //정답 monica 
-    # display_story_text("강봉희 교수님 : 오~ 정확하군! MONICA, 맞네.", ch="monica_smile")
-    # display_story_text("강봉희 교수님 : 수업을 아주 집중해서 들었군. 대단한데?")
-    # display_story_text("(강봉희 교수님이 만족한 듯 고개를 끄덕인다.)")
-    # display_story_text("강봉희 교수님 : 좋아. 통과! 이만 가봐도 좋다네.")
-    # display_story_text("(단서 +25)")
 
-    # # //오답
-    # display_story_text("강봉희 교수님 : 땡! 틀렸어.", ch="monica_serious");
-    # display_story_text("강봉희 교수님 : 이봐, 내가 뭐랬지? 스펠링 틀리면 F라고 했지?");
-    # display_story_text("(갑자기 진지해지며)", ch="monica_smile2");
-    # display_story_text("강봉희 교수님 : 자네… 공법창 F다.");
-    # display_story_text("나 : 아이고.. 아이고.. (하지만 어차피 중간 성적대로 가면 D+였기 때문에 큰 타격이 없다. 교양이기도 하고)");
-    # display_story_text("(공법창 학점 F확정^^)");
+    choice4 = choice_dialogue([
+    "MONICA",
+    "MONIKA",
+    "MONICAH",
+    "MONISSA",
+    "MONICAE"
+    ])
+
+    if choice4 == 0:
+        display_story_text("강봉희 교수님 : 오~ 정확하군! MONICA, 맞네.", ch="monica_smile")
+        display_story_text("강봉희 교수님 : 수업을 아주 집중해서 들었군. 대단한데?")
+        display_story_text("(강봉희 교수님이 만족한 듯 고개를 끄덕인다.)")
+        display_story_text("강봉희 교수님 : 좋아. 통과! 이만 가봐도 좋다네.")
+        display_story_text("(단서 획득!)")
+    else:
+        display_story_text("강봉희 교수님 : 땡! 틀렸어.", ch="monica_serious");
+        display_story_text("강봉희 교수님 : 이봐, 내가 뭐랬지? 스펠링 틀리면 F라고 했지?")
+        display_story_text("(갑자기 진지해지며)", ch="monica_smile2")
+        display_story_text("강봉희 교수님 : 자네… 공법창 F다.")
+        display_story_text("나 : 아이고.. 아이고.. (하지만 어차피 중간 성적대로 가면 D+였기 때문에 큰 타격이 없다. 교양이기도 하고)")
+        display_story_text("(공법창 학점 F확정^^)")
 
     # # 3.학연산 (충북 산학협력단 rise와 만남.) -----------------------------------
     # display_story_text("(학연산 건물 앞을 지나던 중 산학협력단 관계자로 보이는 사람이 서류를 들고 이동중이다.)", bg="학연산", ch="rise")

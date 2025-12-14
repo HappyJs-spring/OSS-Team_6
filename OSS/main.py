@@ -2,6 +2,10 @@ import pygame
 import sys
 import json
 import os 
+from start_screen import start_screen
+from ending_screen import show_ending
+from status_ui import draw_status_ui
+from clue_popup import show_clue_popup
 
 from hangman import HangmanGame 
 from up_down import UpDownGame
@@ -11,6 +15,29 @@ from BR31 import BR31
 from music import MusicGame
 
 from dialogue_manager import DialogueManager
+
+def check_ending():
+    if player["health"] <= 0:
+        show_ending(screen, "bad")
+        pygame.quit()
+        sys.exit()
+
+    if player["escaped"] and player["health"] > 0:
+        show_ending(screen, "happy")
+        pygame.quit()
+        sys.exit()
+
+
+def change_health(amount):
+    player["health"] += amount
+    player["health"] = max(0, min(100, player["health"]))
+    check_ending()
+
+
+def add_clue(amount=25):
+    player["clue"] += amount
+    player["clue"] = min(100, player["clue"])
+
 
 def draw_wrapped_text(surface, text, font, color, rect, line_spacing=6):
     """
@@ -232,6 +259,7 @@ pygame.init()
 
 SCREEN_WIDTH, SCREEN_HEIGHT = 1500, 700
 screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
+start_screen(screen)
 
 pygame.display.set_caption("Story Game Sequence")
 clock = pygame.time.Clock()
@@ -427,7 +455,7 @@ def game_story_sequence():
     '''
     # # 4.—---------------------------------------------
     # # 올바른 대화 선택지
-    
+    '''
     display_story_text("(무사히 과제를 제출하고 교수연구실 밖으로 나왔다.)")
     display_story_text("나 : 후.. 이번에도 운이 좋았어.. 이제 빨리 나가야겠다.")
     display_story_text("(복도 끝에서 교수연구실 쪽으로 걸어오는 발소리가 들린다.)", bg="e8-1(6)")
@@ -492,8 +520,8 @@ def game_story_sequence():
         display_story_text("교수님게 발각되어 학점 F를 받게되었습니다.", 3000)
         return
 
-   
-    # '''-------------------------------------
+   '''
+    # -------------------------------------
     # <전개, E8-1 건물 나감, 랜덤 이벤트 발생>
     # 랜덤 이벤트 기본은 8개 제작, 이 중 4개 이벤트 발생, 중복 X
 
@@ -526,6 +554,7 @@ def game_story_sequence():
         display_story_text("총장 : 오늘 만난 것도 인연이지. 자네에게 작은 도움을 주도록 하지.")
         display_story_text("(딱히 도움이 되진 않으나 총장의 호감도가 상승했다.)")
         display_story_text("(단서 획득!)")
+        add_clue(25)
             
     else:
         display_story_text("총장 : …흠. 그렇군.", ch="president_disappointed")
@@ -564,6 +593,7 @@ def game_story_sequence():
         display_story_text("(강봉희 교수님이 만족한 듯 고개를 끄덕인다.)")
         display_story_text("강봉희 교수님 : 좋아. 통과! 이만 가봐도 좋다네.")
         display_story_text("(단서 획득!)")
+        add_clue(25)
     else:
         display_story_text("강봉희 교수님 : 땡! 틀렸어.", ch="monica_serious");
         display_story_text("강봉희 교수님 : 이봐, 내가 뭐랬지? 스펠링 틀리면 F라고 했지?")
@@ -581,14 +611,15 @@ def game_story_sequence():
         "아이돌 아님?",
         "롤 챔프 아님?",
         "상승이라는 뜻 아님?",
-        "RISE는 대학·기업·지역을 연결해 연구 및 기술개발을 지원하는 ‘산학협력단’입니다.",
+        "연구 및 기술개발을 지원하는 ‘산학협력단’",
         "로켓 발사 프로젝트 아님?"])
 
-    if choice5 == 0:
+    if choice5 == 3:
         display_story_text("RISE 관계자 : 맞습니다! RISE는 충북대의 산학연 협력, 기술사업화, 기업 지원을 담당하는 핵심 조직이에요.", ch="rise_smile")
         display_story_text("RISE 관계자 : 학생이 아주 잘 알고 있네요.")
         display_story_text("RISE 관계자 : 이해도가 높으니, 도움이 될 만한 정보를 더 드릴게요.")
         display_story_text("(단서 획득!)")
+        add_clue(25)
     else:
         display_story_text("RISE 관계자 : RISE는 ‘Regional Innovation & Start-up Education’의 약자로,", ch="rise_smile")
         display_story_text("충북대학교 산학협력단이 지역 기업·연구기관·정부와 협업하여 기술 개발 지원, 창업 보육 및 기업 컨설팅, 산학 공동 R&D, 지식재산(IP) 관리, 현장실습·취업 연계, 지역산업 혁신 프로젝트 등을 수행하는 기관입니다. 우리 학교의 연구 역량을 지역 산업과 직접 연결해...")
@@ -597,6 +628,7 @@ def game_story_sequence():
         display_story_text("나 : (아.. 피곤해..)")
         display_story_text("(긴 설명으로 인해 체력이 감소합니다.)")
         display_story_text("(체력 -30)")
+        change_health(-30)
 
     # # 4.솔못 (커플 피하기 게임) -----------------------------------
     display_story_text("(솔못 근처를 조용히 지나가려는데, 벤치에 앉아 있는 닭살 커플이 갑자기 당신을 발견하고 말을 건다.)", bg="솔못", ch="couple")
@@ -604,6 +636,9 @@ def game_story_sequence():
     display_story_text("커플녀 : 그러게~ 솔못은 커플들이 오는 명소인데… 혼자 오니까 뭔가 신기하다~ 헤헤.")
     display_story_text("(둘이 서로 팔짱을 끼고 부비부비 거리며 다가온다.)")
     display_story_text("나 : (하…)")
+    display_story_text("제한시간 내에 커플을 피해 솔못을 빠져나가야 한다.")
+    display_story_text("올바른 방향키와 스페이스바를 눌러 커플을 피해 빠져나가자!")
+    display_story_text("기회는 1번이다!")
 
     game_result_music = run_game(MusicGame)
     if game_result_music == "QUIT":
@@ -611,7 +646,8 @@ def game_story_sequence():
     
     if game_result_music is True:
         display_story_text("(커플을 피해 무사히 솔못을 빠져나갔다.)")
-        display_story_text("(단서 획득!)");
+        display_story_text("(단서 획득!)")
+        add_clue(25)
     else: 
         display_story_text("커플녀 : 솔못은 원래 커플 성지야~ 우리도 여기서 200일 기념했거든~ 헤헤.", ch="couple_sneer")
         display_story_text("커플남 : 맞아~ 여기 벤치에서 처음으로 손도 잡고~ 첫 데이트도 하고~")
@@ -620,6 +656,7 @@ def game_story_sequence():
         display_story_text("(당신은 닭살 커플의 과한 애정행각에 정신적 데미지를 입었습니다.)")
         display_story_text("(당신은 털썩한 마음으로 솔못을 벗어난다.)")
         display_story_text("(체력 -50)")
+        change_health(-50)
 
 
 
@@ -646,10 +683,12 @@ def game_story_sequence():
         display_story_text("나: 배부르니까 하나만 먹을게요~ 많이파세요~~")
         display_story_text("편의점 직원: 감사합니다 또오세요~ ")
         display_story_text("( 단서 획득!)")
+        add_clue(25)
     else:
         display_story_text("편의점 직원: 아이고.. 아쉽네요..")
         display_story_text("나: 이걸로 결제 해 주세요….( 카드를 건넨다)")
         display_story_text("(체력 -30)")
+        change_health(-30)
 
     
 
@@ -658,9 +697,9 @@ def game_story_sequence():
     # //(배경 부스로 바뀜)
     display_story_text("홍보 관계자: 어서 오세요, 손님! 오늘은 특별한 체험 이벤트가 있어요!", ch="booth_promoter")
     display_story_text("B:last 10초 버튼 챌린지’에 참여하시겠어요?")
-    display_story_text("나: …버튼을 10초 안에 맞춘다고요?")
+    display_story_text("나: …버튼을 10초에 딱 맞추라고요?")
     display_story_text("나: 오 재밌겠는데?")
-    display_story_text("홍보 관계자: 좋아요! 10초 안에 화면에 나타나는 버튼을 정확히 누르세요!")
+    display_story_text("홍보 관계자: 좋아요! 10초에 스페이스바 버튼을 정확히 누르세요!")
     display_story_text("성공하면 단서 +25, 실패하면 체력이 조금 줄어듭니다. 준비, 시작!")
 
 
@@ -671,9 +710,10 @@ def game_story_sequence():
 
     if game_result_timer is True:
         display_story_text("와! 대단하시네요! 완벽하게 성공하셨습니다!", ch="booth_promoter_smile")
-        display_story_text("나: 오예!")
+        display_story_text("나: (정확히 10초는 아니지만) 오..오예!")
         display_story_text("홍보 관계자: 좋아요, 덕분에 오늘도 즐거운 이벤트였어요! 또 오세요~")
         display_story_text("단서 획득!")
+        add_clue(25)
     else:
         display_story_text("홍보 관계자: 앗, 아쉽네요… 다음 기회에 다시 도전하세요!", ch="booth_promoter_disappointed")
 
@@ -689,6 +729,7 @@ def game_story_sequence():
         display_story_text("나: 에이, 귀찮아도… 환경은 지켜야지!")
         display_story_text("나: 흠… 손은 더러워졌지만, 뭔가 기분이 좋네")
         display_story_text("(단서 획득!)")
+        add_clue(25)
 
     elif choice6 == 1:
         display_story_text("(그냥 지나간다)", ch="environmentalist_angry")
@@ -697,6 +738,7 @@ def game_story_sequence():
         display_story_text("나: 죄송합니다… 다음부터 꼭 챙길게요!", ch="environmentalist")
         display_story_text("환경봉사 동아리 부원: 좋아요, 이번 한 번만 봐줄게요. 앞으로는 주의하세요!")
         display_story_text("(체력 -20)")
+        change_health(-20)
 
 
 
@@ -714,14 +756,19 @@ def game_story_sequence():
     
     if game_result_BR31 is True:
         display_story_text("동기: 와! 대단한데? 역시 네가 우리 중에 제일 센스 있네!", ch="schoolmate_smile")
-        display_story_text("(단서 +25)")
+        display_story_text("(단서 획득!)")
+        add_clue(25)
     else:
         display_story_text("동기:ㅋ 아쉽다! 넌 아직 부족하군.", ch="schoolmate_sneer")
         display_story_text("이제 더 집중해야지, 그래도 열심히 하셨잖아~")
         display_story_text("(체력 -50)")
+        change_health(-50)
+
+ # 9. 엔딩-----------------------------------    
+    player["escaped"] = True
+    check_ending()
 
 
- # 9. 엔딩-----------------------------------
 
 
 

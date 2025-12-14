@@ -12,59 +12,73 @@ from music import MusicGame
 
 from dialogue_manager import DialogueManager
 
-def draw_wrapped_text(surface, text, font, color, rect, line_spacing=5):
+def draw_wrapped_text(surface, text, font, color, rect, line_spacing=6):
     """
-    rect 영역 안에서 자동 줄바꿈하여 텍스트 출력
+    한국어 대응 자동 줄바꿈 + \n 개행 지원
+    rect 영역을 넘지 않도록 렌더링
     """
-    words = text.split(" ")
-    lines = []
-    current_line = ""
-
-    for word in words:
-        test_line = current_line + word + " "
-        if font.size(test_line)[0] <= rect.width - 30:
-            current_line = test_line
-        else:
-            lines.append(current_line)
-            current_line = word + " "
-
-    lines.append(current_line)
-
+    max_width = rect.width - 30
+    x = rect.x + 15
     y = rect.y + 15
+
+    lines = []
+
+    for paragraph in text.split("\n"):
+        current_line = ""
+        for char in paragraph:
+            test_line = current_line + char
+            if font.size(test_line)[0] <= max_width:
+                current_line = test_line
+            else:
+                lines.append(current_line)
+                current_line = char
+        lines.append(current_line)
+
     for line in lines:
         rendered = font.render(line, True, color)
-        surface.blit(rendered, (rect.x + 15, y))
+        surface.blit(rendered, (x, y))
         y += rendered.get_height() + line_spacing
 
+        # 박스 높이 초과 시 중단 (안 넘치게)
+        if y > rect.bottom - 10:
+            break
 
-def choice_dialogue(option1, option2):
-    box_width = 600
-    box_height = 140
-    margin = 40
 
-    box1_rect = pygame.Rect(
-        SCREEN_WIDTH // 2 - box_width - margin // 2,
-        SCREEN_HEIGHT - box_height - 50,
-        box_width,
-        box_height
-    )
+def choice_dialogue(options):
+    """
+    options: ["선택지1", "선택지2", ..., "선택지N"]
+    return: 선택된 index (0부터 시작)
+    """
+    box_width = 900
+    box_height = 90
+    gap = 15
 
-    box2_rect = pygame.Rect(
-        SCREEN_WIDTH // 2 + margin // 2,
-        SCREEN_HEIGHT - box_height - 50,
-        box_width,
-        box_height
-    )
+    total_height = len(options) * box_height + (len(options) - 1) * gap
+    start_y = SCREEN_HEIGHT - total_height - 40
 
-    clock_local = pygame.time.Clock()
+    boxes = []
+    for i in range(len(options)):
+        rect = pygame.Rect(
+            SCREEN_WIDTH // 2 - box_width // 2,
+            start_y + i * (box_height + gap),
+            box_width,
+            box_height
+        )
+        boxes.append(rect)
+
+    selected = 0
     blink_alpha = 0
     blink_dir = 1
+    clock_local = pygame.time.Clock()
 
     while True:
         mouse_pos = pygame.mouse.get_pos()
 
-        hover_1 = box1_rect.collidepoint(mouse_pos)
-        hover_2 = box2_rect.collidepoint(mouse_pos)
+        hover_index = -1
+        for i, rect in enumerate(boxes):
+            if rect.collidepoint(mouse_pos):
+                hover_index = i
+                selected = i
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -72,42 +86,47 @@ def choice_dialogue(option1, option2):
                 sys.exit()
 
             if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_1:
-                    return 1
-                if event.key == pygame.K_2:
-                    return 2
+                if pygame.K_1 <= event.key <= pygame.K_9:
+                    idx = event.key - pygame.K_1
+                    if idx < len(options):
+                        return idx
+
+                if event.key == pygame.K_UP:
+                    selected = (selected - 1) % len(options)
+                if event.key == pygame.K_DOWN:
+                    selected = (selected + 1) % len(options)
+                if event.key == pygame.K_RETURN:
+                    return selected
 
             if event.type == pygame.MOUSEBUTTONDOWN:
-                if hover_1:
-                    return 1
-                if hover_2:
-                    return 2
+                if hover_index != -1:
+                    return hover_index
 
-        # 깜빡임 계산
+        # 깜빡임
         blink_alpha += blink_dir * 6
-        if blink_alpha >= 120 or blink_alpha <= 30:
+        if blink_alpha >= 120 or blink_alpha <= 40:
             blink_dir *= -1
 
-        # 배경
+        # ===== 배경 =====
         screen.blit(background, (0, 0))
 
-        # 캐릭터
         if character is not None:
             x = (SCREEN_WIDTH - character.get_width()) // 2
             y = SCREEN_HEIGHT - character.get_height()
             screen.blit(character, (x, y))
 
-        # 색상 설정
-        def draw_box(rect, text, hovered):
+        # ===== 선택지 =====
+        for i, rect in enumerate(boxes):
+            hovered = (i == selected)
+
             base_color = (40, 40, 40)
-            hover_color = (80, 80, 80)
-            border_color = (255, 255, 255)
+            hover_color = (90, 90, 90)
 
             pygame.draw.rect(
                 screen,
                 hover_color if hovered else base_color,
                 rect,
-                border_radius=18
+                border_radius=16
             )
 
             if hovered:
@@ -117,28 +136,31 @@ def choice_dialogue(option1, option2):
                     (255, 255, 255, blink_alpha),
                     border_surface.get_rect(),
                     4,
-                    border_radius=18
+                    border_radius=16
                 )
                 screen.blit(border_surface, rect.topleft)
             else:
-                pygame.draw.rect(screen, border_color, rect, 2, border_radius=18)
+                pygame.draw.rect(
+                    screen,
+                    (180, 180, 180),
+                    rect,
+                    2,
+                    border_radius=16
+                )
 
             draw_wrapped_text(
                 screen,
-                text,
+                f"{i+1}. {options[i]}",
                 font,
                 (255, 255, 255),
                 rect
             )
 
-        draw_box(box1_rect, "1. " + option1, hover_1)
-        draw_box(box2_rect, "2. " + option2, hover_2)
-
-        # HUD
         draw_player_status(screen, font, player, status_img)
 
         pygame.display.flip()
         clock_local.tick(60)
+
 
 
 
@@ -415,6 +437,7 @@ def game_story_sequence():
     '''
     # # 4.—---------------------------------------------
     # # 올바른 대화 선택지
+    
     display_story_text("(무사히 과제를 제출하고 교수연구실 밖으로 나왔다.)")
     display_story_text("나 : 후.. 이번에도 운이 좋았어.. 이제 빨리 나가야겠다.")
     display_story_text("(복도 끝에서 교수연구실 쪽으로 걸어오는 발소리가 들린다.)", bg="e8-1(6)")
@@ -424,18 +447,18 @@ def game_story_sequence():
     display_story_text("(???이 들어온다.)")
     display_story_text("전공교수님 : 자네. 이 시간까지 강의실에서 뭐하는 건가?")
 
-    choice = choice_dialogue(
+    choice1 = choice_dialogue([
     "강의실에 남아 공부하고 있었다고 이야기한다.",
     "과제 제출하러 왔다고 말한다."
-    )
+    ])
 
-    if choice == 1:
-        display_story_text("나 : 강의실에 남아서 복습하고 있었습니다.", ch="professor_smile")
-        display_story_text("전공교수님 : 훌륭한 학생이군. 열심히 하게.")
-        display_story_text("(전공 교수님이 밖으로 나간다.)")
-        display_story_text("나 : (휴… 살았다..)")
+    if choice1 == 0:
+            display_story_text("나 : 강의실에 남아서 복습하고 있었습니다.", ch="professor_smile")
+            display_story_text("전공교수님 : 훌륭한 학생이군. 열심히 하게.")
+            display_story_text("(전공 교수님이 밖으로 나간다.)")
+            display_story_text("나 : (휴… 살았다..)")
 
-    elif choice == 2:
+    elif choice1 == 1:
         display_story_text("나 : 과제 제출하러 왔습니다.", ch="professor_angry")
         display_story_text("전공교수 : 과제제출은 어제까지 인걸로 알고있는데..?")
         display_story_text("나 : 하하.. 들켰네.")
@@ -451,12 +474,12 @@ def game_story_sequence():
     display_story_text("대학원생 : 학생. 이 시간에 학교에는 어쩐일인가?")
     display_story_text("나 : (아.. 뭐라고 둘러대지?)")
     
-    choice = choice_dialogue(
+    choice2 = choice_dialogue([
     "강의실에 남아 공부하고 있었다고 이야기한다.",
     "과제 제출하러 왔다고 말한다."
-)
+    ])
 
-    if choice == 1:
+    if choice2 == 0:
         display_story_text("나 : 안녕하세요. 선배님. 강의실에 남아서 공부하다가 집에 가는 중이에요.", ch="grad_student_smile")
         display_story_text("대학원생 : 지금 교수님 연구 중이시라 예민하셔. 조심히가렴.")
         display_story_text("나 : 네. 알겠습니다.", bg="e8-1외부")
@@ -466,7 +489,7 @@ def game_story_sequence():
         display_story_text("나 : (도망친다.)")
         display_story_text("전공교수님 : 헉헉… 분명 교수연구실 문과 과제물 케비넷이 잠겨있었는데..! 저 학생이 범인이 분명해 꼭 잡고야 말겠어..!")
 
-    elif choice == 2:
+    elif choice2 == 1:
         display_story_text("대학원생 : 이 자식봐라 수상한데? 거기 학생 잠깐 나 좀 볼까?", ch="grad_student_angry");
         display_story_text("나 : 네..? 저..저요?");
         display_story_text("대학원생 : 그래. 지금 여기 학생 말고 또 누가 있나?");
@@ -484,35 +507,42 @@ def game_story_sequence():
     # <전개, E8-1 건물 나감, 랜덤 이벤트 발생>
     # 랜덤 이벤트 기본은 8개 제작, 이 중 4개 이벤트 발생, 중복 X
 
-    # <설명 : 몇몇 정신을 공격하는 이벤트에 실패하면 
-    # 그 자리에서 체력을 모두 잃어 기절하게 된다. 
-    # 한 시라도 학교에서 나가야 되는 상황에서 기절하게 되면 
-    # 교수님에게 붙잡힐 수 있으니 되도록 이벤트에서 성공해야 한다>
+    display_story_text('교수님께 잡히면 안되니 최대한 빨리 학교를 나가야해!.', bg="e8-1외부")
+    display_story_text('(몇몇 정신을 공격하는 이벤트에 실패하면 그 자리에서 체력을 모두 잃어 기절하게 된다.)')
+    display_story_text('(기절하게 되면 교수님에게 붙잡힐 수 있으니 되도록 이벤트를 성공해야 한다.)')
     # —-----------------------------------
     # '''
 
     # # 1.산책하던 충북대학교 총장과 마주침. -----------------------------------
-    # display_story_text("(멀리서 조용한 충북대 캠퍼스에서 한 사람의 실루엣이 보인다. 그가 다가왔다.)", bg="솔못", ch="president")
-    # display_story_text("총장 : 어? 이 시간에 학생이 여길 왜 다니고 있지?")
-    # display_story_text("총장 : 혹시… 나를 알아보겠나?")
-    # display_story_text("나 : 아..! 총장님..! (왜 하필 지금…!) 네, 당연하죠.")
-    # display_story_text("총장 : 그렇다면 내 이름이 무엇인지 말해보게.")
-    # display_story_text("(초성 : ㄱㅊㅅ)")
-    # display_story_text("1.김창섭\n2.고창섭\n3.김치신\n4.강창섭\n5구창섭")
+    display_story_text("(멀리서 조용한 충북대 캠퍼스에서 한 사람의 실루엣이 보인다. 그가 다가왔다.)", bg="솔못", ch="president")
+    display_story_text("총장 : 어? 이 시간에 학생이 여길 왜 다니고 있지?")
+    display_story_text("총장 : 혹시… 나를 알아보겠나?")
+    display_story_text("나 : 아..! 총장님..! (왜 하필 지금…!) 네, 당연하죠.")
+    display_story_text("총장 : 그렇다면 내 이름이 무엇인지 말해보게.")
+    display_story_text("(초성 : ㄱㅊㅅ)")
 
-    # # 올바른 선택시
-    # display_story_text("총장 : 흠… 정확하게 알고 있군!", ch="president_smile")
-    # display_story_text("(기분이 좋아져 미소를 짓는다)")
-    # display_story_text("총장 : 이 정도면 우리 학교 학생으로서 충분히 자랑스럽네.")
-    # display_story_text("총장 : 오늘 만난 것도 인연이지. 자네에게 작은 도움을 주도록 하지.")
-    # display_story_text("(딱히 도움이 되진 않으나 총장의 호감도가 상승했다.)")
-    # display_story_text("(단서 +25)")
+    choice3 = choice_dialogue([
+    "김창섭",
+    "고창섭",
+    "김치신",
+    "강창섭",
+    "구창섭"
+    ])
 
-    # # //플레이어가 오답을 선택 시
-    # display_story_text("총장 : …흠. 그렇군.", ch="president_disappointed")
-    # display_story_text("(씁쓸한 표정을 짓는다.)")
-    # display_story_text("총장 : 내 이름도 모르는 학생이 요즘 왜 이렇게 많나… 하여간… 에휴…")
-    # display_story_text("(총장이 실망했다. 하지만 딱히 상관은 없다.)")
+    if choice3 == 1:
+        display_story_text("총장 : 흠… 정확하게 알고 있군!", ch="president_smile")
+        display_story_text("(기분이 좋아져 미소를 짓는다)")
+        display_story_text("총장 : 이 정도면 우리 학교 학생으로서 충분히 자랑스럽네.")
+        display_story_text("총장 : 오늘 만난 것도 인연이지. 자네에게 작은 도움을 주도록 하지.")
+        display_story_text("(딱히 도움이 되진 않으나 총장의 호감도가 상승했다.)")
+        display_story_text("(단서 획득!)")
+            
+    else:
+        display_story_text("총장 : …흠. 그렇군.", ch="president_disappointed")
+        display_story_text("(씁쓸한 표정을 짓는다.)")
+        display_story_text("총장 : 내 이름도 모르는 학생이 요즘 왜 이렇게 많나… 하여간… 에휴…")
+        display_story_text("(총장이 실망했다. 하지만 딱히 상관은 없다.)")
+
 
 
     # # 2.공업 법규와 창업. 강봉희 교수를 만남 -----------------------------------

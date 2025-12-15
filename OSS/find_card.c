@@ -142,3 +142,8 @@ DLLEXPORT int is_time_over() {
     return (now - start_time >= time_limit) ? 1 : 0;
 }
 
+DLLEXPORT int get_remaining_time() {
+    time_t now = time(NULL);
+    int remain = time_limit - (int)(now - start_time);
+    return (remain > 0) ? remain : 0;
+}

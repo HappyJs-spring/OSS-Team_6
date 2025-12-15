@@ -124,6 +124,9 @@ class FindCard:
         self.c_lib.get_board_state.restype = None
         self.c_lib.is_finished.restype = ctypes.c_int
 
+
+        self.c_lib.is_time_over.restype = ctypes.c_int                    
+        self.c_lib.get_remaining_time.restype = ctypes.c_int              
     # ---------------------------------------------------------
     def _card_rect(self, x, y):
         return pygame.Rect(
@@ -189,6 +192,13 @@ class FindCard:
         title = self.font_big.render("Find Card", True, (80,85,95))
         self.screen.blit(title, ((self.SCREEN_W - title.get_width())//2, 40))
 
+        remaining = self.c_lib.get_remaining_time()    
+        timer_text = self.font.render(f"남은 시간: {remaining}초", True, (80, 80, 90))  
+        self.screen.blit( 
+            timer_text,   
+            (self.SCREEN_W - timer_text.get_width() - 40, 40)  
+        ) 
+
         idx = 0
         for y in range(4):
             for x in range(4):
@@ -206,6 +216,12 @@ class FindCard:
     # ---------------------------------------------------------
     def run(self):
         while True:
+            if self.c_lib.is_time_over():   
+                self.message = "시간 초과!"   
+                self._draw_board()  
+                pygame.time.wait(1500)  
+                return False  
+
             if self.c_lib.is_finished():
                 self.message = "성공!"
                 self._draw_board()
@@ -232,6 +248,13 @@ class FindCard:
                         for x in range(4):
                             if self._card_rect(x, y).collidepoint(mx, my):
                                 r = self.c_lib.select_card(x, y)
+
+
+                                if r == 5:
+                                    self.message = "시간 초과!"   
+                                    self._draw_board()     
+                                    pygame.time.wait(1500)  
+                                    return False   
 
                                 if r == 2:
                                     self.flip_pending = True

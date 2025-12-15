@@ -3,6 +3,11 @@
 #include <stdlib.h>
 #include <time.h>
 
+static time_t start_time;
+static int time_limit = 30;
+
+DLLEXPORT int is_time_over();
+
 enum Status { HIDDEN, OPEN, TEMP, HINT };
 
 typedef struct {
@@ -20,6 +25,9 @@ static int temp_y[2];
 DLLEXPORT void init_game() {
     srand((unsigned int)time(NULL));
 
+    // 게임 시작 시간 기록
+    start_time = time(NULL);
+
     // 초기화
     opened_pair = 0;
     temp_count = 0;
@@ -29,6 +37,7 @@ DLLEXPORT void init_game() {
     for(int i=0;i<4;i++){
         for(int j=0;j<4;j++){
             Board[i][j].St = HIDDEN;
+            Board[i][j].Num = 0;
         }
     }
 
@@ -42,7 +51,6 @@ DLLEXPORT void init_game() {
             }while(Board[x][y].St != HIDDEN || Board[x][y].Num != 0);
 
             Board[x][y].Num = num;
-            Board[x][y].St  = HIDDEN;
         }
     }
 }
@@ -50,6 +58,8 @@ DLLEXPORT void init_game() {
 // 카드 선택
 DLLEXPORT int select_card(int x, int y) {
 
+    if(is_time_over())
+        return 5;   // 시간 초과 코드
     // 이미 뒤집힌 카드
     if(Board[x][y].St == OPEN)
         return 3;
@@ -130,4 +140,15 @@ DLLEXPORT void use_hint(int num) {
 // 게임 끝났는가?
 DLLEXPORT int is_finished() {
     return (opened_pair == 8) ? 1 : 0;
+}
+
+DLLEXPORT int is_time_over() {
+    time_t now = time(NULL);
+    return (now - start_time >= time_limit) ? 1 : 0;
+}
+
+DLLEXPORT int get_remaining_time() {
+    time_t now = time(NULL);
+    int remain = time_limit - (int)(now - start_time);
+    return (remain > 0) ? remain : 0;
 }

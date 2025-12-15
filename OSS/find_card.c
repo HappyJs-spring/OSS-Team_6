@@ -37,6 +37,7 @@ DLLEXPORT void init_game() {
     for(int i=0;i<4;i++){
         for(int j=0;j<4;j++){
             Board[i][j].St = HIDDEN;
+            Board[i][j].Num = 0;
         }
     }
 

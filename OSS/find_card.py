@@ -192,6 +192,13 @@ class FindCard:
         title = self.font_big.render("Find Card", True, (80,85,95))
         self.screen.blit(title, ((self.SCREEN_W - title.get_width())//2, 40))
 
+        remaining = self.c_lib.get_remaining_time()    
+        timer_text = self.font.render(f"남은 시간: {remaining}초", True, (80, 80, 90))  
+        self.screen.blit( 
+            timer_text,   
+            (self.SCREEN_W - timer_text.get_width() - 40, 40)  
+        ) 
+
         idx = 0
         for y in range(4):
             for x in range(4):

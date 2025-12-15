@@ -23,6 +23,9 @@ static int temp_y[2];
 DLLEXPORT void init_game() {
     srand((unsigned int)time(NULL));
 
+    // 게임 시작 시간 기록
+    start_time = time(NULL);
+
     // 초기화
     opened_pair = 0;
     temp_count = 0;
@@ -45,7 +48,6 @@ DLLEXPORT void init_game() {
             }while(Board[x][y].St != HIDDEN || Board[x][y].Num != 0);
 
             Board[x][y].Num = num;
-            Board[x][y].St  = HIDDEN;
         }
     }
 }
@@ -134,3 +136,9 @@ DLLEXPORT void use_hint(int num) {
 DLLEXPORT int is_finished() {
     return (opened_pair == 8) ? 1 : 0;
 }
+
+DLLEXPORT int is_time_over() {
+    time_t now = time(NULL);
+    return (now - start_time >= time_limit) ? 1 : 0;
+}
+

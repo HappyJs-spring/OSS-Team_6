@@ -6,6 +6,8 @@
 static time_t start_time;
 static int time_limit = 30;
 
+DLLEXPORT int is_time_over();
+
 enum Status { HIDDEN, OPEN, TEMP, HINT };
 
 typedef struct {
@@ -55,6 +57,8 @@ DLLEXPORT void init_game() {
 // 카드 선택
 DLLEXPORT int select_card(int x, int y) {
 
+    if(is_time_over())
+        return 5;   // 시간 초과 코드
     // 이미 뒤집힌 카드
     if(Board[x][y].St == OPEN)
         return 3;

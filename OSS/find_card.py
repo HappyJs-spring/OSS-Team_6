@@ -124,6 +124,9 @@ class FindCard:
         self.c_lib.get_board_state.restype = None
         self.c_lib.is_finished.restype = ctypes.c_int
 
+
+        self.c_lib.is_time_over.restype = ctypes.c_int                    
+        self.c_lib.get_remaining_time.restype = ctypes.c_int              
     # ---------------------------------------------------------
     def _card_rect(self, x, y):
         return pygame.Rect(
@@ -206,6 +209,12 @@ class FindCard:
     # ---------------------------------------------------------
     def run(self):
         while True:
+            if self.c_lib.is_time_over():   
+                self.message = "시간 초과!"   
+                self._draw_board()  
+                pygame.time.wait(1500)  
+                return False  
+
             if self.c_lib.is_finished():
                 self.message = "성공!"
                 self._draw_board()

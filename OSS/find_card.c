@@ -3,6 +3,9 @@
 #include <stdlib.h>
 #include <time.h>
 
+static time_t start_time;
+static int time_limit = 30;
+
 enum Status { HIDDEN, OPEN, TEMP, HINT };
 
 typedef struct {

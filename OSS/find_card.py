@@ -249,6 +249,13 @@ class FindCard:
                             if self._card_rect(x, y).collidepoint(mx, my):
                                 r = self.c_lib.select_card(x, y)
 
+
+                                if r == 5:
+                                    self.message = "시간 초과!"   
+                                    self._draw_board()     
+                                    pygame.time.wait(1500)  
+                                    return False   
+
                                 if r == 2:
                                     self.flip_pending = True
                                     self.flip_time = now + 700

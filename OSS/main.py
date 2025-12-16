@@ -714,7 +714,7 @@ def game_story_sequence():
         display_story_text("나: 이거 다 가져가도 돼요?")
         display_story_text("편의점 직원: 다 가져가도 됩니다!")
         display_story_text("나: 배부르니까 하나만 먹을게요~ 많이파세요~~")
-        display_story_text("편의점 직원: 감사합니다 또오세요~ ")
+        display_story_text("편의점 직원: 감사합니다 또오세요~ ", ch="clear")
         display_story_text("( 단서 획득!)")
         gain_clue(player, amount=25)
         show_clue_popup(
@@ -726,16 +726,16 @@ def game_story_sequence():
         )
     else:
         display_story_text("편의점 직원: 아이고.. 아쉽네요..")
-        display_story_text("나: 이걸로 결제 해 주세요….( 카드를 건넨다)")
+        display_story_text("나: 이걸로 결제 해 주세요….( 카드를 건넨다)", ch="clear")
         display_story_text("(체력 -30)")
         change_health(-30)
 
     
 
     # 6. B:last 홍보 부스 (10초에 맞춰 버튼 입력하는 게임) -----------------------------------
-    display_story_text("나: 조금 걷다가… 아, 저기 부스가 있네. 뭐하는 곳이지?", bg="중도부스")
+    display_story_text("나: 조금 걷다가… 아, 저기 부스가 있네. 뭐하는 곳이지?", bg="중도부스", ch="booth_promoter")
     # //(배경 부스로 바뀜)
-    display_story_text("홍보 관계자: 어서 오세요, 손님! 오늘은 특별한 체험 이벤트가 있어요!", ch="booth_promoter")
+    display_story_text("홍보 관계자: 어서 오세요, 손님! 오늘은 특별한 체험 이벤트가 있어요!")
     display_story_text("B:last 10초 버튼 챌린지’에 참여하시겠어요?")
     display_story_text("나: …버튼을 10초에 딱 맞추라고요?")
     display_story_text("나: 오 재밌겠는데?")
@@ -751,7 +751,7 @@ def game_story_sequence():
     if game_result_timer is True:
         display_story_text("와! 대단하시네요! 완벽하게 성공하셨습니다!", ch="booth_promoter_smile")
         display_story_text("나: (정확히 10초는 아니지만) 오..오예!")
-        display_story_text("홍보 관계자: 좋아요, 덕분에 오늘도 즐거운 이벤트였어요! 또 오세요~")
+        display_story_text("홍보 관계자: 좋아요, 덕분에 오늘도 즐거운 이벤트였어요! 또 오세요~", ch="clear")
         display_story_text("단서 획득!")
         gain_clue(player, amount=25)
         show_clue_popup(
@@ -763,6 +763,7 @@ def game_story_sequence():
         )
     else:
         display_story_text("홍보 관계자: 앗, 아쉽네요… 다음 기회에 다시 도전하세요!", ch="booth_promoter_disappointed")
+        
 
 
     # 7.중도 앞 길가에서 쓰레기 발견 (중도 앞 길가에서 쓰레기를 발견함)-----------------------------------

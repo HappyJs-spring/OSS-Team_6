@@ -477,7 +477,7 @@ def game_story_sequence():
 
     if choice1 == 0:
             display_story_text("나 : 강의실에 남아서 복습하고 있었습니다.", ch="professor_smile")
-            display_story_text("전공교수님 : 훌륭한 학생이군. 열심히 하게.")
+            display_story_text("전공교수님 : 훌륭한 학생이군. 열심히 하게.", ch="clear")
             display_story_text("(전공 교수님이 밖으로 나간다.)")
             display_story_text("나 : (휴… 살았다..)")
 
@@ -504,19 +504,19 @@ def game_story_sequence():
 
     if choice2 == 0:
         display_story_text("나 : 안녕하세요. 선배님. 강의실에 남아서 공부하다가 집에 가는 중이에요.", ch="grad_student_smile")
-        display_story_text("대학원생 : 지금 교수님 연구 중이시라 예민하셔. 조심히가렴.")
+        display_story_text("대학원생 : 지금 교수님 연구 중이시라 예민하셔. 조심히가렴.", ch="clear")
         display_story_text("나 : 네. 알겠습니다.", bg="e8-1외부")
         display_story_text("(무사히 학과 건물을 빠져나왔다.)", ch="professor_embarrassed")
         display_story_text("(갑자기 뒤에서 전공교수님이 뛰어온다.)")
         display_story_text("전공교수님 : 자네 잠깐만 거기 서 보세..!")
         display_story_text("나 : (도망친다.)")
-        display_story_text("전공교수님 : 헉헉… 분명 교수연구실 문과 과제물 케비넷이 잠겨있었는데..! 저 학생이 범인이 분명해 꼭 잡고야 말겠어..!")
+        display_story_text("전공교수님 : 헉헉… 분명 교수연구실 문과 과제물 케비넷이 잠겨있었는데..! 저 학생이 범인이 분명해 꼭 잡고야 말겠어..!", ch="clear")
 
     elif choice2 == 1:
-        display_story_text("대학원생 : 이 자식봐라 수상한데? 거기 학생 잠깐 나 좀 볼까?", ch="grad_student_angry");
-        display_story_text("나 : 네..? 저..저요?");
-        display_story_text("대학원생 : 그래. 지금 여기 학생 말고 또 누가 있나?");
-        display_story_text("(갑자기 전공교수님이 뛰어온다)");
+        display_story_text("대학원생 : 이 자식봐라 수상한데? 거기 학생 잠깐 나 좀 볼까?", ch="grad_student_angry")
+        display_story_text("나 : 네..? 저..저요?")
+        display_story_text("대학원생 : 그래. 지금 여기 학생 말고 또 누가 있나?")
+        display_story_text("(갑자기 전공교수님이 뛰어온다)")
         display_story_text("전공교수님 : 이봐 자네! 그 학생 잡아!", ch="grad_student_embrrassed")
         display_story_text("대학원생 : 이 학생이요..?")
         display_story_text("(대학원생에게 붙잡혔다.)", ch="professor_angry")

@@ -556,7 +556,7 @@ def game_story_sequence():
         display_story_text("총장 : 흠… 정확하게 알고 있군!", ch="president_smile")
         display_story_text("(기분이 좋아져 미소를 짓는다)")
         display_story_text("총장 : 이 정도면 우리 학교 학생으로서 충분히 자랑스럽네.")
-        display_story_text("총장 : 오늘 만난 것도 인연이지. 자네에게 작은 도움을 주도록 하지.")
+        display_story_text("총장 : 오늘 만난 것도 인연이지. 자네에게 작은 도움을 주도록 하지.", ch="clear")
         display_story_text("(딱히 도움이 되진 않으나 총장의 호감도가 상승했다.)")
         display_story_text("(단서 획득!)")
         gain_clue(player, amount=25)
@@ -571,7 +571,7 @@ def game_story_sequence():
     else:
         display_story_text("총장 : …흠. 그렇군.", ch="president_disappointed")
         display_story_text("(씁쓸한 표정을 짓는다.)")
-        display_story_text("총장 : 내 이름도 모르는 학생이 요즘 왜 이렇게 많나… 하여간… 에휴…")
+        display_story_text("총장 : 내 이름도 모르는 학생이 요즘 왜 이렇게 많나… 하여간… 에휴…", ch="clear")
         display_story_text("(총장이 실망했다. 하지만 딱히 상관은 없다.)")
 
 
@@ -603,7 +603,7 @@ def game_story_sequence():
         display_story_text("강봉희 교수님 : 오~ 정확하군! MONICA, 맞네.", ch="monica_smile")
         display_story_text("강봉희 교수님 : 수업을 아주 집중해서 들었군. 대단한데?")
         display_story_text("(강봉희 교수님이 만족한 듯 고개를 끄덕인다.)")
-        display_story_text("강봉희 교수님 : 좋아. 통과! 이만 가봐도 좋다네.")
+        display_story_text("강봉희 교수님 : 좋아. 통과! 이만 가봐도 좋다네.", ch="clear")
         display_story_text("(단서 획득!)")
         gain_clue(player, amount=25)
         show_clue_popup(
@@ -614,11 +614,11 @@ def game_story_sequence():
             character=character
         )
     else:
-        display_story_text("강봉희 교수님 : 땡! 틀렸어.", ch="monica_serious");
+        display_story_text("강봉희 교수님 : 땡! 틀렸어.", ch="monica_serious")
         display_story_text("강봉희 교수님 : 이봐, 내가 뭐랬지? 스펠링 틀리면 F라고 했지?")
         display_story_text("(갑자기 진지해지며)", ch="monica_smile2")
         display_story_text("강봉희 교수님 : 자네… 공법창 F다.")
-        display_story_text("나 : 아이고.. 아이고.. (하지만 어차피 중간 성적대로 가면 D+였기 때문에 큰 타격이 없다. 교양이기도 하고)")
+        display_story_text("나 : 아이고.. 아이고.. (하지만 어차피 중간 성적대로 가면 D+였기 때문에 큰 타격이 없다. 교양이기도 하고)", ch="clear")
         display_story_text("(공법창 학점 F확정^^)")
 
 

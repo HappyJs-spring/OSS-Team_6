@@ -791,7 +791,7 @@ def game_story_sequence():
         display_story_text("환경봉사 동아리 부원 등장")
         display_story_text("환경봉사 동아리 부원: 학생! 여기서 쓰레기를 무시하고 지나가다니… 환경 의식이 너무 부족하군요!")
         display_story_text("나: 죄송합니다… 다음부터 꼭 챙길게요!", ch="environmentalist")
-        display_story_text("환경봉사 동아리 부원: 좋아요, 이번 한 번만 봐줄게요. 앞으로는 주의하세요!")
+        display_story_text("환경봉사 동아리 부원: 좋아요, 이번 한 번만 봐줄게요. 앞으로는 주의하세요!", ch="Clear")
         display_story_text("(체력 -20)")
         change_health(-20)
 
@@ -811,7 +811,7 @@ def game_story_sequence():
     
     if game_result_BR31 is True:
         display_story_text("동기: 와! 대단한데? 역시 네가 우리 중에 제일 센스 있네!", ch="schoolmate_smile")
-        display_story_text("(단서 획득!)")
+        display_story_text("(단서 획득!)", ch="clear")
         gain_clue(player, amount=25)
         show_clue_popup(
             screen=screen,
@@ -822,7 +822,7 @@ def game_story_sequence():
         )
     else:
         display_story_text("동기:ㅋ 아쉽다! 넌 아직 부족하군.", ch="schoolmate_sneer")
-        display_story_text("이제 더 집중해야지, 그래도 열심히 하셨잖아~")
+        display_story_text("이제 더 집중해야지, 그래도 열심히 하셨잖아~", ch="clear")
         display_story_text("(체력 -50)")
         change_health(-50)
 

@@ -636,7 +636,7 @@ def game_story_sequence():
     if choice5 == 3:
         display_story_text("RISE 관계자 : 맞습니다! RISE는 충북대의 산학연 협력, 기술사업화, 기업 지원을 담당하는 핵심 조직이에요.", ch="rise_smile")
         display_story_text("RISE 관계자 : 학생이 아주 잘 알고 있네요.")
-        display_story_text("RISE 관계자 : 이해도가 높으니, 도움이 될 만한 정보를 더 드릴게요.")
+        display_story_text("RISE 관계자 : 이해도가 높으니, 도움이 될 만한 정보를 더 드릴게요.", ch="clear")
         display_story_text("(단서 획득!)")
         gain_clue(player, amount=25)
         show_clue_popup(
@@ -651,7 +651,7 @@ def game_story_sequence():
         display_story_text("충북대학교 산학협력단이 지역 기업·연구기관·정부와 협업하여 기술 개발 지원, 창업 보육 및 기업 컨설팅, 산학 공동 R&D, 지식재산(IP) 관리, 현장실습·취업 연계, 지역산업 혁신 프로젝트 등을 수행하는 기관입니다. 우리 학교의 연구 역량을 지역 산업과 직접 연결해...")
         display_story_text("...학생·기업·지역사회가 함께 성장할 수 있도록 돕는 핵심 조직이죠.")
         display_story_text("RISE 관계자 : 다음엔 꼭 맞추세요, 학생.")
-        display_story_text("나 : (아.. 피곤해..)")
+        display_story_text("나 : (아.. 피곤해..)", ch="clear")
         display_story_text("(긴 설명으로 인해 체력이 감소합니다.)")
         display_story_text("(체력 -30)")
         change_health(-30)
@@ -686,7 +686,7 @@ def game_story_sequence():
         display_story_text("커플남 : 맞아~ 여기 벤치에서 처음으로 손도 잡고~ 첫 데이트도 하고~")
         display_story_text("(둘이 갑자기 과한 스킨십을 시전한다. 당신은 정신적으로 데미지를 입기 시작한다.)")
         display_story_text("커플녀 : 너도 얼른 커플 만들어~ 요즘 혼자 다니면 외로워~")
-        display_story_text("(당신은 닭살 커플의 과한 애정행각에 정신적 데미지를 입었습니다.)")
+        display_story_text("(당신은 닭살 커플의 과한 애정행각에 정신적 데미지를 입었습니다.)", ch="clear")
         display_story_text("(당신은 털썩한 마음으로 솔못을 벗어난다.)")
         display_story_text("(체력 -50)")
         change_health(-50)

@@ -191,7 +191,7 @@ def choice_dialogue(options):
                 rect
             )
 
-        draw_player_status(screen, font, player, status_img)
+        draw_player_status(screen, font, player)
 
         pygame.display.flip()
         clock_local.tick(60)
@@ -350,7 +350,7 @@ def display_story_text(text, nexttime=600, bg=None, ch=None):
         dialogue_box.draw()
 
         # --- HUD ---
-        draw_player_status(screen, font, player, status_img)
+        draw_player_status(screen, font, player)
 
         pygame.display.flip()
         clock.tick(60)

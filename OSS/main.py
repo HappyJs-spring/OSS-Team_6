@@ -23,6 +23,10 @@ def gain_clue(player, amount=25):
     player["clue"] = min(100, player["clue"] + amount)
 
 
+def get_clue_level(player):
+    return min(4, player["clue"] // 25)
+
+
 def check_ending():
     if player["health"] <= 0:
         show_ending(screen, "bad")

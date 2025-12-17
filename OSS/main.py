@@ -199,7 +199,13 @@ def choice_dialogue(options):
 
 
 
-def draw_player_status(screen, font, player, status_img):
+def draw_player_status(screen, font, player):
+    # 단서 단계 계산
+    clue_level = get_clue_level(player)
+
+    # 단계에 맞는 status 이미지 선택
+    status_img = STATUS_IMAGES[clue_level]
+
     img_w, img_h = status_img.get_size()
 
     # 화면 오른쪽 상단
@@ -209,9 +215,8 @@ def draw_player_status(screen, font, player, status_img):
     # UI 이미지
     screen.blit(status_img, (x, y))
 
-    # ========================
+
     # 체력바 설정
-    # ========================
     max_hp = 100
     current_hp = player['health']
     hp_ratio = max(0, current_hp / max_hp)

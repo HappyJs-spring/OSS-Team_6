@@ -38,6 +38,10 @@ def show_ending(screen, ending_type, display_story_text):
     # ======================
     # BAD ENDING
     # ======================
+    if ending_type == "fail":
+        show_grade(screen, "F", (200, 0, 0))
+        return       
+    
     if ending_type == "bad":
         display_story_text(
             "(교수님의 목소리가 들려온다…)",

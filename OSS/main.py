@@ -29,15 +29,29 @@ def get_clue_level(player):
 
 
 def check_ending():
+    # 1. 배드 엔딩 (체력 0)
     if player["health"] <= 0:
-        show_ending(screen, "bad")
+        show_ending(screen, "bad", display_story_text)
         pygame.quit()
         sys.exit()
 
-    if player["escaped"] and player["health"] > 0:
-        show_ending(screen, "happy")
+    # 탈출 안 했으면 아직 엔딩 아님
+    if not player.get("escaped", False):
+        return
+
+    # 2. 히든 엔딩 (체력 > 0 && 단서 4개)
+    if player["clue"] >= 100:
+        show_ending(screen, "hidden", display_story_text)
+
         pygame.quit()
         sys.exit()
+
+    # 3. 해피 엔딩 (체력 > 0 && 단서 부족)
+    show_ending(screen, "happy", display_story_text)
+
+    pygame.quit()
+    sys.exit()
+
 
 
 def change_health(amount):
@@ -805,7 +819,7 @@ def game_story_sequence():
                 display_story_text("환경봉사 동아리 부원: 좋아요, 이번 한 번만 봐줄게요. 앞으로는 주의하세요!", ch="Clear")
                 display_story_text("(체력 -20)")
                 change_health(-20)
-                
+
         elif i == 8:
             # 8.중문에서 나타나는 보드게임 중독(홀덤 중독자) 학과 동기와 만남-----------------------------------
             display_story_text("하하하하하", bg="n-14")

@@ -5,6 +5,7 @@ import os
 from start_screen import start_screen
 from ending_screen import show_ending
 from clue_popup import show_clue_popup
+import random
 
 from hangman import HangmanGame 
 from up_down import UpDownGame
@@ -17,23 +18,40 @@ from dialogue_manager import DialogueManager
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 PROJECT_ROOT = os.path.dirname(BASE_DIR)
-
 CLUE_IMG_PATH = os.path.join(PROJECT_ROOT, "OSS", "UI", "Status", "clue.png")
 
 def gain_clue(player, amount=25):
     player["clue"] = min(100, player["clue"] + amount)
 
 
+def get_clue_level(player):
+    return min(4, player["clue"] // 25)
+
+
 def check_ending():
+    # 1. 배드 엔딩 (체력 0)
     if player["health"] <= 0:
-        show_ending(screen, "bad")
+        show_ending(screen, "bad", display_story_text)
         pygame.quit()
         sys.exit()
 
-    if player["escaped"] and player["health"] > 0:
-        show_ending(screen, "happy")
+    # 탈출 안 했으면 아직 엔딩 아님
+    if not player.get("escaped", False):
+        return
+
+    # 2. 히든 엔딩 (체력 > 0 && 단서 4개)
+    if player["clue"] >= 100:
+        show_ending(screen, "hidden", display_story_text)
+
         pygame.quit()
         sys.exit()
+
+    # 3. 해피 엔딩 (체력 > 0 && 단서 부족)
+    show_ending(screen, "happy", display_story_text)
+
+    pygame.quit()
+    sys.exit()
+
 
 
 def change_health(amount):
@@ -188,7 +206,7 @@ def choice_dialogue(options):
                 rect
             )
 
-        draw_player_status(screen, font, player, status_img)
+        draw_player_status(screen, font, player)
 
         pygame.display.flip()
         clock_local.tick(60)
@@ -196,7 +214,13 @@ def choice_dialogue(options):
 
 
 
-def draw_player_status(screen, font, player, status_img):
+def draw_player_status(screen, font, player):
+    # 단서 단계 계산
+    clue_level = get_clue_level(player)
+
+    # 단계에 맞는 status 이미지 선택
+    status_img = STATUS_IMAGES[clue_level]
+
     img_w, img_h = status_img.get_size()
 
     # 화면 오른쪽 상단
@@ -206,9 +230,8 @@ def draw_player_status(screen, font, player, status_img):
     # UI 이미지
     screen.blit(status_img, (x, y))
 
-    # ========================
+
     # 체력바 설정
-    # ========================
     max_hp = 100
     current_hp = player['health']
     hp_ratio = max(0, current_hp / max_hp)
@@ -272,13 +295,17 @@ font = pygame.font.SysFont("malgun gothic", 40)
 
 # 상태창 이미지 로드
 STATUS_DIR = os.path.join(BASE, "UI", "Status")
-STATUS_IMG_PATH = os.path.join(STATUS_DIR, "status_0.PNG")
-status_img = pygame.image.load(STATUS_IMG_PATH).convert_alpha()
-
-# 원하는 크기로 리사이즈 (예: 300x180)
 STATUS_WIDTH = 300
 STATUS_HEIGHT = 180
-status_img = pygame.transform.smoothscale(status_img, (STATUS_WIDTH, STATUS_HEIGHT))
+
+STATUS_IMAGES = {}
+
+for i in range(5):
+    path = os.path.join(STATUS_DIR, f"status_{i}.PNG")
+    img = pygame.image.load(path).convert_alpha()
+    img = pygame.transform.smoothscale(img, (STATUS_WIDTH, STATUS_HEIGHT))
+    STATUS_IMAGES[i] = img
+
 
 # # 모니터 해상도 자동 인식 
 # info = pygame.display.Info()
@@ -338,7 +365,7 @@ def display_story_text(text, nexttime=600, bg=None, ch=None):
         dialogue_box.draw()
 
         # --- HUD ---
-        draw_player_status(screen, font, player, status_img)
+        draw_player_status(screen, font, player)
 
         pygame.display.flip()
         clock.tick(60)
@@ -529,302 +556,299 @@ def game_story_sequence():
     # -------------------------------------
     # <전개, E8-1 건물 나감, 랜덤 이벤트 발생>
     # 랜덤 이벤트 기본은 8개 제작, 이 중 4개 이벤트 발생, 중복 X
+    lst = [1, 2, 3, 4, 5, 6, 7, 8]
+    play = random.sample(lst, 4)
 
-    display_story_text('교수님께 잡히면 안되니 최대한 빨리 학교를 나가야해!.', bg="e8-1외부")
-    display_story_text('(몇몇 정신을 공격하는 이벤트에 실패하면 그 자리에서 체력을 모두 잃어 기절하게 된다.)')
-    display_story_text('(기절하게 되면 교수님에게 붙잡힐 수 있으니 되도록 이벤트를 성공해야 한다.)')
-    # —-----------------------------------
-    # '''
+    for i in play:
+        if i == 1:
+            display_story_text('교수님께 잡히면 안되니 최대한 빨리 학교를 나가야해!.', bg="e8-1외부")
+            display_story_text('(몇몇 정신을 공격하는 이벤트에 실패하면 그 자리에서 체력을 모두 잃어 기절하게 된다.)')
+            display_story_text('(기절하게 되면 교수님에게 붙잡힐 수 있으니 되도록 이벤트를 성공해야 한다.)')
+            # —-----------------------------------
+            # '''
 
-    # # 1.산책하던 충북대학교 총장과 마주침. -----------------------------------
-    display_story_text("(멀리서 조용한 충북대 캠퍼스에서 한 사람의 실루엣이 보인다. 그가 다가왔다.)", bg="솔못", ch="president")
-    display_story_text("총장 : 어? 이 시간에 학생이 여길 왜 다니고 있지?")
-    display_story_text("총장 : 혹시… 나를 알아보겠나?")
-    display_story_text("나 : 아..! 총장님..! (왜 하필 지금…!) 네, 당연하죠.")
-    display_story_text("총장 : 그렇다면 내 이름이 무엇인지 말해보게.")
-    display_story_text("(초성 : ㄱㅊㅅ)")
+            # # 1.산책하던 충북대학교 총장과 마주침. -----------------------------------
+            display_story_text("(멀리서 조용한 충북대 캠퍼스에서 한 사람의 실루엣이 보인다. 그가 다가왔다.)", bg="솔못", ch="president")
+            display_story_text("총장 : 어? 이 시간에 학생이 여길 왜 다니고 있지?")
+            display_story_text("총장 : 혹시… 나를 알아보겠나?")
+            display_story_text("나 : 아..! 총장님..! (왜 하필 지금…!) 네, 당연하죠.")
+            display_story_text("총장 : 그렇다면 내 이름이 무엇인지 말해보게.")
+            display_story_text("(초성 : ㄱㅊㅅ)")
 
-    choice3 = choice_dialogue([
-    "김창섭",
-    "고창섭",
-    "김치신",
-    "강창섭",
-    "구창섭"
-    ])
+            choice3 = choice_dialogue([
+            "김창섭",
+            "고창섭",
+            "김치신",
+            "강창섭",
+            "구창섭"
+            ])
 
-    if choice3 == 1:
-        display_story_text("총장 : 흠… 정확하게 알고 있군!", ch="president_smile")
-        display_story_text("(기분이 좋아져 미소를 짓는다)")
-        display_story_text("총장 : 이 정도면 우리 학교 학생으로서 충분히 자랑스럽네.")
-        display_story_text("총장 : 오늘 만난 것도 인연이지. 자네에게 작은 도움을 주도록 하지.", ch="clear")
-        display_story_text("(딱히 도움이 되진 않으나 총장의 호감도가 상승했다.)")
-        display_story_text("(단서 획득!)")
-        gain_clue(player, amount=25)
-        show_clue_popup(
-            screen=screen,
-            clock=clock,
-            clue_img_path=CLUE_IMG_PATH,
-            background=background,
-            character=character
-        )
+            if choice3 == 1:
+                display_story_text("총장 : 흠… 정확하게 알고 있군!", ch="president_smile")
+                display_story_text("(기분이 좋아져 미소를 짓는다)")
+                display_story_text("총장 : 이 정도면 우리 학교 학생으로서 충분히 자랑스럽네.")
+                display_story_text("총장 : 오늘 만난 것도 인연이지. 자네에게 작은 도움을 주도록 하지.", ch="clear")
+                display_story_text("(딱히 도움이 되진 않으나 총장의 호감도가 상승했다.)")
+                display_story_text("(단서 획득!)")
+                gain_clue(player, amount=25)
+                show_clue_popup(
+                    screen=screen,
+                    clock=clock,
+                    clue_img_path=CLUE_IMG_PATH,
+                    background=background,
+                    character=character
+                )
 
-    else:
-        display_story_text("총장 : …흠. 그렇군.", ch="president_disappointed")
-        display_story_text("(씁쓸한 표정을 짓는다.)")
-        display_story_text("총장 : 내 이름도 모르는 학생이 요즘 왜 이렇게 많나… 하여간… 에휴…", ch="clear")
-        display_story_text("(총장이 실망했다. 하지만 딱히 상관은 없다.)")
+            else:
+                display_story_text("총장 : …흠. 그렇군.", ch="president_disappointed")
+                display_story_text("(씁쓸한 표정을 짓는다.)")
+                display_story_text("총장 : 내 이름도 모르는 학생이 요즘 왜 이렇게 많나… 하여간… 에휴…", ch="clear")
+                display_story_text("(총장이 실망했다. 하지만 딱히 상관은 없다.)")
 
-
-
-    # # 2.공업 법규와 창업. 강봉희 교수를 만남 -----------------------------------
-    display_story_text("(학연산 건물 앞을 지나가던 도중, 공업법규와 창업 강봉희 교수님을 만났다.)", bg="학연산", ch="monica")
-    display_story_text("강봉희 교수님 : 어이 학생. 잠깐 거기 서봐.")
-    display_story_text("(당황하며 얼어붙는다.)")
-    display_story_text("나 : 네.. 교수님… (큰일났다…!)")
-    display_story_text("강봉희 교수님 : 마침 잘 됐군. 방금 APEC 회의 자료를 검토하고 있었거든.")
-    display_story_text("강봉희 교수님 : APEC이 뭔지 정도는 알겠지? 아시아 태평양 경제협력체 말이야.")
-    display_story_text("(강봉희 교수님이 서류를 덮고 플레이어를 바라본다)", ch="monica_serious")
-    display_story_text("강봉희 교수님 : 근데 말이지… 학생, 혹시 내 영어 이름을 알고 있나?!")
-    display_story_text("나 : (뜨끔!)")
-    display_story_text("강봉희 교수님 : 정확한 스펠링을 맞혀야 한다. 틀리면…", ch="monica_smile2")
-    display_story_text("(강봉희 교수님이 씨익 웃는다)")
-    display_story_text("강봉희 교수님 : 가차 없어 F를 주지!")
-
-
-    choice4 = choice_dialogue([
-    "MONICA",
-    "MONIKA",
-    "MONICAH",
-    "MONISSA",
-    "MONICAE"
-    ])
-
-    if choice4 == 0:
-        display_story_text("강봉희 교수님 : 오~ 정확하군! MONICA, 맞네.", ch="monica_smile")
-        display_story_text("강봉희 교수님 : 수업을 아주 집중해서 들었군. 대단한데?")
-        display_story_text("(강봉희 교수님이 만족한 듯 고개를 끄덕인다.)")
-        display_story_text("강봉희 교수님 : 좋아. 통과! 이만 가봐도 좋다네.", ch="clear")
-        display_story_text("(단서 획득!)")
-        gain_clue(player, amount=25)
-        show_clue_popup(
-            screen=screen,
-            clock=clock,
-            clue_img_path=CLUE_IMG_PATH,
-            background=background,
-            character=character
-        )
-    else:
-        display_story_text("강봉희 교수님 : 땡! 틀렸어.", ch="monica_serious")
-        display_story_text("강봉희 교수님 : 이봐, 내가 뭐랬지? 스펠링 틀리면 F라고 했지?")
-        display_story_text("(갑자기 진지해지며)", ch="monica_smile2")
-        display_story_text("강봉희 교수님 : 자네… 공법창 F다.")
-        display_story_text("나 : 아이고.. 아이고.. (하지만 어차피 중간 성적대로 가면 D+였기 때문에 큰 타격이 없다. 교양이기도 하고)", ch="clear")
-        display_story_text("(공법창 학점 F확정^^)")
+        elif i == 2:
+            # # 2.공업 법규와 창업. 강봉희 교수를 만남 -----------------------------------
+            display_story_text("(학연산 건물 앞을 지나가던 도중, 공업법규와 창업 강봉희 교수님을 만났다.)", bg="학연산", ch="monica")
+            display_story_text("강봉희 교수님 : 어이 학생. 잠깐 거기 서봐.")
+            display_story_text("(당황하며 얼어붙는다.)")
+            display_story_text("나 : 네.. 교수님… (큰일났다…!)")
+            display_story_text("강봉희 교수님 : 마침 잘 됐군. 방금 APEC 회의 자료를 검토하고 있었거든.")
+            display_story_text("강봉희 교수님 : APEC이 뭔지 정도는 알겠지? 아시아 태평양 경제협력체 말이야.")
+            display_story_text("(강봉희 교수님이 서류를 덮고 플레이어를 바라본다)", ch="monica_serious")
+            display_story_text("강봉희 교수님 : 근데 말이지… 학생, 혹시 내 영어 이름을 알고 있나?!")
+            display_story_text("나 : (뜨끔!)")
+            display_story_text("강봉희 교수님 : 정확한 스펠링을 맞혀야 한다. 틀리면…", ch="monica_smile2")
+            display_story_text("(강봉희 교수님이 씨익 웃는다)")
+            display_story_text("강봉희 교수님 : 가차 없어 F를 주지!")
 
 
-    # # 3.학연산 (충북 산학협력단 rise와 만남.) -----------------------------------
-    display_story_text("(학연산 건물 앞을 지나던 중 산학협력단 관계자로 보이는 사람이 서류를 들고 이동중이다.)", bg="학연산", ch="rise")
-    display_story_text("RISE 관계자 : 학생, 잠시만요.")
-    display_story_text("RISE 관계자 : 혹시 우리 충북대학교 산학협력단 RISE에 대해 알고 있나요?")
-    choice5 = choice_dialogue([
-        "아이돌 아님?",
-        "롤 챔프 아님?",
-        "상승이라는 뜻 아님?",
-        "연구 및 기술개발을 지원하는 ‘산학협력단’",
-        "로켓 발사 프로젝트 아님?"])
+            choice4 = choice_dialogue([
+            "MONICA",
+            "MONIKA",
+            "MONICAH",
+            "MONISSA",
+            "MONICAE"
+            ])
 
-    if choice5 == 3:
-        display_story_text("RISE 관계자 : 맞습니다! RISE는 충북대의 산학연 협력, 기술사업화, 기업 지원을 담당하는 핵심 조직이에요.", ch="rise_smile")
-        display_story_text("RISE 관계자 : 학생이 아주 잘 알고 있네요.")
-        display_story_text("RISE 관계자 : 이해도가 높으니, 도움이 될 만한 정보를 더 드릴게요.", ch="clear")
-        display_story_text("(단서 획득!)")
-        gain_clue(player, amount=25)
-        show_clue_popup(
-            screen=screen,
-            clock=clock,
-            clue_img_path=CLUE_IMG_PATH,
-            background=background,
-            character=character
-        )
-    else:
-        display_story_text("RISE 관계자 : RISE는 ‘Regional Innovation & Start-up Education’의 약자로,", ch="rise_smile")
-        display_story_text("충북대학교 산학협력단이 지역 기업·연구기관·정부와 협업하여 기술 개발 지원, 창업 보육 및 기업 컨설팅, 산학 공동 R&D, 지식재산(IP) 관리, 현장실습·취업 연계, 지역산업 혁신 프로젝트 등을 수행하는 기관입니다. 우리 학교의 연구 역량을 지역 산업과 직접 연결해...")
-        display_story_text("...학생·기업·지역사회가 함께 성장할 수 있도록 돕는 핵심 조직이죠.")
-        display_story_text("RISE 관계자 : 다음엔 꼭 맞추세요, 학생.")
-        display_story_text("나 : (아.. 피곤해..)", ch="clear")
-        display_story_text("(긴 설명으로 인해 체력이 감소합니다.)")
-        display_story_text("(체력 -30)")
-        change_health(-30)
+            if choice4 == 0:
+                display_story_text("강봉희 교수님 : 오~ 정확하군! MONICA, 맞네.", ch="monica_smile")
+                display_story_text("강봉희 교수님 : 수업을 아주 집중해서 들었군. 대단한데?")
+                display_story_text("(강봉희 교수님이 만족한 듯 고개를 끄덕인다.)")
+                display_story_text("강봉희 교수님 : 좋아. 통과! 이만 가봐도 좋다네.", ch="clear")
+                display_story_text("(단서 획득!)")
+                gain_clue(player, amount=25)
+                show_clue_popup(
+                    screen=screen,
+                    clock=clock,
+                    clue_img_path=CLUE_IMG_PATH,
+                    background=background,
+                    character=character
+                )
+            else:
+                display_story_text("강봉희 교수님 : 땡! 틀렸어.", ch="monica_serious")
+                display_story_text("강봉희 교수님 : 이봐, 내가 뭐랬지? 스펠링 틀리면 F라고 했지?")
+                display_story_text("(갑자기 진지해지며)", ch="monica_smile2")
+                display_story_text("강봉희 교수님 : 자네… 공법창 F다.")
+                display_story_text("나 : 아이고.. 아이고.. (하지만 어차피 중간 성적대로 가면 D+였기 때문에 큰 타격이 없다. 교양이기도 하고)", ch="clear")
+                display_story_text("(공법창 학점 F확정^^)")
+        elif i == 3:
+            # # 3.학연산 (충북 산학협력단 rise와 만남.) -----------------------------------
+            display_story_text("(학연산 건물 앞을 지나던 중 산학협력단 관계자로 보이는 사람이 서류를 들고 이동중이다.)", bg="학연산", ch="rise")
+            display_story_text("RISE 관계자 : 학생, 잠시만요.")
+            display_story_text("RISE 관계자 : 혹시 우리 충북대학교 산학협력단 RISE에 대해 알고 있나요?")
+            choice5 = choice_dialogue([
+                "아이돌 아님?",
+                "롤 챔프 아님?",
+                "상승이라는 뜻 아님?",
+                "연구 및 기술개발을 지원하는 ‘산학협력단’",
+                "로켓 발사 프로젝트 아님?"])
 
-    # # 4.솔못 (커플 피하기 게임) -----------------------------------
-    display_story_text("(솔못 근처를 조용히 지나가려는데, 벤치에 앉아 있는 닭살 커플이 갑자기 당신을 발견하고 말을 건다.)", bg="솔못", ch="couple")
-    display_story_text("커플남 : 어? 자기야, 저 사람 혼자 다닌다~ 우리랑 얘기 좀 하면 안 돼?")
-    display_story_text("커플녀 : 그러게~ 솔못은 커플들이 오는 명소인데… 혼자 오니까 뭔가 신기하다~ 헤헤.")
-    display_story_text("(둘이 서로 팔짱을 끼고 부비부비 거리며 다가온다.)")
-    display_story_text("나 : (하…)")
-    display_story_text("제한시간 내에 커플을 피해 솔못을 빠져나가야 한다.")
-    display_story_text("올바른 방향키와 스페이스바를 눌러 커플을 피해 빠져나가자!")
-    display_story_text("기회는 1번이다!")
+            if choice5 == 3:
+                display_story_text("RISE 관계자 : 맞습니다! RISE는 충북대의 산학연 협력, 기술사업화, 기업 지원을 담당하는 핵심 조직이에요.", ch="rise_smile")
+                display_story_text("RISE 관계자 : 학생이 아주 잘 알고 있네요.")
+                display_story_text("RISE 관계자 : 이해도가 높으니, 도움이 될 만한 정보를 더 드릴게요.", ch="clear")
+                display_story_text("(단서 획득!)")
+                gain_clue(player, amount=25)
+                show_clue_popup(
+                    screen=screen,
+                    clock=clock,
+                    clue_img_path=CLUE_IMG_PATH,
+                    background=background,
+                    character=character
+                )
+            else:
+                display_story_text("RISE 관계자 : RISE는 ‘Regional Innovation & Start-up Education’의 약자로,", ch="rise_smile")
+                display_story_text("충북대학교 산학협력단이 지역 기업·연구기관·정부와 협업하여 기술 개발 지원, 창업 보육 및 기업 컨설팅, 산학 공동 R&D, 지식재산(IP) 관리, 현장실습·취업 연계, 지역산업 혁신 프로젝트 등을 수행하는 기관입니다. 우리 학교의 연구 역량을 지역 산업과 직접 연결해...")
+                display_story_text("...학생·기업·지역사회가 함께 성장할 수 있도록 돕는 핵심 조직이죠.")
+                display_story_text("RISE 관계자 : 다음엔 꼭 맞추세요, 학생.")
+                display_story_text("나 : (아.. 피곤해..)", ch="clear")
+                display_story_text("(긴 설명으로 인해 체력이 감소합니다.)")
+                display_story_text("(체력 -30)")
+                change_health(-30)
 
-    game_result_music = run_game(MusicGame)
-    if game_result_music == "QUIT":
-        return
-    
-    if game_result_music is True:
-        display_story_text("(커플을 피해 무사히 솔못을 빠져나갔다.)")
-        display_story_text("(단서 획득!)")
-        gain_clue(player, amount=25)
-        show_clue_popup(
-            screen=screen,
-            clock=clock,
-            clue_img_path=CLUE_IMG_PATH,
-            background=background,
-            character=character
-        )
-    else: 
-        display_story_text("커플녀 : 솔못은 원래 커플 성지야~ 우리도 여기서 200일 기념했거든~ 헤헤.", ch="couple_sneer")
-        display_story_text("커플남 : 맞아~ 여기 벤치에서 처음으로 손도 잡고~ 첫 데이트도 하고~")
-        display_story_text("(둘이 갑자기 과한 스킨십을 시전한다. 당신은 정신적으로 데미지를 입기 시작한다.)")
-        display_story_text("커플녀 : 너도 얼른 커플 만들어~ 요즘 혼자 다니면 외로워~")
-        display_story_text("(당신은 닭살 커플의 과한 애정행각에 정신적 데미지를 입었습니다.)", ch="clear")
-        display_story_text("(당신은 털썩한 마음으로 솔못을 벗어난다.)")
-        display_story_text("(체력 -50)")
-        change_health(-50)
+        elif i == 4:
+            # # 4.솔못 (커플 피하기 게임) -----------------------------------
+            display_story_text("(솔못 근처를 조용히 지나가려는데, 벤치에 앉아 있는 닭살 커플이 갑자기 당신을 발견하고 말을 건다.)", bg="솔못", ch="couple")
+            display_story_text("커플남 : 어? 자기야, 저 사람 혼자 다닌다~ 우리랑 얘기 좀 하면 안 돼?")
+            display_story_text("커플녀 : 그러게~ 솔못은 커플들이 오는 명소인데… 혼자 오니까 뭔가 신기하다~ 헤헤.")
+            display_story_text("(둘이 서로 팔짱을 끼고 부비부비 거리며 다가온다.)")
+            display_story_text("나 : (하…)")
+            display_story_text("제한시간 내에 커플을 피해 솔못을 빠져나가야 한다.")
+            display_story_text("올바른 방향키와 스페이스바를 눌러 커플을 피해 빠져나가자!")
+            display_story_text("기회는 1번이다!")
 
+            game_result_music = run_game(MusicGame)
+            if game_result_music == "QUIT":
+                return
+            
+            if game_result_music is True:
+                display_story_text("(커플을 피해 무사히 솔못을 빠져나갔다.)")
+                display_story_text("(단서 획득!)")
+                gain_clue(player, amount=25)
+                show_clue_popup(
+                    screen=screen,
+                    clock=clock,
+                    clue_img_path=CLUE_IMG_PATH,
+                    background=background,
+                    character=character
+                )
+            else: 
+                display_story_text("커플녀 : 솔못은 원래 커플 성지야~ 우리도 여기서 200일 기념했거든~ 헤헤.", ch="couple_sneer")
+                display_story_text("커플남 : 맞아~ 여기 벤치에서 처음으로 손도 잡고~ 첫 데이트도 하고~")
+                display_story_text("(둘이 갑자기 과한 스킨십을 시전한다. 당신은 정신적으로 데미지를 입기 시작한다.)")
+                display_story_text("커플녀 : 너도 얼른 커플 만들어~ 요즘 혼자 다니면 외로워~")
+                display_story_text("(당신은 닭살 커플의 과한 애정행각에 정신적 데미지를 입었습니다.)", ch="clear")
+                display_story_text("(당신은 털썩한 마음으로 솔못을 벗어난다.)")
+                display_story_text("(체력 -50)")
+                change_health(-50)
 
+        elif i == 5:
+            # 5.coopsket (1+1 삼김 짝 맞추기) -----------------------------------
+            display_story_text("나: 아 배고파.. 편의점좀 가야겠다..", bg="쿱스켓")
+            display_story_text("(쿱스켓에 도착했다.)", ch="clerk")
+            display_story_text("편의점 직원: 어서오세요 손님~")
+            display_story_text("편의점 직원: 오늘의 특별 이벤트! 삼김 1+1 COOPSKET 매칭 챌린지에 참여하시겠습니까?")
+            display_story_text("나: 그게 뭔데요?")
+            display_story_text("편의점 직원: 선반에 놓인 4×4 총 16개의 삼김 중, 같은 종류끼리 짝을 맞추면 공짜로 가져가시는 거죠!")
+            display_story_text("(마침 돈도 얼마 없던참이라 좋은일이라고 생각했다.)")
+            display_story_text("나: 오 좋은데요?")
 
-    
-
-    # 5.coopsket (1+1 삼김 짝 맞추기) -----------------------------------
-    display_story_text("나: 아 배고파.. 편의점좀 가야겠다..", bg="쿱스켓")
-    display_story_text("(쿱스켓에 도착했다.)", ch="clerk")
-    display_story_text("편의점 직원: 어서오세요 손님~")
-    display_story_text("편의점 직원: 오늘의 특별 이벤트! 삼김 1+1 COOPSKET 매칭 챌린지에 참여하시겠습니까?")
-    display_story_text("나: 그게 뭔데요?")
-    display_story_text("편의점 직원: 선반에 놓인 4×4 총 16개의 삼김 중, 같은 종류끼리 짝을 맞추면 공짜로 가져가시는 거죠!")
-    display_story_text("(마침 돈도 얼마 없던참이라 좋은일이라고 생각했다.)")
-    display_story_text("나: 오 좋은데요?")
-
-    game_result_findcard = run_game(FindCard)
-    
-    if game_result_findcard == "QUIT":
-        return
-    
-    if game_result_findcard is True: # 카드 찾기 게임 승리 
-        display_story_text("나: 이거 다 가져가도 돼요?")
-        display_story_text("편의점 직원: 다 가져가도 됩니다!")
-        display_story_text("나: 배부르니까 하나만 먹을게요~ 많이파세요~~")
-        display_story_text("편의점 직원: 감사합니다 또오세요~ ", ch="clear")
-        display_story_text("( 단서 획득!)")
-        gain_clue(player, amount=25)
-        show_clue_popup(
-            screen=screen,
-            clock=clock,
-            clue_img_path=CLUE_IMG_PATH,
-            background=background,
-            character=character
-        )
-    else:
-        display_story_text("편의점 직원: 아이고.. 아쉽네요..")
-        display_story_text("나: 이걸로 결제 해 주세요….( 카드를 건넨다)", ch="clear")
-        display_story_text("(체력 -30)")
-        change_health(-30)
-
-    
-
-    # 6. B:last 홍보 부스 (10초에 맞춰 버튼 입력하는 게임) -----------------------------------
-    display_story_text("나: 조금 걷다가… 아, 저기 부스가 있네. 뭐하는 곳이지?", bg="중도부스", ch="booth_promoter")
-    # //(배경 부스로 바뀜)
-    display_story_text("홍보 관계자: 어서 오세요, 손님! 오늘은 특별한 체험 이벤트가 있어요!")
-    display_story_text("B:last 10초 버튼 챌린지’에 참여하시겠어요?")
-    display_story_text("나: …버튼을 10초에 딱 맞추라고요?")
-    display_story_text("나: 오 재밌겠는데?")
-    display_story_text("홍보 관계자: 좋아요! 10초에 스페이스바 버튼을 정확히 누르세요!")
-    display_story_text("성공하면 단서 +25, 실패하면 체력이 조금 줄어듭니다. 준비, 시작!")
-
-
-    game_result_timer = run_game(Timer)
-
-    if game_result_timer == "QUIT":
-        return
-
-    if game_result_timer is True:
-        display_story_text("와! 대단하시네요! 완벽하게 성공하셨습니다!", ch="booth_promoter_smile")
-        display_story_text("나: (정확히 10초는 아니지만) 오..오예!")
-        display_story_text("홍보 관계자: 좋아요, 덕분에 오늘도 즐거운 이벤트였어요! 또 오세요~", ch="clear")
-        display_story_text("단서 획득!")
-        gain_clue(player, amount=25)
-        show_clue_popup(
-            screen=screen,
-            clock=clock,
-            clue_img_path=CLUE_IMG_PATH,
-            background=background,
-            character=character
-        )
-    else:
-        display_story_text("홍보 관계자: 앗, 아쉽네요… 다음 기회에 다시 도전하세요!", ch="booth_promoter_disappointed")
+            game_result_findcard = run_game(FindCard)
+            
+            if game_result_findcard == "QUIT":
+                return
+            
+            if game_result_findcard is True: # 카드 찾기 게임 승리 
+                display_story_text("나: 이거 다 가져가도 돼요?")
+                display_story_text("편의점 직원: 다 가져가도 됩니다!")
+                display_story_text("나: 배부르니까 하나만 먹을게요~ 많이파세요~~")
+                display_story_text("편의점 직원: 감사합니다 또오세요~ ", ch="clear")
+                display_story_text("( 단서 획득!)")
+                gain_clue(player, amount=25)
+                show_clue_popup(
+                    screen=screen,
+                    clock=clock,
+                    clue_img_path=CLUE_IMG_PATH,
+                    background=background,
+                    character=character
+                )
+            else:
+                display_story_text("편의점 직원: 아이고.. 아쉽네요..")
+                display_story_text("나: 이걸로 결제 해 주세요….( 카드를 건넨다)", ch="clear")
+                display_story_text("(체력 -30)")
+                change_health(-30)
         
+        elif i == 6:
+            # 6. B:last 홍보 부스 (10초에 맞춰 버튼 입력하는 게임) -----------------------------------
+            display_story_text("나: 조금 걷다가… 아, 저기 부스가 있네. 뭐하는 곳이지?", bg="중도부스", ch="booth_promoter")
+            # //(배경 부스로 바뀜)
+            display_story_text("홍보 관계자: 어서 오세요, 손님! 오늘은 특별한 체험 이벤트가 있어요!")
+            display_story_text("B:last 10초 버튼 챌린지’에 참여하시겠어요?")
+            display_story_text("나: …버튼을 10초에 딱 맞추라고요?")
+            display_story_text("나: 오 재밌겠는데?")
+            display_story_text("홍보 관계자: 좋아요! 10초에 스페이스바 버튼을 정확히 누르세요!")
+            display_story_text("성공하면 단서 +25, 실패하면 체력이 조금 줄어듭니다. 준비, 시작!")
 
 
-    # 7.중도 앞 길가에서 쓰레기 발견 (중도 앞 길가에서 쓰레기를 발견함)-----------------------------------
-    display_story_text("나:  어? 뭐지? 땅에 쓰레기가…", bg="중앙도서관")
+            game_result_timer = run_game(Timer)
 
-    choice6 = choice_dialogue([
-        "쓰레기를 줍는다",
-        "무시하고 지나간다."
-    ])
-    if choice6 == 0:
-        display_story_text("나: 에이, 귀찮아도… 환경은 지켜야지!")
-        display_story_text("나: 흠… 손은 더러워졌지만, 뭔가 기분이 좋네")
-        display_story_text("(단서 획득!)")
-        gain_clue(player, amount=25)
-        show_clue_popup(
-            screen=screen,
-            clock=clock,
-            clue_img_path=CLUE_IMG_PATH,
-            background=background,
-            character=character
-        )
+            if game_result_timer == "QUIT":
+                return
 
-    elif choice6 == 1:
-        display_story_text("(그냥 지나간다)", ch="environmentalist_angry")
-        display_story_text("환경봉사 동아리 부원 등장")
-        display_story_text("환경봉사 동아리 부원: 학생! 여기서 쓰레기를 무시하고 지나가다니… 환경 의식이 너무 부족하군요!")
-        display_story_text("나: 죄송합니다… 다음부터 꼭 챙길게요!", ch="environmentalist")
-        display_story_text("환경봉사 동아리 부원: 좋아요, 이번 한 번만 봐줄게요. 앞으로는 주의하세요!", ch="Clear")
-        display_story_text("(체력 -20)")
-        change_health(-20)
+            if game_result_timer is True:
+                display_story_text("와! 대단하시네요! 완벽하게 성공하셨습니다!", ch="booth_promoter_smile")
+                display_story_text("나: (정확히 10초는 아니지만) 오..오예!")
+                display_story_text("홍보 관계자: 좋아요, 덕분에 오늘도 즐거운 이벤트였어요! 또 오세요~", ch="clear")
+                display_story_text("단서 획득!")
+                gain_clue(player, amount=25)
+                show_clue_popup(
+                    screen=screen,
+                    clock=clock,
+                    clue_img_path=CLUE_IMG_PATH,
+                    background=background,
+                    character=character
+                )
+            else:
+                display_story_text("홍보 관계자: 앗, 아쉽네요… 다음 기회에 다시 도전하세요!", ch="booth_promoter_disappointed")
+                
+        elif i == 7:
+            # 7.중도 앞 길가에서 쓰레기 발견 (중도 앞 길가에서 쓰레기를 발견함)-----------------------------------
+            display_story_text("나:  어? 뭐지? 땅에 쓰레기가…", bg="중앙도서관")
 
+            choice6 = choice_dialogue([
+                "쓰레기를 줍는다",
+                "무시하고 지나간다."
+            ])
+            if choice6 == 0:
+                display_story_text("나: 에이, 귀찮아도… 환경은 지켜야지!")
+                display_story_text("나: 흠… 손은 더러워졌지만, 뭔가 기분이 좋네")
+                display_story_text("(단서 획득!)")
+                gain_clue(player, amount=25)
+                show_clue_popup(
+                    screen=screen,
+                    clock=clock,
+                    clue_img_path=CLUE_IMG_PATH,
+                    background=background,
+                    character=character
+                )
 
+            elif choice6 == 1:
+                display_story_text("(그냥 지나간다)", ch="environmentalist_angry")
+                display_story_text("환경봉사 동아리 부원 등장")
+                display_story_text("환경봉사 동아리 부원: 학생! 여기서 쓰레기를 무시하고 지나가다니… 환경 의식이 너무 부족하군요!")
+                display_story_text("나: 죄송합니다… 다음부터 꼭 챙길게요!", ch="environmentalist")
+                display_story_text("환경봉사 동아리 부원: 좋아요, 이번 한 번만 봐줄게요. 앞으로는 주의하세요!", ch="Clear")
+                display_story_text("(체력 -20)")
+                change_health(-20)
 
-    # 8.중문에서 나타나는 보드게임 중독(홀덤 중독자) 학과 동기와 만남-----------------------------------
-    display_story_text("하하하하하", bg="n-14")
-    display_story_text("나: 저게 무슨소리지?")
-    display_story_text("나: 저 사람 컴공 동기인가? 왜 이렇게 진지하게 게임을 하고 있지?", ch="schoolmate_smile")
-    display_story_text("동기: 오! 너도 들어와! 베스킨라빈스 31, 한 판 하자고!")
-    display_story_text("동기: …지금? 체력도 좀 남았는데, 한 번만 해보지 뭐. 들어오쇼 ㅋ")
-    display_story_text("동기: 규칙은 간단해, 31을 넘기지 않고 돌아가면서 최대 3개 최소 1개씩 숫자를 말하면 되고 31을 말하면 지는거야!")
-    
-    game_result_BR31 = run_game(BR31)
-    if game_result_BR31== "QUIT":
-        return
-    
-    if game_result_BR31 is True:
-        display_story_text("동기: 와! 대단한데? 역시 네가 우리 중에 제일 센스 있네!", ch="schoolmate_smile")
-        display_story_text("(단서 획득!)", ch="clear")
-        gain_clue(player, amount=25)
-        show_clue_popup(
-            screen=screen,
-            clock=clock,
-            clue_img_path=CLUE_IMG_PATH,
-            background=background,
-            character=character
-        )
-    else:
-        display_story_text("동기:ㅋ 아쉽다! 넌 아직 부족하군.", ch="schoolmate_sneer")
-        display_story_text("이제 더 집중해야지, 그래도 열심히 하셨잖아~", ch="clear")
-        display_story_text("(체력 -50)")
-        change_health(-50)
+        elif i == 8:
+            # 8.중문에서 나타나는 보드게임 중독(홀덤 중독자) 학과 동기와 만남-----------------------------------
+            display_story_text("하하하하하", bg="n-14")
+            display_story_text("나: 저게 무슨소리지?")
+            display_story_text("나: 저 사람 컴공 동기인가? 왜 이렇게 진지하게 게임을 하고 있지?", ch="schoolmate_smile")
+            display_story_text("동기: 오! 너도 들어와! 베스킨라빈스 31, 한 판 하자고!")
+            display_story_text("동기: …지금? 체력도 좀 남았는데, 한 번만 해보지 뭐. 들어오쇼 ㅋ")
+            display_story_text("동기: 규칙은 간단해, 31을 넘기지 않고 돌아가면서 최대 3개 최소 1개씩 숫자를 말하면 되고 31을 말하면 지는거야!")
+            
+            game_result_BR31 = run_game(BR31)
+            if game_result_BR31== "QUIT":
+                return
+            
+            if game_result_BR31 is True:
+                display_story_text("동기: 와! 대단한데? 역시 네가 우리 중에 제일 센스 있네!", ch="schoolmate_smile")
+                display_story_text("(단서 획득!)", ch="clear")
+                gain_clue(player, amount=25)
+                show_clue_popup(
+                    screen=screen,
+                    clock=clock,
+                    clue_img_path=CLUE_IMG_PATH,
+                    background=background,
+                    character=character
+                )
+            else:
+                display_story_text("동기:ㅋ 아쉽다! 넌 아직 부족하군.", ch="schoolmate_sneer")
+                display_story_text("이제 더 집중해야지, 그래도 열심히 하셨잖아~", ch="clear")
+                display_story_text("(체력 -50)")
+                change_health(-50)
 
  # 9. 엔딩-----------------------------------    
     player["escaped"] = True

@@ -321,6 +321,9 @@ def display_story_text(text, nexttime=600, bg=None, ch=None):
     global background
     global character
 
+    # --- HUD ---
+    draw_player_status(screen, font, player)
+        
     # --- 배경 처리 ---
     if isinstance(bg, str):
         if bg in backgrounds:
@@ -364,9 +367,6 @@ def display_story_text(text, nexttime=600, bg=None, ch=None):
         # --- 대사창 ---
         dialogue_box.draw()
 
-        # --- HUD ---
-        draw_player_status(screen, font, player)
-
         pygame.display.flip()
         clock.tick(60)
 
@@ -379,8 +379,6 @@ def run_game(GameClass):
     return game_instance.run()
 
 # ==== 배경 자동 로드 시스템 ====
-# ==== 배경 자동 로드 시스템 ====
-
 
 BACKGROUND_DIR = os.path.join(BASE, "background")
 
@@ -447,7 +445,7 @@ def game_story_sequence():
     # 2.—---------------------------------------------
     # 업다운 게임
     display_story_text("(교수연구실 앞으로 이동한다.)", 600, bg="e8-1(2)")
-    display_story_text("나 : 이런.. 교수연구실 문이 잠겨있잖아.. 5번 틀리면 경보가 울릴테니 그 전에 숫자를 맞춰야겠어..")
+    display_story_text("나 : 이런.. 교수연구실 문이 잠겨있잖아.. 7번 틀리면 경보가 울릴테니 그 전에 숫자를 맞춰야겠어..")
     display_story_text("교수실 문을 열어라!", 3000)
     
     game_result_updown = run_game(UpDownGame)
@@ -677,8 +675,9 @@ def game_story_sequence():
                 )
             else:
                 display_story_text("RISE 관계자 : RISE는 ‘Regional Innovation & Start-up Education’의 약자로,", ch="rise_smile")
-                display_story_text("충북대학교 산학협력단이 지역 기업·연구기관·정부와 협업하여 기술 개발 지원, 창업 보육 및 기업 컨설팅, 산학 공동 R&D, 지식재산(IP) 관리, 현장실습·취업 연계, 지역산업 혁신 프로젝트 등을 수행하는 기관입니다. 우리 학교의 연구 역량을 지역 산업과 직접 연결해...")
-                display_story_text("...학생·기업·지역사회가 함께 성장할 수 있도록 돕는 핵심 조직이죠.")
+                display_story_text("충북대학교 산학협력단이 지역 기업·연구기관·정부와 협업하여 기술 개발 지원, 창업 보육 및 기업 컨설팅, 산학 공동 R&D, 지식재산(IP) 관리")
+                display_story_text("현장실습·취업 연계, 지역산업 혁신 프로젝트 등을 수행하는 기관입니다. 우리 학교의 연구 역량을 지역 산업과 직접 연결해")
+                display_story_text("학생·기업·지역사회가 함께 성장할 수 있도록 돕는 핵심 조직이죠.")
                 display_story_text("RISE 관계자 : 다음엔 꼭 맞추세요, 학생.")
                 display_story_text("나 : (아.. 피곤해..)", ch="clear")
                 display_story_text("(긴 설명으로 인해 체력이 감소합니다.)")
@@ -792,7 +791,7 @@ def game_story_sequence():
                 
         elif i == 7:
             # 7.중도 앞 길가에서 쓰레기 발견 (중도 앞 길가에서 쓰레기를 발견함)-----------------------------------
-            display_story_text("나:  어? 뭐지? 땅에 쓰레기가…", bg="중앙도서관")
+            display_story_text("나:  어? 뭐지? 땅에 쓰레기가…", bg="중앙도서관", ch="clear")
 
             choice6 = choice_dialogue([
                 "쓰레기를 줍는다",
@@ -816,7 +815,7 @@ def game_story_sequence():
                 display_story_text("환경봉사 동아리 부원 등장")
                 display_story_text("환경봉사 동아리 부원: 학생! 여기서 쓰레기를 무시하고 지나가다니… 환경 의식이 너무 부족하군요!")
                 display_story_text("나: 죄송합니다… 다음부터 꼭 챙길게요!", ch="environmentalist")
-                display_story_text("환경봉사 동아리 부원: 좋아요, 이번 한 번만 봐줄게요. 앞으로는 주의하세요!", ch="Clear")
+                display_story_text("환경봉사 동아리 부원: 좋아요, 이번 한 번만 봐줄게요. 앞으로는 주의하세요!", ch="clear")
                 display_story_text("(체력 -20)")
                 change_health(-20)
 

@@ -35,19 +35,22 @@ class DialogueManager:
     def _wrap_text(self, text):
         """텍스트를 대화창 폭에 맞게 줄 바꿈 처리합니다."""
         max_width = self.box_rect.width - 40 # 패딩
-        words = text.split(' ')
         lines = []
-        current_line = ""
         
-        for word in words:
-            # 현재 줄에 단어를 추가했을 때의 너비를 확인
-            test_line = current_line + " " + word if current_line else word
-            if self.font.size(test_line)[0] <= max_width:
-                current_line = test_line
-            else:
-                lines.append(current_line)
-                current_line = word
-        lines.append(current_line)
+        # 먼저 '\n' 단위로 문단 나누기
+
+        paragraphs = text.split('\n')
+
+        for paragraph in paragraphs:
+            current_line = ""
+            for char in paragraph:
+                test_line = current_line + char
+                if self.font.size(test_line)[0] <= max_width:
+                    current_line = test_line
+                else:
+                    lines.append(current_line)
+                    current_line = char
+            lines.append(current_line)
         return lines
 
     def update(self):

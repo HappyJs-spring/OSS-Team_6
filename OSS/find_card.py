@@ -189,8 +189,8 @@ class FindCard:
 
         self._draw_background()
 
-        title = self.font_big.render("Find Card", True, (80,85,95))
-        self.screen.blit(title, ((self.SCREEN_W - title.get_width())//2, 40))
+        # title = self.font_big.render("Find Card", True, (80,85,95))
+        # self.screen.blit(title, ((self.SCREEN_W - title.get_width())//2, 40))
 
         remaining = self.c_lib.get_remaining_time()    
         timer_text = self.font.render(f"남은 시간: {remaining}초", True, (80, 80, 90))  

@@ -17,7 +17,6 @@ from dialogue_manager import DialogueManager
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 PROJECT_ROOT = os.path.dirname(BASE_DIR)
-
 CLUE_IMG_PATH = os.path.join(PROJECT_ROOT, "OSS", "UI", "Status", "clue.png")
 
 def gain_clue(player, amount=25):
@@ -272,13 +271,17 @@ font = pygame.font.SysFont("malgun gothic", 40)
 
 # 상태창 이미지 로드
 STATUS_DIR = os.path.join(BASE, "UI", "Status")
-STATUS_IMG_PATH = os.path.join(STATUS_DIR, "status_0.PNG")
-status_img = pygame.image.load(STATUS_IMG_PATH).convert_alpha()
-
-# 원하는 크기로 리사이즈 (예: 300x180)
 STATUS_WIDTH = 300
 STATUS_HEIGHT = 180
-status_img = pygame.transform.smoothscale(status_img, (STATUS_WIDTH, STATUS_HEIGHT))
+
+STATUS_IMAGES = {}
+
+for i in range(5):
+    path = os.path.join(STATUS_DIR, f"status_{i}.PNG")
+    img = pygame.image.load(path).convert_alpha()
+    img = pygame.transform.smoothscale(img, (STATUS_WIDTH, STATUS_HEIGHT))
+    STATUS_IMAGES[i] = img
+
 
 # # 모니터 해상도 자동 인식 
 # info = pygame.display.Info()
